@@ -17,11 +17,19 @@
             weekends: false,
             defaultView: 'agendaWeek',
             columnHeaderFormat: 'dddd',
+            minTime: "08:00:00",
+            maxTime: "23:59:00",
+            header:
+           {
+             left:   '',
+             center: '',
+             right:  '',
+           },
+
+            contentHeight: 600,
+            allDaySlot: false,
 
             events: 'https://fullcalendar.io/demo-events.json?with-resources=2'
-
-
-
 
 
           });
@@ -309,10 +317,19 @@
         </div>
         <!-- Right side of page -->
         <div class="col-md-8" style="height:100%; background: white">
-            <!-- Calendar -->
             <div class="row" style="height:50%; overflow-y: scroll;">
-                <div class="col-md-12">
-                    <div id='calendar'></div>
+                <div class="row" style="height: 7%;background-color: white">
+                    <center><div class="btn-group">
+                        <button>Previous Schedule</button>
+                        <button>Next Schedule</button>
+                    </div>
+                        <p><center>Schedule 1 of #</p>
+
+                </div>
+                <div class = "row" style ="height:43%;">
+                    <div class="col-md-12">
+                        <div id='calendar'></div>
+                    </div>
                 </div>
             </div>
         <!-- Wish List -->
