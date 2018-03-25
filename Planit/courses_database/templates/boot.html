@@ -1,0 +1,829 @@
+<html lang="en">
+
+<head>
+    <title>Planit!</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+    <style>
+    .courses {
+        font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    .courses td, #course th {
+        border: 1px solid #ddd;
+        padding: 8px;
+    }
+
+    .courses tr:nth-child(even){background-color: #fff;}
+
+    .courses tr:hover {background-color: #ddd;}
+
+    .courses th {
+        padding-top: 12px;
+        padding-bottom: 12px;
+        padding-left: 12px;
+        text-align: left;
+        background-color: #505A78;
+        color: white;
+    }
+
+    .row {
+        padding-left: 15;
+        padding-right: 15;
+    }
+
+    .searchTerms td {
+        padding-left: 5px;
+    }
+
+    #title {
+        color: #505A78;
+        font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    }
+    </style>
+
+</head>
+
+<body>
+
+<div class= "container-fluid">
+    <div class="row" style="padding-left: 0; padding-right: 0;">
+        <!-- Left side of page -->
+        <div class="col-md-4" style="height:100%;background: #F2F4F6;">
+            <!-- Search Courses -->
+            <div class="row" style="height:30%; overflow-y: scroll;">
+                <h1 id="title"><strong>Planit!</strong></h1>
+                <div id ="content">
+                    <div id="h1" style="padding:5px">
+                        <p>Select options for search</p>
+                    </div>
+
+                    <form action="#">
+                        <table class="searchTerms">
+                            <tr>
+                                <td>
+                                    <!-- Term -->
+                                    <div class="searchParam" style="display: inline; text-align: left;">
+                                        <h4>Term</h4>
+                                        <select name="term_code" style="width:200px;font-size: 16px" id="term_code" >
+                                            <option value="201910" >Fall 2018</option>
+                                        </select>
+                                    </div>
+                                </td>
+                                <td>
+                                    <!-- Course ID -->
+                                    <div class="searchParam" style="display: inline; text-align: left;">
+                                        <h4>Course ID</h4>
+                                        <input type="text" name="course_id">
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                        <table class="searchTerms">
+                            <tr>
+                                <td>
+                                    <!-- Subject -->
+                                    <div class="searchParam">
+                                        <h4>Subject</h4>
+                                        <select name="term_subj" style="width:200px;font-size: 16px" id="term_subj" >
+                                            <option value="0">ALL</option>
+                                            <option value="AFST" >Africana Studies</option>
+                                            <option value="AMST" >American Studies</option>
+                                            <option value="ANTH" >Anthropology</option>
+                                            <option value="APSC" >Applied Science</option>
+                                            <option value="ARAB" >Arabic</option>
+                                            <option value="ART" >Art</option>
+                                            <option value="ARTH" >Art History</option>
+                                            <option value="AMES" >Asian &amp; Middle Eastern Studies</option>
+                                            <option value="APIA" >Asian&amp;Pac Islander American St</option>
+                                            <option value="BIOL" >Biology</option>
+                                            <option value="BUAD" >Business Administration</option>
+                                            <option value="CHEM" >Chemistry</option>
+                                            <option value="CHIN" >Chinese</option>
+                                            <option value="CLCV" >Classical Civilization</option>
+                                            <option value="COLL" >College Courses</option>
+                                            <option value="CMST" >Community Studies</option>
+                                            <option value="CSCI" >Computer Science</option>
+                                            <option value="CRWR" >Creative Writing</option>
+                                            <option value="CRIN" >Curriculum &amp; Instruction</option>
+                                            <option value="DANC" >Dance</option>
+                                            <option value="DATA" >Data Science</option>
+                                            <option value="ECON" >Economics</option>
+                                            <option value="EPPL" >Ed Policy Planning Leadership</option>
+                                            <option value="EDUC" >Education</option>
+                                            <option value="ENGL" >English</option>
+                                            <option value="ENSP" >Environmental Science &amp; Policy</option>
+                                            <option value="EURS" >European Studies</option>
+                                            <option value="FMST" >Film and Media Studies</option>
+                                            <option value="FREN" >French &amp; Francophone Studies</option>
+                                            <option value="GSWS" >Gender/Sexuality &amp; Women&#39;s Std</option>
+                                            <option value="GIS" >Geographic Information Systems</option>
+                                            <option value="GEOL" >Geology</option>
+                                            <option value="GRMN" >German Studies</option>
+                                            <option value="GBST" >Global Studies</option>
+                                            <option value="GOVT" >Government</option>
+                                            <option value="GRAD" >Graduate</option>
+                                            <option value="GREK" >Greek</option>
+                                            <option value="HBRW" >Hebrew</option>
+                                            <option value="HISP" >Hispanic Studies</option>
+                                            <option value="HIST" >History</option>
+                                            <option value="INTR" >Interdisciplinary Studies</option>
+                                            <option value="INRL" >International Relations</option>
+                                            <option value="ITAL" >Italian</option>
+                                            <option value="JAPN" >Japanese</option>
+                                            <option value="KINE" >Kinesiology &amp; Hlth Sciences</option>
+                                            <option value="LATN" >Latin</option>
+                                            <option value="LAS" >Latin American Studies</option>
+                                            <option value="LAW" >Law</option>
+                                            <option value="LING" >Linguistics</option>
+                                            <option value="MSCI" >Marine Science</option>
+                                            <option value="MATH" >Mathematics</option>
+                                            <option value="MREN" >Medieval &amp; Renaissance Studies</option>
+                                            <option value="MLSC" >Military Science</option>
+                                            <option value="MDLL" >Modern Languages/Literatures</option>
+                                            <option value="MUSC" >Music</option>
+                                            <option value="NSCI" >Neuroscience</option>
+                                            <option value="PHIL" >Philosophy</option>
+                                            <option value="PHYS" >Physics</option>
+                                            <option value="PSYC" >Psychology</option>
+                                            <option value="PBHL" >Public Health</option>
+                                            <option value="PUBP" >Public Policy</option>
+                                            <option value="RELG" >Religious Studies</option>
+                                            <option value="RUSN" >Russian</option>
+                                            <option value="RPSS" >Russian &amp; Post-Soviet Studies</option>
+                                            <option value="SOCL" >Sociology</option>
+                                            <option value="SPCH" >Speech</option>
+                                            <option value="THEA" >Theatre</option>
+                                            <option value="WRIT" >Writing</option>
+                                        </select>
+                                    </div>
+                                </td>
+                                <td>
+                                    <!-- Attribute 1 -->
+                                    <div class="searchParam">
+                                        <h4>Attribute</h4>
+                                        <select name="attr" style="width:200px;font-size: 16px" id="attr" >
+                                            <option value="0">ALL</option>
+                                            <option value="ACTV" >Active Learning -- ACTV</option>
+                                            <option value="FEE" >Additional Fee Required -- FEE</option>
+                                            <option value="ALB" >American Lit before 1920 -- ALB</option>
+                                            <option value="ALV" >Arts Letters Values -- ALV</option>
+                                            <option value="GE6" >Arts Proficiency (GER6) -- GE6</option>
+                                            <option value="BLB" >British Lit before 1700 -- BLB</option>
+                                            <option value="BLT" >British Lit between 1700-1900 -- BLT</option>
+                                            <option value="BLWF" >Business Law - Foundational -- BLWF</option>
+                                            <option value="BLWS" >Business Law - Supporting -- BLWS</option>
+                                            <option value="CHEL" >Chemistry Electives -- CHEL</option>
+                                            <option value="CSOT" >CLST Other Courses -- CSOT</option>
+                                            <option value="C100" >College 100 -- C100</option>
+                                            <option value="C150" >College 150 -- C150</option>
+                                            <option value="C200" >College 200 -- C200</option>
+                                            <option value="C300" >College 300 -- C300</option>
+                                            <option value="C400" >College 400 -- C400</option>
+                                            <option value="MATC" >Computational Mathematics -- MATC</option>
+                                            <option value="CR" >Constructions of Race -- CR</option>
+                                            <option value="CLS" >Crim, Law, &amp; Society -- CLS</option>
+                                            <option value="CSI" >Culture Society Individual -- CSI</option>
+                                            <option value="DC" >Department Chair Required -- DC</option>
+                                            <option value="ECWR" >ECON Writing Requirement -- ECWR</option>
+                                            <option value="EXP" >Experiential -- EXP</option>
+                                            <option value="FRSM" >First-Year Seminar -- FRSM</option>
+                                            <option value="FLP" >Foreign Lang Proficiency -- FLP</option>
+                                            <option value="G2LA" >G2LA Natural Sci-Physical Lab -- G2LA</option>
+                                            <option value="G2LB" >G2LB Natural Sci-Bio Lab -- G2LB</option>
+                                            <option value="GE1" >GE1Math/Quantitative Reasoning -- GE1</option>
+                                            <option value="GE2A" >GE2A Natural Sci-Physical -- GE2A</option>
+                                            <option value="GE2B" >GE2B Natural Sci-Biological -- GE2B</option>
+                                            <option value="GE2L" >GE2L Natural Science Lab -- GE2L</option>
+                                            <option value="GE3" >GE3 Social Sciences -- GE3</option>
+                                            <option value="GE4A" >GE4A Hist/Cultr Euro Tradition -- GE4A</option>
+                                            <option value="GE4B" >GE4B Hist/Cult outside EurTrad -- GE4B</option>
+                                            <option value="GE4C" >GE4C Cross-Cultural Issues -- GE4C</option>
+                                            <option value="GE5" >GE5 Lit/Hist of the Arts -- GE5</option>
+                                            <option value="GE7" >GE7 Phil/Relig/Soc Thought -- GE7</option>
+                                            <option value="GLOB" >Globalization -- GLOB</option>
+                                            <option value="GUAR" >Guaranteed Summer Offering -- GUAR</option>
+                                            <option value="HMWB" >Health, Med, &amp; Well-Being -- HMWB</option>
+                                            <option value="HIPP" >High Impact Projects -- HIPP</option>
+                                            <option value="HIPT" >High Impact Projects -- HIPT</option>
+                                            <option value="HISC" >HIST Colloquium Requirement -- HISC</option>
+                                            <option value="HINW" >HIST Non-Western Survey Course -- HINW</option>
+                                            <option value="IRCP" >INRL Capstone -- IRCP</option>
+                                            <option value="IREL" >INRL Elective -- IREL</option>
+                                            <option value="IRSC" >INRL Social Cultural Concepts -- IRSC</option>
+                                            <option value="IN" >Instructor Permission Required -- IN</option>
+                                            <option value="JDST" >Judaic Studies Requirement -- JDST</option>
+                                            <option value="KINA" >KINE Activity -- KINA</option>
+                                            <option value="EPPH" >KINE Epidemiology Pub Hlth -- EPPH</option>
+                                            <option value="LWWR" >Law Writing Requirement -- LWWR</option>
+                                            <option value="LW1R" >Law Year 1 Requirement -- LW1R</option>
+                                            <option value="LW2R" >Law Year 2 Requirement -- LW2R</option>
+                                            <option value="LS" >Literature since 1900 -- LS</option>
+                                            <option value="LDWR" >Lower Divsn Writing Req -- LDWR</option>
+                                            <option value="MMTG" >Mandatory Meeting -- MMTG</option>
+                                            <option value="MATH" >Math Proficiency -- MATH</option>
+                                            <option value="MCR" >Meets Major Computing Req -- MCR</option>
+                                            <option value="MWR" >Meets Major Writing Req -- MWR</option>
+                                            <option value="MCGD" >Molecules/Cells/Genes/Develop -- MCGD</option>
+                                            <option value="NQR" >Nat World Quant Reasoning -- NQR</option>
+                                            <option value="NATV" >Natv Stds Minor Core -- NATV</option>
+                                            <option value="ON" >Online Course -- ON</option>
+                                            <option value="MATO" >Operations Research -- MATO</option>
+                                            <option value="OWR" >Optional Writing Requirement -- OWR</option>
+                                            <option value="OPEE" >Organsms/Popultns/Ecology/Evol -- OPEE</option>
+                                            <option value="P/F" >Pass/Fail Course -- P/F</option>
+                                            <option value="PACT" >Physical Activity Proficiency -- PACT</option>
+                                            <option value="MATP" >Probability &amp; Statistics -- MATP</option>
+                                            <option value="MATS" >Scientific Applications -- MATS</option>
+                                            <option value="SHCR" >Short Course -- SHCR</option>
+                                            <option value="SA" >Single Author/Film Auteur -- SA</option>
+                                            <option value="SPPJ" >Soc Prob, Pol, &amp; Justice -- SPPJ</option>
+                                            <option value="SUST" >Sustainability Courses -- SUST</option>
+                                            <option value="UNSM" >University Seminar Req -- UNSM</option>
+                                        </select>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                        <!-- Search Button -->
+                        <br>
+                        <div class = "srchButtonFront">
+                            <input type="submit" value="Search">
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Display Courses -->
+            <div class="row" style="height:70%; overflow-y: scroll;">
+                <h3>Search Results</h3>
+                <table class="courses" style="overflow-y: scroll;">
+                    <tr>
+                        <th>Subject</th>
+                        <th>Course ID</th>
+                        <th>Course Title</th>
+                        <th>Add to Wish List</th>
+                    </tr>
+                    {% for item in sections %}
+                    <tr>
+                        <td> {{ item.subject }}</td>
+                        <td> {{ item.course_id }} </td>
+                        <td> {{ item.title }}</td>
+                        <td style="text-align: center;">
+                            <input type="submit" value="+"></form>
+                            <!-- <form action="" method="post" style="">{% csrf_token %}
+                                <input type="submit" value="+"></form>
+                            </form> -->
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+        <!-- Right side of page -->
+        <div class="col-md-8" style="height:100%; background: white">
+            <!-- Calendar -->
+            <div class="row" style="height:50%; overflow-y: scroll;">
+            <div class="col-md-12">
+                <p>Calendar</p>
+
+                <TABLE  CLASS="plaintable" SUMMARY="This layout table is used to present the goto previous and next week anchors along with the current week information." WIDTH="80%">
+
+                    <TR>
+                        <TD COLSPAN="1" CLASS="pldefault"><A HREF="/pls/PROD/bwskfshd.P_CrseSchd?start_date_in=03/12/2018" onMouseOver="window.status='Previous Week';  return true" onFocus="window.status='Previous Week';  return true" onMouseOut="window.status='';  return true" onBlur="window.status='';  return true">Previous Week</A></TD>
+                        <TD COLSPAN="4" CLASS="pldead">&nbsp;</TD>
+                        <TD COLSPAN="3" CLASS="pldefault"><SPAN class="fieldlargetext">Week of April 20,420 CE</SPAN><SPAN class="fieldmediumtext"> (83 of 88)</SPAN></TD>
+                        <TD COLSPAN="1" CLASS="pldead">&nbsp;</TD>
+                        <TD COLSPAN="1" CLASS="pldefault"><p class="rightaligntext"><A HREF="/pls/PROD/bwskfshd.P_CrseSchd?start_date_in=03/26/2018" onMouseOver="window.status='Next Week';  return true" onFocus="window.status='Next Week';  return true" onMouseOut="window.status='';  return true" onBlur="window.status='';  return true">Next Week</A></p></TD>
+                    </TR>
+                </TABLE>
+                <TABLE  CLASS="datadisplaytable" SUMMARY="This layout table is used to present the weekly course schedule." WIDTH="80%">
+                    <TR>
+                        <TH CLASS="ddheader" scope="col" >&nbsp;</TH>
+                        <TH CLASS="ddheader" scope="col" >&nbsp;&nbsp;&nbsp;Monday&nbsp;&nbsp;&nbsp;</TH>
+                        <TH CLASS="ddheader" scope="col" >&nbsp;&nbsp;&nbsp;Tuesday&nbsp;&nbsp;&nbsp;</TH>
+                        <TH CLASS="ddheader" scope="col" >&nbsp;&nbsp;&nbsp;Wednesday&nbsp;&nbsp;&nbsp;</TH>
+                        <TH CLASS="ddheader" scope="col" >&nbsp;&nbsp;&nbsp;Thursday&nbsp;&nbsp;&nbsp;</TH>
+                        <TH CLASS="ddheader" scope="col" >&nbsp;&nbsp;&nbsp;Friday&nbsp;&nbsp;&nbsp;</TH>
+                        <TH CLASS="ddheader" scope="col" >&nbsp;&nbsp;&nbsp;Saturday&nbsp;&nbsp;&nbsp;</TH>
+                        <TH CLASS="ddheader" scope="col" >&nbsp;&nbsp;&nbsp;Sunday&nbsp;&nbsp;&nbsp;</TH>
+                    </TR>
+                    <TR>
+                        <TH ROWSPAN="4" CLASS="ddlabel" scope="row" >11am</TH>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                    </TR>
+                    <TR>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                    </TR>
+                    <TR>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                    </TR>
+                    <TR>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                    </TR>
+                    <TR>
+                        <TH ROWSPAN="4" CLASS="ddlabel" scope="row" >12pm</TH>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                    </TR>
+                    <TR>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                    </TR>
+                    <TR>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                    </TR>
+                    <TR>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                    </TR>
+                    <TR>
+                        <TH ROWSPAN="4" CLASS="ddlabel" scope="row" >1pm</TH>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                    </TR>
+                    <TR>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                    </TR>
+                    <TR>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                    </TR>
+                    <TR>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                    </TR>
+                    <TR>
+                        <TH ROWSPAN="4" CLASS="ddlabel" scope="row" >2pm</TH>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                    </TR>
+                    <TR>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                    </TR>
+                    <TR>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                    </TR>
+                    <TR>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                    </TR>
+                    <TR>
+                        <TH ROWSPAN="4" CLASS="ddlabel" scope="row" >3pm</TH>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                    </TR>
+                    <TR>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                    </TR>
+                    <TR>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                    </TR>
+                    <TR>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                    </TR>
+                    <TR>
+                        <TH ROWSPAN="4" CLASS="ddlabel" scope="row" >4pm</TH>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                    </TR>
+                    <TR>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                    </TR>
+                    <TR>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                    </TR>
+                    <TR>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                    </TR>
+                    <TR>
+                        <TH ROWSPAN="4" CLASS="ddlabel" scope="row" >5pm</TH>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                    </TR>
+                    <TR>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                    </TR>
+                    <TR>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                    </TR>
+                    <TR>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                    </TR>
+                    <TR>
+                        <TH ROWSPAN="4" CLASS="ddlabel" scope="row" >6pm</TH>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                    </TR>
+                    <TR>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                    </TR>
+                    <TR>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                    </TR>
+                    <TR>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                    </TR>
+                    <TR>
+                        <TH ROWSPAN="4" CLASS="ddlabel" scope="row" >7pm</TH>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                    </TR>
+                    <TR>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                    </TR>
+                    <TR>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                    </TR>
+                    <TR>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                    </TR>
+                    <TR>
+                        <TH ROWSPAN="4" CLASS="ddlabel" scope="row" >8pm</TH>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                    </TR>
+                    <TR>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                    </TR>
+                    <TR>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                    </TR>
+                    <TR>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                        <TD CLASS="dddefault">&nbsp;</TD>
+                    </TR>
+                </TABLE>
+                <BR>
+
+
+            </div>-->
+        </div>
+        <!-- Wish List -->
+        <div class="row">
+          <div class="col-lg-6" style="height:50%; background: white; overflow-y: scroll;">
+            <h4>Wish List Filters</h4>
+            <div id="wishlistfilter">
+              <h4>Earliest Time</h4>
+              <p><select name="time" style="width:200px;font-size: 16px" id="times">
+                            <option value="0">None</option>
+                            <option value="0800" >8:00</option>
+                            <option value="0830" >8:30</option>
+                            <option value="0900" >9:00</option>
+                            <option value="0930" >9:30</option>
+                            <option value="1000" >10:00</option>
+                            <option value="1030" >10:30</option>
+                            <option value="1100" >11:00</option>
+                            <option value="1130" >11:30</option>
+                            <option value="1200" >12:00</option>
+                            <option value="1230" >12:30</option>
+                            <option value="1300" >1:00</option>
+                            <option value="1330" >1:30</option>
+                            <option value="1400" >2:00</option>
+                            <option value="1430" >2:30</option>
+                            <option value="1500" >3:00</option>
+                            <option value="1530" >3:30</option>
+                            <option value="1600" >4:00</option>
+                            <option value="1630" >4:30</option>
+                            <option value="1700" >5:00</option>
+                        </select>
+              </p>
+            </div>
+
+            <h4>Latest Time</h4>
+            <select name="ltime" style="width:200px;font-size: 16px" id="ltimes">
+                        <option value="0">None</option>
+                        <option value="0800" >8:00</option>
+                        <option value="0830" >8:30</option>
+                        <option value="0900" >9:00</option>
+                        <option value="0930" >9:30</option>
+                        <option value="1000" >10:00</option>
+                        <option value="1030" >10:30</option>
+                        <option value="1100" >11:00</option>
+                        <option value="1130" >11:30</option>
+                        <option value="1200" >12:00</option>
+                        <option value="1230" >12:30</option>
+                        <option value="1300" >1:00</option>
+                        <option value="1330" >1:30</option>
+                        <option value="1400" >2:00</option>
+                        <option value="1430" >2:30</option>
+                        <option value="1500" >3:00</option>
+                        <option value="1530" >3:30</option>
+                        <option value="1600" >4:00</option>
+                        <option value="1630" >4:30</option>
+                        <option value="1700" >5:00</option>
+                    </select>
+
+            <h4>Days Off</h4>
+            <form>
+              <input type="checkbox" name="day" value="M"> Monday
+              <input type="checkbox" name="day" value="T"> Tuesday
+              <input type="checkbox" name="day" value="W"> Wednesday
+              <input type="checkbox" name="day" value="R"> Thursday
+              <input type="checkbox" name="day" value="F"> Friday
+
+            </form>
+
+
+            <h4>Attribute(hit command or shift to select multiple)</h4>
+            <p><select multiple name="attr2" style="width:200px;font-size: 16px" id="attr2">
+                        <option value="0">ALL</option>
+                        <option value="ACTV" >Active Learning -- ACTV</option>
+                        <option value="FEE" >Additional Fee Required -- FEE</option>
+                        <option value="ALB" >American Lit before 1920 -- ALB</option>
+                        <option value="ALV" >Arts Letters Values -- ALV</option>
+                        <option value="GE6" >Arts Proficiency (GER6) -- GE6</option>
+                        <option value="BLB" >British Lit before 1700 -- BLB</option>
+                        <option value="BLT" >British Lit between 1700-1900 -- BLT</option>
+                        <option value="BLWF" >Business Law - Foundational -- BLWF</option>
+                        <option value="BLWS" >Business Law - Supporting -- BLWS</option>
+                        <option value="CHEL" >Chemistry Electives -- CHEL</option>
+                        <option value="CSOT" >CLST Other Courses -- CSOT</option>
+                        <option value="C100" >College 100 -- C100</option>
+                        <option value="C150" >College 150 -- C150</option>
+                        <option value="C200" >College 200 -- C200</option>
+                        <option value="C300" >College 300 -- C300</option>
+                        <option value="C400" >College 400 -- C400</option>
+                        <option value="MATC" >Computational Mathematics -- MATC</option>
+                        <option value="CR" >Constructions of Race -- CR</option>
+                        <option value="CLS" >Crim, Law, &amp; Society -- CLS</option>
+                        <option value="CSI" >Culture Society Individual -- CSI</option>
+                        <option value="DC" >Department Chair Required -- DC</option>
+                        <option value="ECWR" >ECON Writing Requirement -- ECWR</option>
+                        <option value="EXP" >Experiential -- EXP</option>
+                        <option value="FRSM" >First-Year Seminar -- FRSM</option>
+                        <option value="FLP" >Foreign Lang Proficiency -- FLP</option>
+                        <option value="G2LA" >G2LA Natural Sci-Physical Lab -- G2LA</option>
+                        <option value="G2LB" >G2LB Natural Sci-Bio Lab -- G2LB</option>
+                        <option value="GE1" >GE1Math/Quantitative Reasoning -- GE1</option>
+                        <option value="GE2A" >GE2A Natural Sci-Physical -- GE2A</option>
+                        <option value="GE2B" >GE2B Natural Sci-Biological -- GE2B</option>
+                        <option value="GE2L" >GE2L Natural Science Lab -- GE2L</option>
+                        <option value="GE3" >GE3 Social Sciences -- GE3</option>
+                        <option value="GE4A" >GE4A Hist/Cultr Euro Tradition -- GE4A</option>
+                        <option value="GE4B" >GE4B Hist/Cult outside EurTrad -- GE4B</option>
+                        <option value="GE4C" >GE4C Cross-Cultural Issues -- GE4C</option>
+                        <option value="GE5" >GE5 Lit/Hist of the Arts -- GE5</option>
+                        <option value="GE7" >GE7 Phil/Relig/Soc Thought -- GE7</option>
+                        <option value="GLOB" >Globalization -- GLOB</option>
+                        <option value="GUAR" >Guaranteed Summer Offering -- GUAR</option>
+                        <option value="HMWB" >Health, Med, &amp; Well-Being -- HMWB</option>
+                        <option value="HIPP" >High Impact Projects -- HIPP</option>
+                        <option value="HIPT" >High Impact Projects -- HIPT</option>
+                        <option value="HISC" >HIST Colloquium Requirement -- HISC</option>
+                        <option value="HINW" >HIST Non-Western Survey Course -- HINW</option>
+                        <option value="IRCP" >INRL Capstone -- IRCP</option>
+                        <option value="IREL" >INRL Elective -- IREL</option>
+                        <option value="IRSC" >INRL Social Cultural Concepts -- IRSC</option>
+                        <option value="IN" >Instructor Permission Required -- IN</option>
+                        <option value="JDST" >Judaic Studies Requirement -- JDST</option>
+                        <option value="KINA" >KINE Activity -- KINA</option>
+                        <option value="EPPH" >KINE Epidemiology Pub Hlth -- EPPH</option>
+                        <option value="LWWR" >Law Writing Requirement -- LWWR</option>
+                        <option value="LW1R" >Law Year 1 Requirement -- LW1R</option>
+                        <option value="LW2R" >Law Year 2 Requirement -- LW2R</option>
+                        <option value="LS" >Literature since 1900 -- LS</option>
+                        <option value="LDWR" >Lower Divsn Writing Req -- LDWR</option>
+                        <option value="MMTG" >Mandatory Meeting -- MMTG</option>
+                        <option value="MATH" >Math Proficiency -- MATH</option>
+                        <option value="MCR" >Meets Major Computing Req -- MCR</option>
+                        <option value="MWR" >Meets Major Writing Req -- MWR</option>
+                        <option value="MCGD" >Molecules/Cells/Genes/Develop -- MCGD</option>
+                        <option value="NQR" >Nat World Quant Reasoning -- NQR</option>
+                        <option value="NATV" >Natv Stds Minor Core -- NATV</option>
+                        <option value="ON" >Online Course -- ON</option>
+                        <option value="MATO" >Operations Research -- MATO</option>
+                        <option value="OWR" >Optional Writing Requirement -- OWR</option>
+                        <option value="OPEE" >Organsms/Popultns/Ecology/Evol -- OPEE</option>
+                        <option value="P/F" >Pass/Fail Course -- P/F</option>
+                        <option value="PACT" >Physical Activity Proficiency -- PACT</option>
+                        <option value="MATP" >Probability &amp; Statistics -- MATP</option>
+                        <option value="MATS" >Scientific Applications -- MATS</option>
+                        <option value="SHCR" >Short Course -- SHCR</option>
+                        <option value="SA" >Single Author/Film Auteur -- SA</option>
+                        <option value="SPPJ" >Soc Prob, Pol, &amp; Justice -- SPPJ</option>
+                        <option value="SUST" >Sustainability Courses -- SUST</option>
+                        <option value="UNSM" >University Seminar Req -- UNSM</option>
+                    </select>
+
+              <h4>Credit Hours</h4>
+              <select name="credit" style="width:200px;font-size: 16px" id="credits">
+                        <option value="1" >1</option>
+                        <option value="2" >2</option>
+                        <option value="3" >3</option>
+                        <option value="4" >4</option>
+                        <option value="5" >5</option>
+                        <option value="6" >6</option>
+                        <option value="7" >7</option>
+                        <option value="8" >8</option>
+                        <option value="9" >9</option>
+                        <option value="10" >10</option>
+                        <option value="11" >11</option>
+                        <option value="12" >12</option>
+                        <option value="13" >13</option>
+                        <option value="14" >14</option>
+                        <option value="15" >15</option>
+                        <option value="16" >16</option>
+                        <option value="17" >17</option>
+                        <option value="18" >18</option>
+                        <option value="19" >19</option>
+                        <option value="20" >20</option>
+                    </select>
+
+          </div>
+          <div class="col-lg-6" style="height:50%;background: linear-gradient(to right, #ffffcc -100%, #cc99ff 100%);">
+            <p>wish list</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+
+</html>
