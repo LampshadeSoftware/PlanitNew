@@ -10,15 +10,19 @@ last_get = None
 def home(request):
 	global last_get
 
-
 	if request.POST:
-		wish_subject = request.GET.get('wish_subject', None)
-		wish_course_id = request.GET.get('wish_course_id', None)
-		new_wish_item = WishList()
-		setattr(new_wish_item, "course_id", wish_course_id)
-		setattr(new_wish_item, "subject", wish_subject)
-		new_wish_item.save()
-		request = last_get
+		if request.GET.get('rem_id', None) is not None:
+			rem_id = request.GET.get('rem_id', None)
+			rem_subj = request.GET.get('rem_subj', None)
+			WishList.objects.all().filter(course_id=rem_id, subject=rem_subj).delete()
+		else:
+			wish_subject = request.GET.get('wish_subject', None)
+			wish_course_id = request.GET.get('wish_course_id', None)
+			new_wish_item = WishList()
+			setattr(new_wish_item, "course_id", wish_course_id)
+			setattr(new_wish_item, "subject", wish_subject)
+			new_wish_item.save()
+			request = last_get
 	else:
 		last_get = request
 

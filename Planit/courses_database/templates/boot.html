@@ -564,7 +564,7 @@
                       <td> {{ item.subject }}</td>
                       <td> {{ item.course_id }} </td>
                       <td style="text-align: center;">
-                          <form action="#" method="post" style="">{% csrf_token %}
+                          <form action="?rem_subj={{item.subject}}&rem_id={{item.course_id}}" method="post" style="">{% csrf_token %}
                               <input type="submit" value="-"></form>
                           </form>
                       </td>
