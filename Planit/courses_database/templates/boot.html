@@ -10,85 +10,97 @@
     <script src='static/fullcalendar/lib/jquery.min.js'></script>
     <script src='static/fullcalendar/lib/moment.min.js'></script>
     <script src='static/fullcalendar/fullcalendar.js'></script>
-    <script type = 'text/javascript'>
-        $(document).ready(function() {
+    <script type='text/javascript'>
+    $(document).ready(function() {
 
-          $('#calendar').fullCalendar({
-            weekends: false,
-            defaultView: 'agendaWeek',
-            columnHeaderFormat: 'dddd',
-            minTime: "08:00:00",
-            maxTime: "23:59:00",
-            header:
-           {
-             left:   '',
-             center: '',
-             right:  '',
-           },
-
-            contentHeight: 600,
-            allDaySlot: false,
-
-            events: 'https://fullcalendar.io/demo-events.json?with-resources=2'
+      $('#calendar').fullCalendar({
+        defaultDate: moment('2018-01-01'),
+        weekends: false,
+        defaultView: 'agendaWeek',
+        columnHeaderFormat: 'dddd',
+        minTime: "08:00:00",
+        maxTime: "23:59:00",
+        header: {
+          left: '',
+          center: '',
+          right: '',
+        },
 
 
-          });
+        contentHeight: 600,
+        allDaySlot: false,
 
-        });
-    </script>
+        events: [
+          {
+            title: 'CSCI 312 01',
+            start: '2018-01-03T12:30:00',
+            allDay: false // will make the time show
+          }
+        ]
+
+
+      });
+
+    });
+  </script>
 
     <style>
     .courses {
-        font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
-        border-collapse: collapse;
-        width: 100%;
+      font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+      border-collapse: collapse;
+      width: 100%;
     }
 
-    .courses td, #course th {
-        border: 1px solid #ddd;
-        padding: 8px;
+    .courses td,
+    #course th {
+      border: 1px solid #ddd;
+      padding: 8px;
     }
 
-    .courses tr:nth-child(even){background-color: #fff;}
+    .courses tr:nth-child(even) {
+      background-color: #fff;
+    }
 
-    .courses tr:hover {background-color: #ddd;}
+    .courses tr:hover {
+      background-color: #ddd;
+    }
 
     .courses th {
-        padding-top: 12px;
-        padding-bottom: 12px;
-        padding-left: 12px;
-        text-align: left;
-        background-color: #505A78;
-        color: white;
+      padding-top: 12px;
+      padding-bottom: 12px;
+      padding-left: 12px;
+      text-align: left;
+      background-color: #505A78;
+      color: white;
     }
 
     .row {
-        padding-left: 15;
-        padding-right: 15;
+      padding-left: 15;
+      padding-right: 15;
     }
 
     .searchTerms td {
-        padding-left: 5px;
+      padding-left: 5px;
     }
 
     #title {
-        color: #505A78;
-        font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+      color: #505A78;
+      font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
     }
-    </style>
+  </style>
 
 </head>
 
 <body>
 
-<div class= "container-fluid">
+<div class="container-fluid">
     <div class="row" style="padding-left: 0; padding-right: 0;">
         <!-- Left side of page -->
         <div class="col-md-4" style="height:100%;background: #F2F4F6;">
             <!-- Search Courses -->
-            <div class="row" style="height:25%; overflow-y: scroll;">
+            <div class="row" style="height:30%; overflow-y: scroll;">
                 <h1 id="title"><strong>Planit!</strong></h1>
-                <div id ="content">
+                <div id="content">
                     <div id="h1" style="padding:5px">
                         <p>Select options for search</p>
                     </div>
@@ -100,7 +112,7 @@
                                     <!-- Term -->
                                     <div class="searchParam" style="display: inline; text-align: left;">
                                         <h4>Term</h4>
-                                        <select name="term_code" style="width:200px;font-size: 16px" id="term_code" >
+                                        <select name="term_code" style="width:200px;font-size: 16px" id="term_code">
                                             <option value="201910" >Fall 2018</option>
                                         </select>
                                     </div>
@@ -120,7 +132,7 @@
                                     <!-- Subject -->
                                     <div class="searchParam">
                                         <h4>Subject</h4>
-                                        <select name="term_subj" style="width:200px;font-size: 16px" id="term_subj" >
+                                        <select name="term_subj" style="width:200px;font-size: 16px" id="term_subj">
                                             <option value="0">ALL</option>
                                             <option value="AFST" >Africana Studies</option>
                                             <option value="AMST" >American Studies</option>
@@ -197,7 +209,7 @@
                                     <!-- Attribute 1 -->
                                     <div class="searchParam">
                                         <h4>Attribute</h4>
-                                        <select name="attr" style="width:200px;font-size: 16px" id="attr" >
+                                        <select name="attr" style="width:200px;font-size: 16px" id="attr">
                                             <option value="0">ALL</option>
                                             <option value="ACTV" >Active Learning -- ACTV</option>
                                             <option value="FEE" >Additional Fee Required -- FEE</option>
@@ -282,7 +294,7 @@
                         </table>
                         <!-- Search Button -->
                         <br>
-                        <div class = "srchButtonFront">
+                        <div class="srchButtonFront">
                             <input type="submit" value="Search">
                         </div>
                     </form>
@@ -290,7 +302,7 @@
             </div>
 
             <!-- Display Courses -->
-            <div class="row" style="height:60%; overflow-y: scroll;">
+            <div class="row" style="height:70%; overflow-y: scroll;">
                 <h3>Search Results</h3>
                 <table class="courses" style="overflow-y: scroll;">
                     <tr>
@@ -305,43 +317,44 @@
                         <td> {{ item.course_id }} </td>
                         <td> {{ item.title }}</td>
                         <td style="text-align: center;">
-                            <form action="{{ request.path }}?wish_course_id={{item.course_id}}&wish_subject={{item.subject}}" method="post" style="">{% csrf_token %}
-                                <input type="submit" value="+"></form>
-                            </form>
+                            <input type="submit" value="+"></form>
+                            <!-- <form action="" method="post" style="">{% csrf_token %}
+                                            <input type="submit" value="+"></form>
+                                        </form> -->
                         </td>
                     </tr>
                     {% endfor %}
                 </table>
-            </div>
-
-            <div class = "row" style = "height:15%; overflow-y:scroll;">
-                <!-- description will go here -->
             </div>
         </div>
         <!-- Right side of page -->
         <div class="col-md-8" style="height:100%; background: white">
             <div class="row" style="height:50%; overflow-y: scroll;">
                 <div class="row" style="height: 7%;background-color: white">
-                    <center><div class="btn-group">
-                        <button>Previous Schedule</button>
-                        <button>Next Schedule</button>
-                    </div></center>
-                        <p><center>Schedule 1 of #</center></p>
+                    <center>
+                        <div class="btn-group">
+                            <button>Previous Schedule</button>
+                            <button>Next Schedule</button>
+                        </div>
+                    </center>
+                    <p>
+                    <center>Schedule 1 of #</center>
+                    </p>
 
                 </div>
-                <div class = "row" style ="height:43%;">
+                <div class="row" style="height:43%;">
                     <div class="col-md-12">
                         <div id='calendar'></div>
                     </div>
                 </div>
             </div>
-        <!-- Wish List -->
-        <div class="row">
-          <div class="col-lg-6" style="height:50%; background: white; overflow-y: scroll;">
-            <h4>Wish List Filters</h4>
-            <div id="wishlistfilter">
-              <h4>Earliest Time</h4>
-              <p><select name="time" style="width:200px;font-size: 16px" id="times">
+            <!-- Wish List -->
+            <div class="row">
+                <div class="col-lg-6" style="height:50%; background: white; overflow-y: scroll;">
+                    <h4>Wish List Filters</h4>
+                    <div id="wishlistfilter">
+                        <h4>Earliest Time</h4>
+                        <p><select name="time" style="width:200px;font-size: 16px" id="times">
                             <option value="0">None</option>
                             <option value="0800" >8:00</option>
                             <option value="0830" >8:30</option>
@@ -363,11 +376,11 @@
                             <option value="1630" >4:30</option>
                             <option value="1700" >5:00</option>
                         </select>
-              </p>
-            </div>
+                        </p>
+                    </div>
 
-            <h4>Latest Time</h4>
-            <select name="ltime" style="width:200px;font-size: 16px" id="ltimes">
+                    <h4>Latest Time</h4>
+                    <select name="ltime" style="width:200px;font-size: 16px" id="ltimes">
                         <option value="0">None</option>
                         <option value="0800" >8:00</option>
                         <option value="0830" >8:30</option>
@@ -390,19 +403,19 @@
                         <option value="1700" >5:00</option>
                     </select>
 
-            <h4>Days Off</h4>
-            <form>
-              <input type="checkbox" name="day" value="M"> Monday
-              <input type="checkbox" name="day" value="T"> Tuesday
-              <input type="checkbox" name="day" value="W"> Wednesday
-              <input type="checkbox" name="day" value="R"> Thursday
-              <input type="checkbox" name="day" value="F"> Friday
+                    <h4>Days Off</h4>
+                    <form>
+                        <input type="checkbox" name="day" value="M"> Monday
+                        <input type="checkbox" name="day" value="T"> Tuesday
+                        <input type="checkbox" name="day" value="W"> Wednesday
+                        <input type="checkbox" name="day" value="R"> Thursday
+                        <input type="checkbox" name="day" value="F"> Friday
 
-            </form>
+                    </form>
 
 
-            <h4>Attribute(hit command or shift to select multiple)</h4>
-            <p><select multiple name="attr2" style="width:200px;font-size: 16px" id="attr2">
+                    <h4>Attribute(hit command or shift to select multiple)</h4>
+                    <p><select multiple name="attr2" style="width:200px;font-size: 16px" id="attr2">
                         <option value="0">ALL</option>
                         <option value="ACTV" >Active Learning -- ACTV</option>
                         <option value="FEE" >Additional Fee Required -- FEE</option>
@@ -482,8 +495,8 @@
                         <option value="UNSM" >University Seminar Req -- UNSM</option>
                     </select>
 
-              <h4>Credit Hours</h4>
-              <select name="credit" style="width:200px;font-size: 16px" id="credits">
+                    <h4>Credit Hours</h4>
+                    <select name="credit" style="width:200px;font-size: 16px" id="credits">
                         <option value="1" >1</option>
                         <option value="2" >2</option>
                         <option value="3" >3</option>
@@ -506,14 +519,14 @@
                         <option value="20" >20</option>
                     </select>
 
-          </div>
-          <div class="col-lg-6" style="height:50%;background: linear-gradient(to right, #ffffcc -100%, #cc99ff 100%);">
-            <p>wish list</p>
-          </div>
+                </div>
+                <div class="col-lg-6" style="height:50%;background: linear-gradient(to right, #ffffcc -100%, #cc99ff 100%);">
+                    <p>wish list</p>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
+</div>
 
 </body>
 
