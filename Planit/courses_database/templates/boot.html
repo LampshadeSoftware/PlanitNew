@@ -86,7 +86,7 @@
         <!-- Left side of page -->
         <div class="col-md-4" style="height:100%;background: #F2F4F6;">
             <!-- Search Courses -->
-            <div class="row" style="height:30%; overflow-y: scroll;">
+            <div class="row" style="height:25%; overflow-y: scroll;">
                 <h1 id="title"><strong>Planit!</strong></h1>
                 <div id ="content">
                     <div id="h1" style="padding:5px">
@@ -290,7 +290,7 @@
             </div>
 
             <!-- Display Courses -->
-            <div class="row" style="height:70%; overflow-y: scroll;">
+            <div class="row" style="height:60%; overflow-y: scroll;">
                 <h3>Search Results</h3>
                 <table class="courses" style="overflow-y: scroll;">
                     <tr>
@@ -305,14 +305,17 @@
                         <td> {{ item.course_id }} </td>
                         <td> {{ item.title }}</td>
                         <td style="text-align: center;">
-                            <input type="submit" value="+"></form>
-                            <!-- <form action="" method="post" style="">{% csrf_token %}
+                            <form action="{{ request.path }}?wish_course_id={{item.course_id}}&wish_subject={{item.subject}}" method="post" style="">{% csrf_token %}
                                 <input type="submit" value="+"></form>
-                            </form> -->
+                            </form>
                         </td>
                     </tr>
                     {% endfor %}
                 </table>
+            </div>
+
+            <div class = "row" style = "height:15%; overflow-y:scroll;">
+                <!-- description will go here -->
             </div>
         </div>
         <!-- Right side of page -->
