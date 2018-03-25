@@ -339,11 +339,21 @@
           <div class="row" style="height: 7%;background-color: white">
             <center>
                 <form action="#" method="get">
-                    <select name = schedulenum>
+                    <select name = schedulenum id="scheduleNum">
                     {% for index_val in indices %}
                         <option value = "{{index_val}}" >Schedule: {{ index_val }}</option>
                     {% endfor %}
                     </select>
+                    <script>
+                        var index = "{{ index }}";
+                        var mySelect = document.getElementById("scheduleNum");
+                        for (var i, j = 0; i = mySelect.options[j]; j++) {
+                            if(i.value == index) {
+                                mySelect.selectedIndex = j;
+                                break;
+                            }
+                        }
+                    </script>
                     <input type="submit">
                 </form>
             </center>
