@@ -302,7 +302,7 @@
             </div>
 
             <!-- Display Courses -->
-            <div class="row" style="height:70%; overflow-y: scroll;">
+            <div class="row" style="height:60%; overflow-y: scroll;">
                 <h3>Search Results</h3>
                 <table class="courses" style="overflow-y: scroll;">
                     <tr>
@@ -317,10 +317,9 @@
                         <td> {{ item.course_id }} </td>
                         <td> {{ item.title }}</td>
                         <td style="text-align: center;">
-                            <input type="submit" value="+"></form>
-                            <!-- <form action="" method="post" style="">{% csrf_token %}
-                                            <input type="submit" value="+"></form>
-                                        </form> -->
+                            <form action="{{ request.path }}?wish_course_id={{item.course_id}}&wish_subject={{item.subject}}" method="post" style="">{% csrf_token %}
+                                <input type="submit" value="+"></form>
+                            </form>
                         </td>
                     </tr>
                     {% endfor %}
