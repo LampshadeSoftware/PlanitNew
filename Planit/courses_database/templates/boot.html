@@ -31,13 +31,11 @@
         contentHeight: 600,
         allDaySlot: false,
 
-        events: [
-          {
-            title: 'CSCI 312 01',
-            start: '2018-01-03T13:30:00',
-            allDay: false // will make the time show
-          }
-        ]
+        events: [{
+          title: 'CSCI 312 01',
+          start: '2018-01-03T13:30:00',
+          allDay: false // will make the time show
+        }]
 
 
       });
@@ -355,7 +353,7 @@
             <h4>Wish List Filters</h4>
             <div id="wishlistfilter">
               <h4>Earliest Time</h4>
-              <p><select name="time" style="width:200px;font-size: 16px" id="times">
+              <select name="time" style="width:200px;font-size: 16px" id="times">
                             <option value="0">None</option>
                             <option value="0800" >8:00</option>
                             <option value="0830" >8:30</option>
@@ -377,11 +375,9 @@
                             <option value="1630" >4:30</option>
                             <option value="1700" >5:00</option>
                         </select>
-              </p>
-            </div>
 
-            <h4>Latest Time</h4>
-            <select name="ltime" style="width:200px;font-size: 16px" id="ltimes">
+              <h4>Latest Time</h4>
+              <select name="ltime" style="width:200px;font-size: 16px" id="ltimes">
                         <option value="0">None</option>
                         <option value="0800" >8:00</option>
                         <option value="0830" >8:30</option>
@@ -403,20 +399,18 @@
                         <option value="1630" >4:30</option>
                         <option value="1700" >5:00</option>
                     </select>
+              <h4>Days Off</h4>
+              <form>
+                <input type="checkbox" name="day" value="M"> Monday
+                <input type="checkbox" name="day" value="T"> Tuesday
+                <input type="checkbox" name="day" value="W"> Wednesday
+                <input type="checkbox" name="day" value="R"> Thursday
+                <input type="checkbox" name="day" value="F"> Friday
 
-            <h4>Days Off</h4>
-            <form>
-              <input type="checkbox" name="day" value="M"> Monday
-              <input type="checkbox" name="day" value="T"> Tuesday
-              <input type="checkbox" name="day" value="W"> Wednesday
-              <input type="checkbox" name="day" value="R"> Thursday
-              <input type="checkbox" name="day" value="F"> Friday
+              </form>
 
-            </form>
-
-
-            <h4>Attribute(hit command or shift to select multiple)</h4>
-            <p><select multiple name="attr2" style="width:200px;font-size: 16px" id="attr2">
+              <h4>Attributes(hit command or shift to select multiple)</h4>
+              <select multiple name="attr2" style="width:200px;font-size: 16px" id="attr2">
                         <option value="0">ALL</option>
                         <option value="ACTV" >Active Learning -- ACTV</option>
                         <option value="FEE" >Additional Fee Required -- FEE</option>
@@ -496,30 +490,55 @@
                         <option value="UNSM" >University Seminar Req -- UNSM</option>
                     </select>
 
-              <h4>Credit Hours</h4>
-              <select name="credit" style="width:200px;font-size: 16px" id="credits">
-                        <option value="1" >1</option>
-                        <option value="2" >2</option>
-                        <option value="3" >3</option>
-                        <option value="4" >4</option>
-                        <option value="5" >5</option>
-                        <option value="6" >6</option>
-                        <option value="7" >7</option>
-                        <option value="8" >8</option>
-                        <option value="9" >9</option>
-                        <option value="10" >10</option>
-                        <option value="11" >11</option>
-                        <option value="12" >12</option>
-                        <option value="13" >13</option>
-                        <option value="14" >14</option>
-                        <option value="15" >15</option>
-                        <option value="16" >16</option>
-                        <option value="17" >17</option>
-                        <option value="18" >18</option>
-                        <option value="19" >19</option>
-                        <option value="20" >20</option>
-                    </select>
+              <h4>Minimum Credit Hours</h4>
+              <select name="min_credits" style="width:200px;font-size: 16px" id="min_credits">
+                            <option value="1" >1</option>
+                            <option value="2" >2</option>
+                            <option value="3" >3</option>
+                            <option value="4" >4</option>
+                            <option value="5" >5</option>
+                            <option value="6" >6</option>
+                            <option value="7" >7</option>
+                            <option value="8" >8</option>
+                            <option value="9" >9</option>
+                            <option value="10" >10</option>
+                            <option value="11" >11</option>
+                            <option value="12" >12</option>
+                            <option value="13" >13</option>
+                            <option value="14" >14</option>
+                            <option value="15" >15</option>
+                            <option value="16" >16</option>
+                            <option value="17" >17</option>
+                            <option value="18" >18</option>
+                            <option value="19" >19</option>
+                            <option value="20" >20</option>
+                  </select>
 
+              <h4>Maximum Credit Hours</h4>
+              <select name="max_credits" style="width:200px;font-size: 16px" id="max_credits">
+                                <option value="1" >1</option>
+                                <option value="2" >2</option>
+                                <option value="3" >3</option>
+                                <option value="4" >4</option>
+                                <option value="5" >5</option>
+                                <option value="6" >6</option>
+                                <option value="7" >7</option>
+                                <option value="8" >8</option>
+                                <option value="9" >9</option>
+                                <option value="10" >10</option>
+                                <option value="11" >11</option>
+                                <option value="12" >12</option>
+                                <option value="13" >13</option>
+                                <option value="14" >14</option>
+                                <option value="15" >15</option>
+                                <option value="16" >16</option>
+                                <option value="17" >17</option>
+                                <option value="18" >18</option>
+                                <option value="19" >19</option>
+                                <option value="20" >20</option>
+                </select>
+
+            </div>
           </div>
           <div class="col-lg-6" style="height:50%;background: linear-gradient(to right, #ffffcc -100%, #cc99ff 100%);">
             <p>wish list</p>
