@@ -1,126 +1,138 @@
 <html lang="en">
 
 <head>
-    <title>Planit!</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <title>Planit!</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 
-    <link rel='stylesheet' href='static/fullcalendar/fullcalendar.css' />
-    <script src='static/fullcalendar/lib/jquery.min.js'></script>
-    <script src='static/fullcalendar/lib/moment.min.js'></script>
-    <script src='static/fullcalendar/fullcalendar.js'></script>
-    <script type = 'text/javascript'>
-        $(document).ready(function() {
+  <link rel='stylesheet' href='static/fullcalendar/fullcalendar.css' />
+  <script src='static/fullcalendar/lib/jquery.min.js'></script>
+  <script src='static/fullcalendar/lib/moment.min.js'></script>
+  <script src='static/fullcalendar/fullcalendar.js'></script>
+  <script type='text/javascript'>
+    $(document).ready(function() {
 
-          $('#calendar').fullCalendar({
-            weekends: false,
-            defaultView: 'agendaWeek',
-            columnHeaderFormat: 'dddd',
-            minTime: "08:00:00",
-            maxTime: "23:59:00",
-            header:
-           {
-             left:   '',
-             center: '',
-             right:  '',
-           },
-
-            contentHeight: 600,
-            allDaySlot: false,
-
-            events: 'https://fullcalendar.io/demo-events.json?with-resources=2'
+      $('#calendar').fullCalendar({
+        defaultDate: moment('2018-01-01'),
+        weekends: false,
+        defaultView: 'agendaWeek',
+        columnHeaderFormat: 'dddd',
+        minTime: "08:00:00",
+        maxTime: "23:59:00",
+        header: {
+          left: '',
+          center: '',
+          right: '',
+        },
 
 
-          });
+        contentHeight: 600,
+        allDaySlot: false,
 
-        });
-    </script>
+        events: [
+          {
+            title: 'event3',
+            start: '2018-01-03T12:30:00',
+            allDay: false // will make the time show
+          }
+        ]
 
-    <style>
+
+      });
+
+    });
+  </script>
+
+  <style>
     .courses {
-        font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
-        border-collapse: collapse;
-        width: 100%;
+      font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+      border-collapse: collapse;
+      width: 100%;
     }
 
-    .courses td, #course th {
-        border: 1px solid #ddd;
-        padding: 8px;
+    .courses td,
+    #course th {
+      border: 1px solid #ddd;
+      padding: 8px;
     }
 
-    .courses tr:nth-child(even){background-color: #fff;}
+    .courses tr:nth-child(even) {
+      background-color: #fff;
+    }
 
-    .courses tr:hover {background-color: #ddd;}
+    .courses tr:hover {
+      background-color: #ddd;
+    }
 
     .courses th {
-        padding-top: 12px;
-        padding-bottom: 12px;
-        padding-left: 12px;
-        text-align: left;
-        background-color: #505A78;
-        color: white;
+      padding-top: 12px;
+      padding-bottom: 12px;
+      padding-left: 12px;
+      text-align: left;
+      background-color: #505A78;
+      color: white;
     }
 
     .row {
-        padding-left: 15;
-        padding-right: 15;
+      padding-left: 15;
+      padding-right: 15;
     }
 
     .searchTerms td {
-        padding-left: 5px;
+      padding-left: 5px;
     }
 
     #title {
-        color: #505A78;
-        font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+      color: #505A78;
+      font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
     }
-    </style>
+  </style>
 
 </head>
 
 <body>
 
-<div class= "container-fluid">
+  <div class="container-fluid">
     <div class="row" style="padding-left: 0; padding-right: 0;">
-        <!-- Left side of page -->
-        <div class="col-md-4" style="height:100%;background: #F2F4F6;">
-            <!-- Search Courses -->
-            <div class="row" style="height:30%; overflow-y: scroll;">
-                <h1 id="title"><strong>Planit!</strong></h1>
-                <div id ="content">
-                    <div id="h1" style="padding:5px">
-                        <p>Select options for search</p>
-                    </div>
+      <!-- Left side of page -->
+      <div class="col-md-4" style="height:100%;background: #F2F4F6;">
+        <!-- Search Courses -->
+        <div class="row" style="height:30%; overflow-y: scroll;">
+          <h1 id="title"><strong>Planit!</strong></h1>
+          <div id="content">
+            <div id="h1" style="padding:5px">
+              <p>Select options for search</p>
+            </div>
 
-                    <form action="#">
-                        <table class="searchTerms">
-                            <tr>
-                                <td>
-                                    <!-- Term -->
-                                    <div class="searchParam" style="display: inline; text-align: left;">
-                                        <h4>Term</h4>
-                                        <select name="term_code" style="width:200px;font-size: 16px" id="term_code" >
+            <form action="#">
+              <table class="searchTerms">
+                <tr>
+                  <td>
+                    <!-- Term -->
+                    <div class="searchParam" style="display: inline; text-align: left;">
+                      <h4>Term</h4>
+                      <select name="term_code" style="width:200px;font-size: 16px" id="term_code">
                                             <option value="201910" >Fall 2018</option>
                                         </select>
-                                    </div>
-                                </td>
-                                <td>
-                                    <!-- Course ID -->
-                                    <div class="searchParam" style="display: inline; text-align: left;">
-                                        <h4>Course ID</h4>
-                                        <input type="text" name="course_id">
-                                    </div>
-                                </td>
-                            </tr>
-                        </table>
-                        <table class="searchTerms">
-                            <tr>
-                                <td>
-                                    <!-- Subject -->
-                                    <div class="searchParam">
-                                        <h4>Subject</h4>
-                                        <select name="term_subj" style="width:200px;font-size: 16px" id="term_subj" >
+                    </div>
+                  </td>
+                  <td>
+                    <!-- Course ID -->
+                    <div class="searchParam" style="display: inline; text-align: left;">
+                      <h4>Course ID</h4>
+                      <input type="text" name="course_id">
+                    </div>
+                  </td>
+                </tr>
+              </table>
+              <table class="searchTerms">
+                <tr>
+                  <td>
+                    <!-- Subject -->
+                    <div class="searchParam">
+                      <h4>Subject</h4>
+                      <select name="term_subj" style="width:200px;font-size: 16px" id="term_subj">
                                             <option value="0">ALL</option>
                                             <option value="AFST" >Africana Studies</option>
                                             <option value="AMST" >American Studies</option>
@@ -191,13 +203,13 @@
                                             <option value="THEA" >Theatre</option>
                                             <option value="WRIT" >Writing</option>
                                         </select>
-                                    </div>
-                                </td>
-                                <td>
-                                    <!-- Attribute 1 -->
-                                    <div class="searchParam">
-                                        <h4>Attribute</h4>
-                                        <select name="attr" style="width:200px;font-size: 16px" id="attr" >
+                    </div>
+                  </td>
+                  <td>
+                    <!-- Attribute 1 -->
+                    <div class="searchParam">
+                      <h4>Attribute</h4>
+                      <select name="attr" style="width:200px;font-size: 16px" id="attr">
                                             <option value="0">ALL</option>
                                             <option value="ACTV" >Active Learning -- ACTV</option>
                                             <option value="FEE" >Additional Fee Required -- FEE</option>
@@ -276,62 +288,66 @@
                                             <option value="SUST" >Sustainability Courses -- SUST</option>
                                             <option value="UNSM" >University Seminar Req -- UNSM</option>
                                         </select>
-                                    </div>
-                                </td>
-                            </tr>
-                        </table>
-                        <!-- Search Button -->
-                        <br>
-                        <div class = "srchButtonFront">
-                            <input type="submit" value="Search">
-                        </div>
-                    </form>
-                </div>
-            </div>
+                    </div>
+                  </td>
+                </tr>
+              </table>
+              <!-- Search Button -->
+              <br>
+              <div class="srchButtonFront">
+                <input type="submit" value="Search">
+              </div>
+            </form>
+          </div>
+        </div>
 
-            <!-- Display Courses -->
-            <div class="row" style="height:70%; overflow-y: scroll;">
-                <h3>Search Results</h3>
-                <table class="courses" style="overflow-y: scroll;">
-                    <tr>
-                        <th>Subject</th>
-                        <th>Course ID</th>
-                        <th>Course Title</th>
-                        <th>Add to Wish List</th>
-                    </tr>
-                    {% for item in sections %}
-                    <tr>
-                        <td> {{ item.subject }}</td>
-                        <td> {{ item.course_id }} </td>
-                        <td> {{ item.title }}</td>
-                        <td style="text-align: center;">
-                            <input type="submit" value="+"></form>
-                            <!-- <form action="" method="post" style="">{% csrf_token %}
+        <!-- Display Courses -->
+        <div class="row" style="height:70%; overflow-y: scroll;">
+          <h3>Search Results</h3>
+          <table class="courses" style="overflow-y: scroll;">
+            <tr>
+              <th>Subject</th>
+              <th>Course ID</th>
+              <th>Course Title</th>
+              <th>Add to Wish List</th>
+            </tr>
+            {% for item in sections %}
+            <tr>
+              <td> {{ item.subject }}</td>
+              <td> {{ item.course_id }} </td>
+              <td> {{ item.title }}</td>
+              <td style="text-align: center;">
+                <input type="submit" value="+"></form>
+                <!-- <form action="" method="post" style="">{% csrf_token %}
                                 <input type="submit" value="+"></form>
                             </form> -->
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </table>
-            </div>
+              </td>
+            </tr>
+            {% endfor %}
+          </table>
         </div>
-        <!-- Right side of page -->
-        <div class="col-md-8" style="height:100%; background: white">
-            <div class="row" style="height:50%; overflow-y: scroll;">
-                <div class="row" style="height: 7%;background-color: white">
-                    <center><div class="btn-group">
-                        <button>Previous Schedule</button>
-                        <button>Next Schedule</button>
-                    </div></center>
-                        <p><center>Schedule 1 of #</center></p>
+      </div>
+      <!-- Right side of page -->
+      <div class="col-md-8" style="height:100%; background: white">
+        <div class="row" style="height:50%; overflow-y: scroll;">
+          <div class="row" style="height: 7%;background-color: white">
+            <center>
+              <div class="btn-group">
+                <button>Previous Schedule</button>
+                <button>Next Schedule</button>
+              </div>
+            </center>
+            <p>
+              <center>Schedule 1 of #</center>
+            </p>
 
-                </div>
-                <div class = "row" style ="height:43%;">
-                    <div class="col-md-12">
-                        <div id='calendar'></div>
-                    </div>
-                </div>
+          </div>
+          <div class="row" style="height:43%;">
+            <div class="col-md-12">
+              <div id='calendar'></div>
             </div>
+          </div>
+        </div>
         <!-- Wish List -->
         <div class="row">
           <div class="col-lg-6" style="height:50%; background: white; overflow-y: scroll;">
