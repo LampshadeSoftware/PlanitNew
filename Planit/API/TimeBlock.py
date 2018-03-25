@@ -65,9 +65,16 @@ class TimeBlock:
 
 	def get_as_dict(self):
 		out = dict()
-		out['day'] = self.get_day_index()
-		out['start'] = TimeBlock.get_readable_time(self._start)
-		out['end'] = TimeBlock.get_readable_time(self._end)
+		out['day'] = self.get_day_index() + 1
+
+		readable_start = TimeBlock.get_readable_time(self._start)
+		out['start_hour'] = readable_start[:2]
+		out['start_minute'] = readable_start[2:]
+
+		readable_end = TimeBlock.get_readable_time(self._end)
+		out['end_hour'] = readable_end[:2]
+		out['end_minute'] = readable_end[2:]
+
 		return out
 
 	def overlaps(self, other_block):

@@ -10,7 +10,7 @@ last_get = None
 def home(request):
 	global last_get
 
-	schedule = Interface.compute_schedules()[0]
+	schedule = Interface.compute_schedules()[3]
 
 	if request.POST:
 		wish_subject = request.GET.get('wish_subject', None)
