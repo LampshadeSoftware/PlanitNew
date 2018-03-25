@@ -2,12 +2,28 @@ from django.shortcuts import render
 from .models import Section, WishList
 
 
+last_get = None
+
+
 # Create your views here.
 def home(request):
+	global last_get
+
 	if request.POST:
-		return render(request, 'boot.html', {'sections': {}})
+		wish_subject = request.GET.get('wish_subject', None)
+		wish_course_id = request.GET.get('wish_course_id', None)
+		new_wish_item = WishList()
+		setattr(new_wish_item, "course_id", wish_course_id)
+		setattr(new_wish_item, "subject", wish_subject)
+		new_wish_item.save()
+		request = last_get
+
+	else:
+		last_get = request
 
 	sections = {}
+	wishlist = {}
+
 	subject = request.GET.get('term_subj', None)
 	course_id = request.GET.get('course_id', None)
 	if subject:  # if we got a valid GET request
@@ -28,8 +44,7 @@ def home(request):
 			if section.title not in already_added:
 				no_repeats.append({"subject": section.subject, "course_id": section.course_id, "title": section.title})
 			already_added.add(section.title)
+		sections = no_repeats
 
-		# sends the response
-		return render(request, 'boot.html', {'sections': no_repeats})
-	else:
-		return render(request, 'boot.html', sections)
+	# sends the response
+	return render(request, 'boot.html', {'sections': sections})
