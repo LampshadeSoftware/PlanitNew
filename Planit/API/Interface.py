@@ -32,5 +32,6 @@ def compute_schedules():
 		print(x)
 		print()
 
+	print(user.get_all_schedules_as_dict())
 	return user.get_all_schedules_as_dict()
 

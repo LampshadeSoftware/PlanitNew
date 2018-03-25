@@ -67,11 +67,10 @@ class API_Schedule:
 			class_dict['course_id'] = section.get_course().get_course_id()
 			class_dict['section_num'] = section.get_section_number()
 
-			class_dict['times'] = dict()
-			k = 0
+			class_dict['times'] = []
+
 			for block in section.get_time_blocks():
-				class_dict['times'][k] = block.get_as_dict()
-				k += 1
+				class_dict['times'].append(block.get_as_dict())
 
 			out.append(class_dict)
 
