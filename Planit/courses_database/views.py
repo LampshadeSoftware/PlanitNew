@@ -10,7 +10,7 @@ last_get = None
 def home(request):
 	global last_get
 
-	schedules = {}
+	schedules = [{"val": 3}, {"val": 5}]
 
 	if request.POST:
 		wish_subject = request.GET.get('wish_subject', None)
@@ -50,4 +50,4 @@ def home(request):
 		sections = no_repeats
 
 	# sends the response
-	return render(request, 'boot.html', {'sections': sections, "schedules": schedules, "num_schedules": len(schedules.keys())})
+	return render(request, 'boot.html', {'sections': sections, "schedules": schedules, "num_schedules": 0})
