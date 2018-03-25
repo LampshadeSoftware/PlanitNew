@@ -10,17 +10,6 @@ last_get = None
 def home(request):
 	global last_get
 
-	index = 1
-	if request.GET:
-		index = request.GET.get("schedulenum", 1)
-
-	schedules = Interface.compute_schedules()
-	indices = [i+1 for i in range(len(schedules))]
-	schedule = []
-	try:
-		schedule = schedules[int(index)-1]
-	except:
-		pass
 
 	if request.POST:
 		wish_subject = request.GET.get('wish_subject', None)
@@ -57,6 +46,18 @@ def home(request):
 				no_repeats.append({"subject": section.subject, "course_id": section.course_id, "title": section.title})
 			already_added.add(section.title)
 		sections = no_repeats
+
+	index = 1
+	if request.GET:
+		index = request.GET.get("schedulenum", 1)
+
+	schedules = Interface.compute_schedules()
+	indices = [i + 1 for i in range(len(schedules))]
+	schedule = []
+	try:
+		schedule = schedules[int(index) - 1]
+	except:
+		pass
 
 	# sends the response
 	return render(request, 'boot.html', {'sections': sections, "schedule": schedule, "num_schedules": len(schedules), "wishlist": wishlist, "indices": indices, "index": index})
