@@ -16,7 +16,7 @@ class API_User:
 		self._filters['earliest_time'] = None
 		self._filters['latest_time'] = None
 
-		self._filters['credit_min'] = 12
+		self._filters['credit_min'] = 5
 		self._filters['credit_max'] = 18
 
 		self._filters['forbidden_days'] = set()

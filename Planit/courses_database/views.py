@@ -10,7 +10,9 @@ last_get = None
 def home(request):
 	global last_get
 
-	index = request.GET.get("schedulenum", 1)
+	index = 1
+	if request.GET:
+		index = request.GET.get("schedulenum", 1)
 
 	schedules = Interface.compute_schedules()
 	indices = [i+1 for i in range(len(schedules))]
