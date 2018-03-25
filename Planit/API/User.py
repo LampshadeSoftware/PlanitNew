@@ -86,11 +86,11 @@ class API_User:
 		return want_list
 
 	def get_all_schedules_as_dict(self):
-		out = dict()
-		i = 1
+		out = []
+
 		for sched in self.get_all_schedules():
-			out[i] = sched.convert_to_dict()
-			i += 1
+			out.append(sched.convert_to_dict())
+
 
 		return out
 
