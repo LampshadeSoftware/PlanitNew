@@ -61,7 +61,7 @@ class TimeBlock:
 		return self._day_index
 
 	def get_as_list(self):
-		return (self.get_day_char(), self._start, self._end)
+		return [self.get_day_char(), self._start, self._end]
 
 	def get_as_dict(self):
 		out = dict()

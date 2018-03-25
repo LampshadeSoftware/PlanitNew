@@ -33,13 +33,16 @@
         contentHeight: 600,
         allDaySlot: false,
 
-        events: [{
-          title: 'Here:' + "{% for schedule in schedules %} {{ schedule.val }} {% endfor %}",
-          start: '2018-01-03T13:30',
-          end:  '2018-01-03T20:50',
-          allDay: false // will make the time show
-        }]
-
+        events: [
+            {% for class in schedule %}
+                {
+                    title: "{{class.subject}}" + " " + "{{class.course_id}}" + " " + "{{class.section_num}}" ,
+                    start: '2018-01-T13:30',
+                    end:  '2018-01-03T20:50',
+                    allDay: false // will make the time show
+                },
+            {% endfor %}
+            ]
 
       });
 

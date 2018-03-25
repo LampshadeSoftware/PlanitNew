@@ -10,7 +10,7 @@ last_get = None
 def home(request):
 	global last_get
 
-	schedules = [{"val": 3}, {"val": 5}]
+	schedule = Interface.compute_schedules()[0]
 
 	if request.POST:
 		wish_subject = request.GET.get('wish_subject', None)
@@ -21,7 +21,7 @@ def home(request):
 		new_wish_item.save()
 		request = last_get
 
-		schedules = Interface.compute_schedules()
+		schedule = Interface.compute_schedules()[0]
 	else:
 		last_get = request
 
@@ -50,4 +50,4 @@ def home(request):
 		sections = no_repeats
 
 	# sends the response
-	return render(request, 'boot.html', {'sections': sections, "schedules": schedules, "num_schedules": 0})
+	return render(request, 'boot.html', {'sections': sections, "schedule": schedule, "num_schedules": 0})

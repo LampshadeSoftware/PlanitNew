@@ -57,24 +57,22 @@ class API_Schedule:
 		return out
 
 	def convert_to_dict(self):
-		out = dict()
+		out = []
 
 		for section in self._sections:
 			crn = section.get_crn()
-			out[crn] = dict()
+			class_dict = dict()
 
-			out[crn]['subject'] = section.get_course().get_subject()
-			out[crn]['course_id'] = section.get_course().get_course_id()
-			out[crn]['section_num'] = section.get_section_number()
+			class_dict['subject'] = section.get_course().get_subject()
+			class_dict['course_id'] = section.get_course().get_course_id()
+			class_dict['section_num'] = section.get_section_number()
 
-
-			out[crn]['times'] = dict()
+			class_dict['times'] = dict()
 			k = 0
 			for block in section.get_time_blocks():
-				out[crn]['times'][k] = block.get_as_dict()
+				class_dict['times'][k] = block.get_as_dict()
 				k += 1
 
-		out['total_credits'] = self._num_credits
-
+			out.append(class_dict)
 
 		return out
