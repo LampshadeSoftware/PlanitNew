@@ -5,8 +5,29 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+    <link rel='stylesheet' href='static/fullcalendar/fullcalendar.css' />
+    <script src='static/fullcalendar/lib/jquery.min.js'></script>
+    <script src='static/fullcalendar/lib/moment.min.js'></script>
+    <script src='static/fullcalendar/fullcalendar.js'></script>
+    <script type = 'text/javascript'>
+        $(document).ready(function() {
+
+          $('#calendar').fullCalendar({
+            weekends: false,
+            defaultView: 'agendaWeek',
+            columnHeaderFormat: 'dddd',
+
+            events: 'https://fullcalendar.io/demo-events.json?with-resources=2'
+
+
+
+
+
+          });
+
+        });
+    </script>
 
     <style>
     .courses {
@@ -290,360 +311,10 @@
         <div class="col-md-8" style="height:100%; background: white">
             <!-- Calendar -->
             <div class="row" style="height:50%; overflow-y: scroll;">
-            <div class="col-md-12">
-                <p>Calendar</p>
-
-                <TABLE  CLASS="plaintable" SUMMARY="This layout table is used to present the goto previous and next week anchors along with the current week information." WIDTH="80%">
-
-                    <TR>
-                        <TD COLSPAN="1" CLASS="pldefault"><A HREF="/pls/PROD/bwskfshd.P_CrseSchd?start_date_in=03/12/2018" onMouseOver="window.status='Previous Week';  return true" onFocus="window.status='Previous Week';  return true" onMouseOut="window.status='';  return true" onBlur="window.status='';  return true">Previous Week</A></TD>
-                        <TD COLSPAN="4" CLASS="pldead">&nbsp;</TD>
-                        <TD COLSPAN="3" CLASS="pldefault"><SPAN class="fieldlargetext">Week of April 20,420 CE</SPAN><SPAN class="fieldmediumtext"> (83 of 88)</SPAN></TD>
-                        <TD COLSPAN="1" CLASS="pldead">&nbsp;</TD>
-                        <TD COLSPAN="1" CLASS="pldefault"><p class="rightaligntext"><A HREF="/pls/PROD/bwskfshd.P_CrseSchd?start_date_in=03/26/2018" onMouseOver="window.status='Next Week';  return true" onFocus="window.status='Next Week';  return true" onMouseOut="window.status='';  return true" onBlur="window.status='';  return true">Next Week</A></p></TD>
-                    </TR>
-                </TABLE>
-                <TABLE  CLASS="datadisplaytable" SUMMARY="This layout table is used to present the weekly course schedule." WIDTH="80%">
-                    <TR>
-                        <TH CLASS="ddheader" scope="col" >&nbsp;</TH>
-                        <TH CLASS="ddheader" scope="col" >&nbsp;&nbsp;&nbsp;Monday&nbsp;&nbsp;&nbsp;</TH>
-                        <TH CLASS="ddheader" scope="col" >&nbsp;&nbsp;&nbsp;Tuesday&nbsp;&nbsp;&nbsp;</TH>
-                        <TH CLASS="ddheader" scope="col" >&nbsp;&nbsp;&nbsp;Wednesday&nbsp;&nbsp;&nbsp;</TH>
-                        <TH CLASS="ddheader" scope="col" >&nbsp;&nbsp;&nbsp;Thursday&nbsp;&nbsp;&nbsp;</TH>
-                        <TH CLASS="ddheader" scope="col" >&nbsp;&nbsp;&nbsp;Friday&nbsp;&nbsp;&nbsp;</TH>
-                        <TH CLASS="ddheader" scope="col" >&nbsp;&nbsp;&nbsp;Saturday&nbsp;&nbsp;&nbsp;</TH>
-                        <TH CLASS="ddheader" scope="col" >&nbsp;&nbsp;&nbsp;Sunday&nbsp;&nbsp;&nbsp;</TH>
-                    </TR>
-                    <TR>
-                        <TH ROWSPAN="4" CLASS="ddlabel" scope="row" >11am</TH>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                    </TR>
-                    <TR>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                    </TR>
-                    <TR>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                    </TR>
-                    <TR>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                    </TR>
-                    <TR>
-                        <TH ROWSPAN="4" CLASS="ddlabel" scope="row" >12pm</TH>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                    </TR>
-                    <TR>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                    </TR>
-                    <TR>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                    </TR>
-                    <TR>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                    </TR>
-                    <TR>
-                        <TH ROWSPAN="4" CLASS="ddlabel" scope="row" >1pm</TH>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                    </TR>
-                    <TR>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                    </TR>
-                    <TR>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                    </TR>
-                    <TR>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                    </TR>
-                    <TR>
-                        <TH ROWSPAN="4" CLASS="ddlabel" scope="row" >2pm</TH>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                    </TR>
-                    <TR>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                    </TR>
-                    <TR>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                    </TR>
-                    <TR>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                    </TR>
-                    <TR>
-                        <TH ROWSPAN="4" CLASS="ddlabel" scope="row" >3pm</TH>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                    </TR>
-                    <TR>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                    </TR>
-                    <TR>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                    </TR>
-                    <TR>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                    </TR>
-                    <TR>
-                        <TH ROWSPAN="4" CLASS="ddlabel" scope="row" >4pm</TH>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                    </TR>
-                    <TR>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                    </TR>
-                    <TR>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                    </TR>
-                    <TR>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                    </TR>
-                    <TR>
-                        <TH ROWSPAN="4" CLASS="ddlabel" scope="row" >5pm</TH>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                    </TR>
-                    <TR>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                    </TR>
-                    <TR>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                    </TR>
-                    <TR>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                    </TR>
-                    <TR>
-                        <TH ROWSPAN="4" CLASS="ddlabel" scope="row" >6pm</TH>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                    </TR>
-                    <TR>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                    </TR>
-                    <TR>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                    </TR>
-                    <TR>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                    </TR>
-                    <TR>
-                        <TH ROWSPAN="4" CLASS="ddlabel" scope="row" >7pm</TH>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                    </TR>
-                    <TR>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                    </TR>
-                    <TR>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                    </TR>
-                    <TR>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                    </TR>
-                    <TR>
-                        <TH ROWSPAN="4" CLASS="ddlabel" scope="row" >8pm</TH>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                    </TR>
-                    <TR>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                    </TR>
-                    <TR>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                    </TR>
-                    <TR>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                        <TD CLASS="dddefault">&nbsp;</TD>
-                    </TR>
-                </TABLE>
-                <BR>
-
-
-            </div>-->
-        </div>
+                <div class="col-md-12">
+                    <div id='calendar'></div>
+                </div>
+            </div>
         <!-- Wish List -->
         <div class="row">
           <div class="col-lg-6" style="height:50%; background: white; overflow-y: scroll;">
