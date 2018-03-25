@@ -10,6 +10,8 @@ last_get = None
 def home(request):
 	global last_get
 
+	schedules = {}
+
 	if request.POST:
 		wish_subject = request.GET.get('wish_subject', None)
 		wish_course_id = request.GET.get('wish_course_id', None)
@@ -19,12 +21,11 @@ def home(request):
 		new_wish_item.save()
 		request = last_get
 
-		print(Interface.compute_schedules())
+		schedules = Interface.compute_schedules()
 	else:
 		last_get = request
 
 	sections = {}
-	wishlist = {}
 
 	subject = request.GET.get('term_subj', None)
 	course_id = request.GET.get('course_id', None)
@@ -49,4 +50,4 @@ def home(request):
 		sections = no_repeats
 
 	# sends the response
-	return render(request, 'boot.html', {'sections': sections})
+	return render(request, 'boot.html', {'sections': sections, "schedules": schedules, "num_schedules": len(schedules.keys())})
