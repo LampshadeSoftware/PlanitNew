@@ -29,6 +29,10 @@ class TimeBlock:
 
 		return time
 
+	@classmethod
+	def get_readable_time(cls, time):
+		return format((time // 60), '02d') + format((time % 60), '02d')
+
 
 	def __init__(self, start_str, end_str, day):
 
@@ -39,8 +43,8 @@ class TimeBlock:
 
 	def __str__(self):
 		out = TimeBlock.DAYS[self._day_index]
-		out += ": " + format((self._start // 60), '02d') + format((self._start % 60), '02d')
-		out += "-" + format((self._end // 60), '02d') + format((self._end % 60), '02d')
+		out += ": " + TimeBlock.get_readable_time(self._start)
+		out += "-" + TimeBlock.get_readable_time(self._end)
 		return out
 
 
@@ -62,8 +66,8 @@ class TimeBlock:
 	def get_as_dict(self):
 		out = dict()
 		out['day'] = self.get_day_index()
-		out['start'] = self._start
-		out['end'] = self._end
+		out['start'] = TimeBlock.get_readable_time(self._start)
+		out['end'] = TimeBlock.get_readable_time(self._end)
 		return out
 
 	def overlaps(self, other_block):

@@ -74,7 +74,7 @@ class API_Schedule:
 				out[crn]['times'][k] = block.get_as_dict()
 				k += 1
 
-			out[crn]['total_credits'] = self._num_credits
+		out['total_credits'] = self._num_credits
 
 
 		return out
