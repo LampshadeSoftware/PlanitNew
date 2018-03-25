@@ -94,44 +94,44 @@
 
   <div class="container-fluid">
     <div class="row" style="padding-left: 0; padding-right: 0;">
-      <!-- Left side of page -->
-      <div class="col-md-4" style="height:100%;background: #F2F4F6;">
-        <!-- Search Courses -->
-        <div class="row" style="height:30%; overflow-y: scroll;">
-          <h1 id="title"><strong>Planit!</strong></h1>
-          <div id="content">
-            <div id="h1" style="padding:5px">
-              <p>Select options for search</p>
-            </div>
+        <!-- Left side of page -->
+        <div class="col-md-4" style="height:100%;background: #F2F4F6;">
+            <!-- Search Courses -->
+            <div class="row" style="height:30%; overflow-y: scroll;">
+                <h1 id="title"><strong>Planit!</strong></h1>
+                <div id="content">
+                    <div id="h1" style="padding:5px">
+                        <p>Select options for search</p>
+                    </div>
 
-            <form action="#">
-              <table class="searchTerms">
-                <tr>
-                  <td>
-                    <!-- Term -->
-                    <div class="searchParam" style="display: inline; text-align: left;">
-                      <h4>Term</h4>
-                      <select name="term_code" style="width:200px;font-size: 16px" id="term_code">
+                    <form action="#">
+                        <table class="searchTerms">
+                            <tr>
+                                <td>
+                                    <!-- Term -->
+                                    <div class="searchParam" style="display: inline; text-align: left;">
+                                        <h4>Term</h4>
+                                        <select name="term_code" style="width:200px;font-size: 16px" id="term_code">
                                             <option value="201910" >Fall 2018</option>
                                         </select>
-                    </div>
-                  </td>
-                  <td>
-                    <!-- Course ID -->
-                    <div class="searchParam" style="display: inline; text-align: left;">
-                      <h4>Course ID</h4>
-                      <input type="text" name="course_id">
-                    </div>
-                  </td>
-                </tr>
-              </table>
-              <table class="searchTerms">
-                <tr>
-                  <td>
-                    <!-- Subject -->
-                    <div class="searchParam">
-                      <h4>Subject</h4>
-                      <select name="term_subj" style="width:200px;font-size: 16px" id="term_subj">
+                                    </div>
+                                </td>
+                                <td>
+                                    <!-- Course ID -->
+                                    <div class="searchParam" style="display: inline; text-align: left;">
+                                        <h4>Course ID</h4>
+                                        <input type="text" name="course_id">
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                        <table class="searchTerms">
+                            <tr>
+                                <td>
+                                    <!-- Subject -->
+                                    <div class="searchParam">
+                                        <h4>Subject</h4>
+                                        <select name="term_subj" style="width:200px;font-size: 16px" id="term_subj">
                                             <option value="0">ALL</option>
                                             <option value="AFST" >Africana Studies</option>
                                             <option value="AMST" >American Studies</option>
@@ -202,13 +202,13 @@
                                             <option value="THEA" >Theatre</option>
                                             <option value="WRIT" >Writing</option>
                                         </select>
-                    </div>
-                  </td>
-                  <td>
-                    <!-- Attribute 1 -->
-                    <div class="searchParam">
-                      <h4>Attribute</h4>
-                      <select name="attr" style="width:200px;font-size: 16px" id="attr">
+                                    </div>
+                                </td>
+                                <td>
+                                    <!-- Attribute 1 -->
+                                    <div class="searchParam">
+                                        <h4>Attribute</h4>
+                                        <select name="attr" style="width:200px;font-size: 16px" id="attr">
                                             <option value="0">ALL</option>
                                             <option value="ACTV" >Active Learning -- ACTV</option>
                                             <option value="FEE" >Additional Fee Required -- FEE</option>
@@ -287,45 +287,44 @@
                                             <option value="SUST" >Sustainability Courses -- SUST</option>
                                             <option value="UNSM" >University Seminar Req -- UNSM</option>
                                         </select>
-                    </div>
-                  </td>
-                </tr>
-              </table>
-              <!-- Search Button -->
-              <br>
-              <div class="srchButtonFront">
-                <input type="submit" value="Search">
-              </div>
-            </form>
-          </div>
-        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                        <!-- Search Button -->
+                        <br>
+                        <div class="srchButtonFront">
+                            <input type="submit" value="Search">
+                        </div>
+                    </form>
+                </div>
+            </div>
 
-        <!-- Display Courses -->
-        <div class="row" style="height:70%; overflow-y: scroll;">
-          <h3>Search Results</h3>
-          <table class="courses" style="overflow-y: scroll;">
-            <tr>
-              <th>Subject</th>
-              <th>Course ID</th>
-              <th>Course Title</th>
-              <th>Add to Wish List</th>
-            </tr>
-            {% for item in sections %}
-            <tr>
-              <td> {{ item.subject }}</td>
-              <td> {{ item.course_id }} </td>
-              <td> {{ item.title }}</td>
-              <td style="text-align: center;">
-                <input type="submit" value="+"></form>
-                <!-- <form action="" method="post" style="">{% csrf_token %}
+            <!-- Display Courses -->
+            <div class="row" style="height:60%; overflow-y: scroll;">
+                <h3>Search Results</h3>
+                <table class="courses" style="overflow-y: scroll;">
+                    <tr>
+                        <th>Subject</th>
+                        <th>Course ID</th>
+                        <th>Course Title</th>
+                        <th>Add to Wish List</th>
+                    </tr>
+                    {% for item in sections %}
+                    <tr>
+                        <td> {{ item.subject }}</td>
+                        <td> {{ item.course_id }} </td>
+                        <td> {{ item.title }}</td>
+                        <td style="text-align: center;">
+                            <form action="{{ request.path }}?wish_course_id={{item.course_id}}&wish_subject={{item.subject}}" method="post" style="">{% csrf_token %}
                                 <input type="submit" value="+"></form>
-                            </form> -->
-              </td>
-            </tr>
-            {% endfor %}
-          </table>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
         </div>
-      </div>
       <!-- Right side of page -->
       <div class="col-md-8" style="height:100%; background: white">
         <div class="row" style="height:50%; overflow-y: scroll;">
