@@ -12,8 +12,8 @@ django.setup()
 # your imports, e.g. Django models
 from courses_database.models import Section
 
-from Planit.API.Section import *
-from Planit.API.TimeBlock import *
+from API.Section import *
+from API.TimeBlock import *
 
 class API_Course:
 

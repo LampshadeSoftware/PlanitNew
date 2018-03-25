@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from .models import Section, WishList
 
+import API.Interface as Interface
 
 last_get = None
 
@@ -18,6 +19,7 @@ def home(request):
 		new_wish_item.save()
 		request = last_get
 
+		print(Interface.compute_schedules())
 	else:
 		last_get = request
 

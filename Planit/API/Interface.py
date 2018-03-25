@@ -1,4 +1,5 @@
 
+
 import os
 import sys
 
@@ -10,13 +11,13 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "Planit.Planit.settings")
 
 django.setup()
 
-from Planit.API.User import *
+from API.User import *
 
 # your imports, e.g. Django models
 from courses_database.models import WishList
 
-from Planit.API.Section import *
-from Planit.API.TimeBlock import *
+from API.Section import *
+from API.TimeBlock import *
 
 def compute_schedules():
 	user = API_User()

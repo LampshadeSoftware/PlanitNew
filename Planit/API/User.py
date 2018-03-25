@@ -1,6 +1,6 @@
-from Planit.API.Course import *
-from Planit.API.TimeBlock import *
-from Planit.API.Schedule import *
+from API.Course import *
+from API.TimeBlock import *
+from API.Schedule import *
 
 
 class API_User:

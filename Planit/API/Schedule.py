@@ -1,4 +1,4 @@
-from Planit.API.TimeBlock import *
+from API.TimeBlock import *
 
 class API_Schedule:
 
