@@ -10,8 +10,14 @@ def home(request):
 	global last_get
 
 	if request.POST:
-		print(request)
+		wish_subject = request.GET.get('wish_subject', None)
+		wish_course_id = request.GET.get('wish_course_id', None)
+		new_wish_item = WishList()
+		setattr(new_wish_item, "course_id", wish_course_id)
+		setattr(new_wish_item, "subject", wish_subject)
+		new_wish_item.save()
 		request = last_get
+
 	else:
 		last_get = request
 
