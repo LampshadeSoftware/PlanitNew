@@ -338,13 +338,17 @@
         <div class="row" style="height:50%; overflow-y: scroll;">
           <div class="row" style="height: 7%;background-color: white">
             <center>
-              <div class="btn-group">
-                <button>Previous Schedule</button>
-                <button>Next Schedule</button>
-              </div>
+                <form action="#" method="get">
+                    <select name = schedulenum>
+                    {% for index in indices %}
+                            <option value = "{{index}}" >Schedule: {{ index }}</option>
+                    {% endfor %}
+                    </select>
+                    <input type="submit">
+                </form>
             </center>
             <p>
-              <center>Schedule 1 of {{ num_schedules }}</center>
+              <center>Schedule {{ index }} of {{ num_schedules }} </center>
             </p>
 
           </div>
@@ -357,7 +361,7 @@
         <!-- Wish List -->
         <div class="row">
           <div class="col-lg-6" style="height:50%; background: white; overflow-y: scroll;">
-            <h4>Wish List Filters</h4>
+            <h2>Wish List Filters</h2>
             <div id="wishlistfilter">
               <h4>Earliest Time</h4>
               <select name="time" style="width:200px;font-size: 16px" id="times">
@@ -510,7 +514,7 @@
                             <option value="9" >9</option>
                             <option value="10" >10</option>
                             <option value="11" >11</option>
-                            <option value="12" >12</option>
+                            <option value="12" selected="selected">12</option>
                             <option value="13" >13</option>
                             <option value="14" >14</option>
                             <option value="15" >15</option>
@@ -540,15 +544,33 @@
                                 <option value="15" >15</option>
                                 <option value="16" >16</option>
                                 <option value="17" >17</option>
-                                <option value="18" >18</option>
+                                <option value="18" selected="selected">18</option>
                                 <option value="19" >19</option>
                                 <option value="20" >20</option>
                 </select>
 
             </div>
           </div>
-          <div class="col-lg-6" style="height:50%;background: linear-gradient(to right, #ffffcc -100%, #cc99ff 100%);">
-            <p>wish list</p>
+          <div class="col-lg-6" style="height:50%;background: white);">
+              <h2>Wish List</h2>
+              <table class="courses" style="overflow-y: scroll;">
+                  <tr>
+                      <th>Subject</th>
+                      <th>Course ID</th>
+                      <th>Remove from Wish List</th>
+                  </tr>
+                  {% for item in wishlist %}
+                  <tr>
+                      <td> {{ item.subject }}</td>
+                      <td> {{ item.course_id }} </td>
+                      <td style="text-align: center;">
+                          <form action="#" method="post" style="">{% csrf_token %}
+                              <input type="submit" value="-"></form>
+                          </form>
+                      </td>
+                  </tr>
+                  {% endfor %}
+              </table>
           </div>
         </div>
       </div>

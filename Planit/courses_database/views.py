@@ -10,7 +10,15 @@ last_get = None
 def home(request):
 	global last_get
 
-	schedule = Interface.compute_schedules()[3]
+	index = request.GET.get("schedulenum", 1)
+
+	schedules = Interface.compute_schedules()
+	indices = [i+1 for i in range(len(schedules))]
+	schedule = []
+	try:
+		schedule = schedules[int(index)-1]
+	except:
+		pass
 
 	if request.POST:
 		wish_subject = request.GET.get('wish_subject', None)
@@ -20,11 +28,10 @@ def home(request):
 		setattr(new_wish_item, "subject", wish_subject)
 		new_wish_item.save()
 		request = last_get
-
-		schedule = Interface.compute_schedules()[0]
 	else:
 		last_get = request
 
+	wishlist = WishList.objects.all()
 	sections = {}
 
 	subject = request.GET.get('term_subj', None)
@@ -50,4 +57,4 @@ def home(request):
 		sections = no_repeats
 
 	# sends the response
-	return render(request, 'boot.html', {'sections': sections, "schedule": schedule, "num_schedules": 0})
+	return render(request, 'boot.html', {'sections': sections, "schedule": schedule, "num_schedules": len(schedules), "wishlist": wishlist, "indices": indices, "index": index})

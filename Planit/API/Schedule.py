@@ -60,9 +60,10 @@ class API_Schedule:
 		out = []
 
 		for section in self._sections:
-			crn = section.get_crn()
+
 			class_dict = dict()
 
+			class_dict['crn'] = section.get_crn()
 			class_dict['subject'] = section.get_course().get_subject()
 			class_dict['course_id'] = section.get_course().get_course_id()
 			class_dict['section_num'] = section.get_section_number()
