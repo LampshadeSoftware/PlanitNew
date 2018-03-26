@@ -9,15 +9,18 @@ class TimeBlock:
 	'''
 	@classmethod
 	def get_time_blocks(cls, time_str):
-		colon_index = time_str.index(':')
-		days = time_str[:colon_index]
-
-		start_time = time_str[-9:-5]
-		end_time = time_str[-4:]
-
 		blocks = []
-		for day in days:
-			blocks.append(TimeBlock(start_time, end_time, day))
+
+		if ':' in time_str:
+			colon_index = time_str.index(':')
+			days = time_str[:colon_index]
+
+			start_time = time_str[-9:-5]
+			end_time = time_str[-4:]
+
+
+			for day in days:
+				blocks.append(TimeBlock(start_time, end_time, day))
 
 		return blocks
 
