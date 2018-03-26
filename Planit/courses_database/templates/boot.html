@@ -40,7 +40,8 @@
                         title: "{{class.subject}} {{class.course_id}} {{class.section_num}}" ,
                         start: "2018-01-0{{ time_block.day }}T{{ time_block.start_hour }}:{{ time_block.start_minute }}",
                         end:  '2018-01-0{{ time_block.day }}T{{ time_block.end_hour }}:{{ time_block.end_minute }}',
-                        allDay: false // will make the time show
+                        allDay: false, // will make the time show
+                        color: "{{ class.color }}"
                     },
                 {% endfor %}
             {% endfor %}

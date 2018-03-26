@@ -1,10 +1,12 @@
 from API.TimeBlock import *
+from random import randint
 
 class API_Schedule:
 
 	def __init__(self):
 		self._sections = set()
 		self._num_credits = 0
+
 
 	def add_section(self, new_section):
 		if new_section in self._sections:
@@ -59,8 +61,11 @@ class API_Schedule:
 	def convert_to_dict(self):
 		out = []
 
-		for section in self._sections:
+		r = randint(50, 255)
+		g = randint(50, 255)
+		b = randint(50, 255)
 
+		for section in self._sections:
 			class_dict = dict()
 
 			class_dict['crn'] = section.get_crn()
@@ -72,6 +77,13 @@ class API_Schedule:
 
 			for block in section.get_time_blocks():
 				class_dict['times'].append(block.get_as_dict())
+
+			r = (r + randint(25, 200)) % 256
+			g = (g + randint(25, 200)) % 256
+			b = (b + randint(25, 200)) % 256
+
+			color = '#' + hex(r)[2:] + hex(g)[2:] + hex(b)[2:]
+			class_dict['color'] = color
 
 			out.append(class_dict)
 
