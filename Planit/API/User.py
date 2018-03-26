@@ -26,10 +26,10 @@ class API_User:
 
 
 	def set_filter_earliest_time(self, time):
-		self._filters['earliest_time'] = TimeBlock.convert_string(time)
+		self._filters['earliest_time'] = time
 
 	def set_filter_latest_time(self, time):
-		self._filters['latest_time'] = TimeBlock.convert_string(time)
+		self._filters['latest_time'] = time
 
 	def set_filter_credit_min(self, amount):
 		self._filters['credit_min'] = amount

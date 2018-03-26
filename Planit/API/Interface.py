@@ -26,6 +26,8 @@ def compute_schedules():
 	for course in wish_list:
 		user.add_to_wish_list(str(course.subject), str(course.course_id))
 
+	user.set_filter_earliest_time('1000')
+
 	# apply filters
 	for x in user.get_all_schedules():
 		print("NEW SCHEDULE")
