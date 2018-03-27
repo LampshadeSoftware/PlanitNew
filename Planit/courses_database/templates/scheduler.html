@@ -25,9 +25,22 @@
                 contentHeight: 600,
                 allDaySlot: false,
 
-                events: [{}]
+                events: [
+                        {
+                            title: "testing",
+                            start: "2018-01-02T13:00",
+                            end: "2018-01-02T14:00",
+                            allDay: false
+                        }
+                    ]
             });
         } );
+
+        function updateCalendar() {
+            $('#calendar').fullCalendar('removeEvents');
+            $('#calendar').fullCalendar('addEventSource', [{}]);
+            $('#calendar').fullCalendar('rerenderEvents' );
+        }
 
         function updateSchedules() {
             var wishList = JSON.parse(localStorage.getItem("wishList")) || {};
@@ -54,6 +67,7 @@
             wishList[crn] = newWishListEntry;
             localStorage.setItem("wishList", JSON.stringify(wishList))
 
+            updateCalendar();
             updateSchedules();
 
         }
@@ -70,13 +84,13 @@
 {% endblock %}
 
 {% block searchTable %}
-    <table id="courses">
+    <table id="courses" class="display">
         <thead>
             <tr>
                 <th>Subject</th>
                 <th>Course ID</th>
                 <th>Course Title</th>
-                <th>Add to Wish List</th>
+                <th>Wish List</th>
             </tr>
         </thead>
         <tbody>
@@ -87,7 +101,6 @@
                 <td> {{ item.title }}</td>
                 <td style="text-align: center;">
                     <button onclick="addToWishList('{{item.subject}}','{{item.course_id}}','{{item.title}}','{{item.crn}}')">+</button>
-                    <button onclick="removeFromWishList('{{item.subject}}','{{item.course_id}}','{{item.title}}','{{item.crn}}')">-</button>
                 </td>
             </tr>
             {% endfor %}
