@@ -66,25 +66,27 @@ class API_Schedule:
 		b = randint(50, 255)
 
 		for section in self._sections:
-			class_dict = dict()
-
-			class_dict['crn'] = section.get_crn()
-			class_dict['subject'] = section.get_course().get_subject()
-			class_dict['course_id'] = section.get_course().get_course_id()
-			class_dict['section_num'] = section.get_section_number()
-
-			class_dict['times'] = []
-
 			for block in section.get_time_blocks():
-				class_dict['times'].append(block.get_as_dict())
+				block = block.get_as_dict()
+				class_dict = dict()
 
-			r = (r + randint(25, 200)) % 256
-			g = (g + randint(25, 200)) % 256
-			b = (b + randint(25, 200)) % 256
+				"""
+				class_dict['crn'] = section.get_crn()
+				class_dict['subject'] = section.get_course().get_subject()
+				class_dict['course_id'] = section.get_course().get_course_id()
+				class_dict['section_num'] = section.get_section_number()
+				"""
 
-			color = '#' + hex(r)[2:] + hex(g)[2:] + hex(b)[2:]
-			class_dict['color'] = color
+				subject = section.get_course().get_subject()
+				course_id = section.get_course().get_course_id()
+				section_num = section.get_section_number()
+				start = "2018-01-0{}T{}:{}".format(block["day"], block["start_hour"], block["start_minute"])
+				end = "2018-01-0{}T{}:{}".format(block["day"], block["end_hour"], block["end_minute"])
 
-			out.append(class_dict)
+				class_dict['title'] = subject + " " + course_id + " " + section_num
+				class_dict['start'] = start
+				class_dict['end'] = end
+
+				out.append(class_dict)
 
 		return out

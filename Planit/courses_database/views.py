@@ -89,12 +89,13 @@ def get_schedules(request):
 				crn = key[open_b[0]+1:close_b[0]]
 				attr = key[open_b[1]+1:close_b[1]]
 				wishList.setdefault(crn, {})[attr] = data[key]
+		print(list(wishList.values()))
 
 		# if there was a request it sends back the response
 		if wishList:
-			# possible_schedules = daniel's function(wishlist)
-			# return possible_schedules
-			data = [[{"title":"penis", "start":"2018-01-03T13:00", "end":"2018-01-03T14:00"}]]
+			data = Interface.compute_schedules(list(wishList.values()))
+			print("possible schedules:", data)
+			# data = [[{"title":"penis", "start":"2018-01-03T13:00", "end":"2018-01-03T14:00"}]]
 			return JsonResponse(data, safe=False)
 		else:
 			# returns a default value
