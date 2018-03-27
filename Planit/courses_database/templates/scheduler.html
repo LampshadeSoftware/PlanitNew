@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+
+{% block javascript %}
+    <script type='text/javascript'>
+        $(document).ready( function () {
+            $('#courses').DataTable();
+            localStorage.clear();
+        } );
+
+        function updateSchedules() {
+            var wishList = JSON.parse(localStorage.getItem("wishList")) || {};
+
+            $.ajax({
+                url: '{% url "get_schedules" %}',
+                method: 'POST',
+                data: {
+                    "wishList": wishList,
+                    "csrfmiddlewaretoken": '{{ csrf_token }}'
+                    },
+                dataType: 'json',
+                success: function (data) {
+                    var wishList = localStorage.getItem("wishList") || "None";
+                    alert(wishList);
+                }
+            });
+        }
+
+        function addToWishList(subject, course_id, title, crn) {
+
+            var newWishListEntry = {"subject": subject, "course_id": course_id, "title": title};
+            var wishList = JSON.parse(localStorage.getItem("wishList")) || {};
+            wishList[crn] = newWishListEntry;
+            localStorage.setItem("wishList", JSON.stringify(wishList))
+
+            updateSchedules();
+
+        }
+    </script>
+{% endblock %}
+
+{% block searchTable %}
+    <table id="courses">
+        <thead>
+            <tr>
+                <th>Subject</th>
+                <th>Course ID</th>
+                <th>Course Title</th>
+                <th>Add to Wish List</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in sections %}
+            <tr>
+                <td> {{ item.subject }}</td>
+                <td> {{ item.course_id }} </td>
+                <td> {{ item.title }}</td>
+                <td style="text-align: center;">
+                    <button onclick="addToWishList('{{item.subject}}','{{item.course_id}}','{{item.title}}','{{item.crn}}')">+</button>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

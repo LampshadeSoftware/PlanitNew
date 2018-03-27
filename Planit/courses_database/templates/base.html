@@ -1,0 +1,29 @@
+{% load render_table from django_tables2 %}
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>PLANiT! Tests</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- load CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static "DataTables/datatables.css" %}">
+</head>
+<body>
+    <header></header>
+
+    <main>
+        {% block searchTable %}
+        {% endblock %}
+    </main>
+
+    <footer></footer>
+
+    <!-- Scripts -->
+    <script src="{% static "js/jquery-3.3.1.min.js" %}"></script>
+    <script type="text/javascript" charset="utf8" src="{% static "DataTables/datatables.js" %}"></script>
+
+    {% block javascript %}{% endblock %}
+</body>
+</html>

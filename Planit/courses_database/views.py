@@ -1,5 +1,7 @@
 from django.shortcuts import render
+from django.http import JsonResponse
 from .models import Section, WishList
+import json
 
 import API.Interface as Interface
 
@@ -65,3 +67,22 @@ def home(request):
 
 	# sends the response
 	return render(request, 'boot.html', {'sections': sections, "schedule": schedule, "num_schedules": len(schedules), "wishlist": wishlist, "indices": indices, "index": index})
+
+
+def index(request):
+	return render(request, 'scheduler.html', {"sections": Section.objects.all()})
+
+
+def get_schedules(request):
+	wishlist = request.POST
+	print("wishlist", wishlist)
+	if wishlist:
+		# possible_schedules = daniel's function(wishlist)
+		# return possible_schedules
+		data = {
+			'schedules': [{}]
+		}
+		return JsonResponse(data)
+	else:
+		# return an error
+		return JsonResponse({"hi": "hey"})
