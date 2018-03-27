@@ -10,7 +10,7 @@
 
         $(document).ready( function () {
             $('#courses').DataTable();
-            localStorage.clear();
+            // localStorage.clear();
 
             $('#calendar').fullCalendar({
                 defaultDate: moment('2018-01-01'),
@@ -39,6 +39,8 @@
             $('#calendar').fullCalendar('removeEvents');
             $('#calendar').fullCalendar('addEventSource', schedules[scheduleIndex]);
             $('#calendar').fullCalendar('rerenderEvents' );
+            document.getElementById("scheduleDisplay").innerHTML = "Schedule " + (scheduleIndex+1).toString() + " of " + numSchedules.toString();
+
         }
 
         function updateSchedules() {
