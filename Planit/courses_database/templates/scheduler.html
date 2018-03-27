@@ -10,6 +10,7 @@
 
         $(document).ready( function () {
             $('#courses').DataTable();
+            $('#wishList').DataTable({"bPaginate": false, "searching": false});
             // localStorage.clear();
 
             $('#calendar').fullCalendar({
@@ -20,11 +21,8 @@
                 minTime: "08:00:00",
                 maxTime: "23:59:00",
                 height: "auto",
-                header: {
-                  left: '',
-                  center: '',
-                  right: '',
-                },
+                eventColor: '#29B89B',
+                header:false,
 
                 contentHeight: 600,
                 allDaySlot: false,
@@ -39,7 +37,7 @@
             $('#calendar').fullCalendar('removeEvents');
             $('#calendar').fullCalendar('addEventSource', schedules[scheduleIndex]);
             $('#calendar').fullCalendar('rerenderEvents' );
-            document.getElementById("scheduleDisplay").innerHTML = "Schedule " + (scheduleIndex+1).toString() + " of " + numSchedules.toString();
+            document.getElementById("scheduleDisplay").innerHTML = (scheduleIndex+1).toString() + "/" + numSchedules.toString();
 
         }
 
@@ -125,6 +123,29 @@
                 </td>
             </tr>
             {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
+
+{% block wishListTable %}
+    <table id="wishList" class="display">
+        <thead>
+            <tr>
+                <th>Subject</th>
+                <th>Course ID</th>
+                <th>Course Title</th>
+                <th>Wish List</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Example</td>
+                <td>Example 2</td>
+                <td>Example 3</td>
+                <td style="text-align: center;">
+                    <button>-</button>
+                </td>
+            </tr>
         </tbody>
     </table>
 {% endblock %}

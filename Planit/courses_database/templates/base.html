@@ -10,24 +10,35 @@
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="{% static 'DataTables/datatables.css' %}">
     <link rel='stylesheet' href="{% static 'fullcalendar/fullcalendar.css' %}" />
+    <link rel='stylesheet' href="{% static 'css/custom.css' %}" />
 
 </head>
 <body>
     <header></header>
 
     <main>
+        <nav class="navbar navbar-default navbar-custom">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <h1 style="color: white; font-family: 'Arial Rounded MT Bold', Arial, Helvetica, sans-serif;">PLANiT!</h1>
+                    <!-- <a class="navbar-brand" href="#"></a> -->
+                </div>
+            </div>
+        </nav>
         <div class="container-fluid">
             <!-- Main Content -->
-            <div class="row">
+            <div class="row" style="height:100%">
                 <!-- Search Database (left side of screen) -->
                 <div class="col-sm-4">
                     {% block searchTable %}
                     {% endblock %}
                 </div>
-                <div class="col-sm-8">
+                <!-- Filter Classes (right side of screen) -->
+                <div class="col-sm-8" style="height:100%">
+                    <!-- Calendar -->
                     <center>
                         <button onclick="scheduleLeft()"><</button>
-                        <h2 id="scheduleDisplay">Schedule - of -</h2>
+                        <strong><p id="scheduleDisplay" style="display: inline-block">0/0</p></strong>
                         <button onclick="scheduleRight()">></button>
                     </center>
                     <div id='calendar'></div>
