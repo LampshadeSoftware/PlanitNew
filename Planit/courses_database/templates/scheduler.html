@@ -36,6 +36,15 @@
             updateSchedules();
 
         }
+
+        function removeFromWishList(subject, course_id, title, crn) {
+            var newWishListEntry = {"subject": subject, "course_id": course_id, "title": title};
+            var wishList = JSON.parse(localStorage.getItem("wishList")) || {};
+            delete wishList[crn];
+            localStorage.setItem("wishList", JSON.stringify(wishList))
+
+            updateSchedules();
+        }
     </script>
 {% endblock %}
 
@@ -57,6 +66,7 @@
                 <td> {{ item.title }}</td>
                 <td style="text-align: center;">
                     <button onclick="addToWishList('{{item.subject}}','{{item.course_id}}','{{item.title}}','{{item.crn}}')">+</button>
+                    <button onclick="removeFromWishList('{{item.subject}}','{{item.course_id}}','{{item.title}}','{{item.crn}}')">-</button>
                 </td>
             </tr>
             {% endfor %}

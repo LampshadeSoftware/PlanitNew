@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import JsonResponse
+from django.http import HttpResponse
 from .models import Section, WishList
 import json
 
@@ -73,16 +74,30 @@ def index(request):
 	return render(request, 'scheduler.html', {"sections": Section.objects.all()})
 
 
+# Used to retrieve schedules from Daniel's code and return them to put in the calendar
 def get_schedules(request):
-	wishlist = request.POST
-	print("wishlist", wishlist)
-	if wishlist:
-		# possible_schedules = daniel's function(wishlist)
-		# return possible_schedules
-		data = {
-			'schedules': [{}]
-		}
-		return JsonResponse(data)
+	if request.POST:
+		# processes the request
+		data = request.POST
+		keys = data.keys()
+		wishList = {}
+		for key in keys:
+			# key format = wishList[crn#][attr] - (e.g. wishList[12712][subject])
+			if key != 'csrfmiddlewaretoken':
+				open_b = [pos for pos, char in enumerate(key) if char == "["]
+				close_b = [pos for pos, char in enumerate(key) if char == "]"]
+				crn = key[open_b[0]+1:close_b[0]]
+				attr = key[open_b[1]+1:close_b[1]]
+				wishList.setdefault(crn, {})[attr] = data[key]
+
+		# if there was a request it sends back the response
+		if wishList:
+			# possible_schedules = daniel's function(wishlist)
+			# return possible_schedules
+			data = wishList
+			return JsonResponse(data)
+		else:
+			# return an error
+			return JsonResponse({"hi": "hey"})
 	else:
-		# return an error
-		return JsonResponse({"hi": "hey"})
+		return HttpResponse("You shouldn't be here... 0.0")
