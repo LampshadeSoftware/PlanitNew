@@ -3,6 +3,9 @@
 
 {% block javascript %}
     <script type='text/javascript'>
+
+        var schedule_num = 0;
+
         $(document).ready( function () {
             $('#courses').DataTable();
             localStorage.clear();
@@ -21,24 +24,18 @@
                   right: '',
                 },
 
-
                 contentHeight: 600,
                 allDaySlot: false,
 
-                events: [
-                        {
-                            title: "testing",
-                            start: "2018-01-02T13:00",
-                            end: "2018-01-02T14:00",
-                            allDay: false
-                        }
-                    ]
+                events: [{}]
             });
+
+            updateSchedules();
         } );
 
-        function updateCalendar() {
+        function updateCalendar(schedules) {
             $('#calendar').fullCalendar('removeEvents');
-            $('#calendar').fullCalendar('addEventSource', [{}]);
+            $('#calendar').fullCalendar('addEventSource', schedules[schedule_num]);
             $('#calendar').fullCalendar('rerenderEvents' );
         }
 
@@ -54,8 +51,9 @@
                     },
                 dataType: 'json',
                 success: function (data) {
-                    var wishList = localStorage.getItem("wishList") || "None";
-                    alert(wishList);
+                    console.log(data[0][0]);
+                    updateCalendar(data);
+                    alert("working");
                 }
             });
         }
@@ -67,7 +65,6 @@
             wishList[crn] = newWishListEntry;
             localStorage.setItem("wishList", JSON.stringify(wishList))
 
-            updateCalendar();
             updateSchedules();
 
         }

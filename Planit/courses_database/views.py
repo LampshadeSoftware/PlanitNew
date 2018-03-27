@@ -94,10 +94,10 @@ def get_schedules(request):
 		if wishList:
 			# possible_schedules = daniel's function(wishlist)
 			# return possible_schedules
-			data = wishList
-			return JsonResponse(data)
+			data = [[{"title":"penis", "start":"2018-01-03T13:00", "end":"2018-01-03T14:00"}]]
+			return JsonResponse(data, safe=False)
 		else:
-			# return an error
-			return JsonResponse({"hi": "hey"})
+			# returns a default value
+			return JsonResponse([[{}]], safe=False)
 	else:
 		return HttpResponse("You shouldn't be here... 0.0")
