@@ -19,12 +19,16 @@ from courses_database.models import WishList
 from API.Section import *
 from API.TimeBlock import *
 
-def compute_schedules():
+
+'''
+wish_list should be a list of dictionaries where each dictionary has
+subject, course_id, and title as keys
+'''
+def compute_schedules(wish_list):
 	user = API_User()
 
-	wish_list = WishList.objects.all()
 	for course in wish_list:
-		user.add_to_wish_list(str(course.subject), str(course.course_id))
+		user.add_to_wish_list(str(course['subject']), str(course['course_id']))
 
 	user.set_filter_earliest_time('1000')
 
@@ -34,6 +38,6 @@ def compute_schedules():
 		print(x)
 		print()
 
-	print(user.get_all_schedules_as_dict())
+	#print(user.get_all_schedules_as_dict())
 	return user.get_all_schedules_as_dict()
 
