@@ -4,8 +4,8 @@
 {% block javascript %}
     <script type='text/javascript'>
 
-        var schedule_index = 0;
-        var num_schedules = 0;
+        var scheduleIndex = 0;
+        var numSchedules = 0;
         var schedules = [[{}]];
 
         $(document).ready( function () {
@@ -37,7 +37,7 @@
 
         function updateCalendar() {
             $('#calendar').fullCalendar('removeEvents');
-            $('#calendar').fullCalendar('addEventSource', schedules[schedule_index]);
+            $('#calendar').fullCalendar('addEventSource', schedules[scheduleIndex]);
             $('#calendar').fullCalendar('rerenderEvents' );
         }
 
@@ -81,21 +81,21 @@
         }
 
         function scheduleLeft() {
-            schedule_index -= 1;
-            if (schedule_index < 0){
-                if (num_schedules == 0){
-                    schedule_index = 0;
+            scheduleIndex -= 1;
+            if (scheduleIndex < 0){
+                if (numSchedules == 0){
+                    scheduleIndex = 0;
                 } else {
-                    schedule_index = num_schedules-1;
+                    scheduleIndex = numSchedules-1;
                 }
             }
             updateCalendar();
         }
 
         function scheduleRight() {
-            schedule_index += 1;
-            if (schedule_index >= num_schedules){
-                schedule_index = 0;
+            scheduleIndex += 1;
+            if (scheduleIndex >= numSchedules){
+                scheduleIndex = 0;
             }
             updateCalendar();
         }
