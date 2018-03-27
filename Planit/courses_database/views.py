@@ -95,8 +95,10 @@ def get_schedules(request):
 		if wishList:
 			data = Interface.compute_schedules(list(wishList.values()))
 			print("possible schedules:", data)
-			# data = [[{"title":"penis", "start":"2018-01-03T13:00", "end":"2018-01-03T14:00"}]]
-			return JsonResponse(data, safe=False)
+			if len(data) > 0:
+				return JsonResponse(data, safe=False)
+			else:
+				return JsonResponse([[{}]], safe=False)
 		else:
 			# returns a default value
 			return JsonResponse([[{}]], safe=False)
