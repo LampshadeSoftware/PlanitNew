@@ -90,7 +90,7 @@
             });
 
 
-            // MIN/MAX CREDITS
+            // MIN/MAX CREDITS INIT
             var creditSlider = document.getElementById('creditSlider');
             noUiSlider.create(creditSlider, {
                 connect: true,
@@ -119,10 +119,10 @@
             });
 
             minCredits.addEventListener('change', function() {
-                creditSlider.NoUiSlider.set([this.value, null]);
+                creditSlider.noUiSlider.set([this.value, null]);
             });
             maxCredits.addEventListener('change', function() {
-                creditSlider.NoUiSlider.set([null, this.value]);
+                creditSlider.noUiSlider.set([null, this.value]);
             });
 
 
@@ -252,6 +252,7 @@
 
 {% block wishListFeatures %}
     <form id="wishListFilters">
+        <!-- Time Filter -->
         <p style="display: inline-block;"><strong>Start time:</strong></p>
         <select id="startTime" name="startTime">
             <option value="480" >8:00</option>
@@ -298,6 +299,7 @@
         </select>
         <div id="timeSlider" style="margin-bottom: 2em;"></div>
 
+        <!-- Credit Filter -->
         <p style="display: inline-block;"><strong>Minimum Credits:</strong></p>
         <select id="minCredits" name="minCredits">
             <option value="1" >1</option>
