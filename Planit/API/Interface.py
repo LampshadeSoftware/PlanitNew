@@ -24,11 +24,15 @@ from API.TimeBlock import *
 wish_list should be a list of dictionaries where each dictionary has
 subject, course_id, and title as keys
 '''
-def compute_schedules(wish_list):
+def compute_schedules(wish_list, filters):
 	user = API_User()
 
 	for course in wish_list:
 		user.add_to_wish_list(str(course['subject']), str(course['course_id']))
+
+	for filter in filters:
+		# apply filter
+		pass
 
 	# apply filters
 	"""

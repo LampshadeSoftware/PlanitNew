@@ -64,7 +64,7 @@ class API_Schedule:
 		colors = ["#33B79B", "#CE5858", "#5869CE",  "#BD4EAC"]
 
 		for i, section in enumerate(self._sections):
-			color = colors[i]
+			color = colors[i % len(colors)]
 			for block in section.get_time_blocks():
 				block = block.get_as_dict()
 				class_dict = dict()
