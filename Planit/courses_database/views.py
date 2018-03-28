@@ -93,7 +93,7 @@ def get_schedules(request):
 			elif "filters" in key:
 				filters[key[key.find("[")+1: key.find("]")]] = data[key]
 
-		print(filters)
+		print("Filters:", filters)
 		# if there was a request it sends back the response
 		if wishList:
 			data = Interface.compute_schedules(list(wishList.values()))

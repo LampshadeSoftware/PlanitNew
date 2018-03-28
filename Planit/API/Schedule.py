@@ -1,5 +1,5 @@
 from API.TimeBlock import *
-from random import randint
+from random import choice
 
 class API_Schedule:
 
@@ -61,11 +61,10 @@ class API_Schedule:
 	def convert_to_dict(self):
 		out = []
 
-		r = randint(50, 255)
-		g = randint(50, 255)
-		b = randint(50, 255)
+		colors = ["#33B79B", "#CE5858", "#5869CE"]
 
-		for section in self._sections:
+		for i, section in enumerate(self._sections):
+			color = colors[i]
 			for block in section.get_time_blocks():
 				block = block.get_as_dict()
 				class_dict = dict()
@@ -87,6 +86,7 @@ class API_Schedule:
 				class_dict['title'] = subject + " " + course_id + " " + section_num + " - " + title
 				class_dict['start'] = start
 				class_dict['end'] = end
+				class_dict['color'] = color
 
 				out.append(class_dict)
 

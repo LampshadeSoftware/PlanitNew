@@ -8,6 +8,7 @@
         var schedules = [[{}]];
 
         $(document).ready( function () {
+            // SETS UP TABLES
             $('#courses').DataTable({"lengthChange": false, "dom": "<'row'<'col-sm-6'f>>" + "t"});
             $('.dataTables_filter').addClass('pull-left');
             var wishListTable = $('#wishList').DataTable( {
@@ -28,6 +29,7 @@
             } );
             localStorage.clear();
 
+            // SETS UP CALENDAR
             $('#calendar').fullCalendar({
                 defaultDate: moment('2018-01-01'),
                 weekends: false,
@@ -45,12 +47,48 @@
                 events: [{}]
             });
 
-            updateSchedules();
-
             // DEALS WITH THE TABS FEATURE
             $(".nav-tabs a").click(function(){
                 $(this).tab('show');
             });
+
+            // SLIDER INIT
+            var timeSlider = document.getElementById('timeSlider');
+            noUiSlider.create(timeSlider, {
+                connect: true,
+                behaviour: 'tap',
+                start: [800, 1700],
+                step: 50,
+                range: {
+                    'min': 800,
+                    'max': 1700
+                }
+            });
+
+            var startTime = document.getElementById('startTime');
+            var endTime = document.getElementById('endTime');
+
+            timeSlider.noUiSlider.on('update', function( values, handle ) {
+
+                var value = values[handle];
+
+                if ( handle ) { // right handle
+                    endTime.value = Math.round(value);
+                } else {  // left handle
+                    startTime.value = Math.round(value);
+                }
+            });
+
+            startTime.addEventListener('change', function(){
+                timeSlider.noUiSlider.set([this.value, null]);
+            });
+
+            endTime.addEventListener('change', function(){
+                timeSlider.noUiSlider.set([null, this.value]);
+            });
+
+            // CALLS THE UPDATE LAST
+            updateSchedules();
         } );
 
         function updateCalendar() {
@@ -175,27 +213,50 @@
 
 {% block wishListFeatures %}
     <form id="wishListFilters">
-        <select name="time" style="width:200px;font-size: 16px" id="times">
-            <option value="0">None</option>
-            <option value="0800" >8:00</option>
-            <option value="0830" >8:30</option>
-            <option value="0900" >9:00</option>
-            <option value="0930" >9:30</option>
+        <p style="display: inline-block;"><strong>Start time:</strong></p>
+        <select id="startTime" name="startTime">
+            <option value="800" >8:00</option>
+            <option value="850" >8:30</option>
+            <option value="900" >9:00</option>
+            <option value="950" >9:30</option>
             <option value="1000" >10:00</option>
-            <option value="1030" >10:30</option>
+            <option value="1050" >10:30</option>
             <option value="1100" >11:00</option>
-            <option value="1130" >11:30</option>
+            <option value="1150" >11:30</option>
             <option value="1200" >12:00</option>
-            <option value="1230" >12:30</option>
+            <option value="1250" >12:30</option>
             <option value="1300" >1:00</option>
-            <option value="1330" >1:30</option>
+            <option value="1350" >1:30</option>
             <option value="1400" >2:00</option>
-            <option value="1430" >2:30</option>
+            <option value="1450" >2:30</option>
             <option value="1500" >3:00</option>
-            <option value="1530" >3:30</option>
+            <option value="1550" >3:30</option>
             <option value="1600" >4:00</option>
-            <option value="1630" >4:30</option>
+            <option value="1650" >4:30</option>
             <option value="1700" >5:00</option>
         </select>
+        <p style="display: inline-block;"><strong>End time:</strong></p>
+        <select id="endTime" name="endTime">
+            <option value="800" >8:00</option>
+            <option value="850" >8:30</option>
+            <option value="900" >9:00</option>
+            <option value="950" >9:30</option>
+            <option value="1000" >10:00</option>
+            <option value="1050" >10:30</option>
+            <option value="1100" >11:00</option>
+            <option value="1150" >11:30</option>
+            <option value="1200" >12:00</option>
+            <option value="1250" >12:30</option>
+            <option value="1300" >1:00</option>
+            <option value="1350" >1:30</option>
+            <option value="1400" >2:00</option>
+            <option value="1450" >2:30</option>
+            <option value="1500" >3:00</option>
+            <option value="1550" >3:30</option>
+            <option value="1600" >4:00</option>
+            <option value="1650" >4:30</option>
+            <option value="1700" >5:00</option>
+        </select>
+        <div id="timeSlider"></div>
     </form>
 {% endblock %}
