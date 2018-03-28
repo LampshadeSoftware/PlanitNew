@@ -58,13 +58,27 @@ class API_Schedule:
 			out += "\n"
 		return out
 
-	def convert_to_dict(self):
+	def convert_to_dict(self, colors_dict, colors):
+		"""
+		:param colors_dict: maps subject+course_id to a color
+		:param colors: returns colors in order
+		:return: 
+		"""
 		out = []
 
-		colors = ["#33B79B", "#CE5858", "#5869CE",  "#BD4EAC"]
-
 		for i, section in enumerate(self._sections):
-			color = colors[i % len(colors)]
+			subject = section.get_course().get_subject()
+			course_id = section.get_course().get_course_id()
+			title = section.get_title()
+			section_num = section.get_section_number()
+
+			# sets the colors
+			if subject+course_id not in colors_dict:
+				color = next(colors)
+				colors_dict[subject+course_id] = color
+
+			color = colors_dict[subject + course_id]
+
 			for block in section.get_time_blocks():
 				block = block.get_as_dict()
 				class_dict = dict()
@@ -76,10 +90,6 @@ class API_Schedule:
 				class_dict['section_num'] = section.get_section_number()
 				"""
 
-				subject = section.get_course().get_subject()
-				course_id = section.get_course().get_course_id()
-				title = section.get_title()
-				section_num = section.get_section_number()
 				start = "2018-01-0{}T{}:{}".format(block["day"], block["start_hour"], block["start_minute"])
 				end = "2018-01-0{}T{}:{}".format(block["day"], block["end_hour"], block["end_minute"])
 
@@ -90,4 +100,4 @@ class API_Schedule:
 
 				out.append(class_dict)
 
-		return out
+		return out, colors_dict, colors
