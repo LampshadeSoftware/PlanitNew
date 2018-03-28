@@ -2,3 +2,21 @@
     color: #FFFFFF;
     background-color: #29B89B;
 }
+
+.tab-pane {
+    padding-top: 10px;
+}
+
+.center {
+    margin: auto;
+    width: 50%;
+}
+
+.dataTables_wrapper .dataTables_filter {
+    float: left;
+    text-align: left;
+}
+
+.dataTables_wrapper .dataTables_filter input {
+    margin-left: 0.0em;
+}
