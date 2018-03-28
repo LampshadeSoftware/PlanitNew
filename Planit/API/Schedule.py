@@ -61,7 +61,7 @@ class API_Schedule:
 	def convert_to_dict(self):
 		out = []
 
-		colors = ["#33B79B", "#CE5858", "#5869CE"]
+		colors = ["#33B79B", "#CE5858", "#5869CE",  "#BD4EAC"]
 
 		for i, section in enumerate(self._sections):
 			color = colors[i]
