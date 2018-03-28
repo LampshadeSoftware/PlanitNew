@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- load CSS -->
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="{% static 'DataTables/datatables.css' %}">
     <link rel='stylesheet' href="{% static 'fullcalendar/fullcalendar.css' %}" />
     <link rel='stylesheet' href="{% static 'css/custom.css' %}" />
@@ -30,8 +30,22 @@
             <div class="row" style="height:100%">
                 <!-- Search Database (left side of screen) -->
                 <div class="col-sm-4">
-                    {% block searchTable %}
-                    {% endblock %}
+                    
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a href="#search">Seach Classes</a></li>
+                        <li><a href="#wishlist">Filter Wish List</a></li>
+                    </ul>
+
+                    <div class="tab-content">
+                        <div id="search" class="tab-pane fade in active">
+                            {% block searchTable %}
+                            {% endblock %}
+                        </div>
+                        <div id="wishlist" class="tab-pane fade">
+                            {% block wishListTable %}
+                            {% endblock %}
+                        </div>
+                    </div>
                 </div>
                 <!-- Filter Classes (right side of screen) -->
                 <div class="col-sm-8" style="height:100%">
@@ -53,6 +67,7 @@
     <script src="{% static 'fullcalendar/lib/jquery.min.js' %}"></script>
     <script src="{% static 'fullcalendar/lib/moment.min.js' %}"></script>
     <script src="{% static 'fullcalendar/fullcalendar.js' %}"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script type="text/javascript" charset="utf8" src="{% static 'DataTables/datatables.js' %}"></script>
 
     {% block javascript %}{% endblock %}

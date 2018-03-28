@@ -9,7 +9,7 @@
         var schedules = [[{}]];
 
         $(document).ready( function () {
-            $('#courses').DataTable();
+            $('#courses').DataTable({"lengthChange": false});
             $('#wishList').DataTable({"bPaginate": false, "searching": false});
             // localStorage.clear();
 
@@ -31,6 +31,11 @@
             });
 
             updateSchedules();
+
+            // DEALS WITH THE TABS FEATURE
+            $(".nav-tabs a").click(function(){
+                $(this).tab('show');
+            });
         } );
 
         function updateCalendar() {
