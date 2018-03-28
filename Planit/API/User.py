@@ -101,19 +101,11 @@ class API_User:
 
 		return want_list
 
-	def get_all_schedules_as_dict(self):
-		def colors_generator(i=0):
-			colors = ["#33B79B", "#CE5858", "#5869CE", "#BD4EAC"]
-			while True:
-				yield colors[i % len(colors)]
-				i += 1
+	def get_all_schedules_as_dict(self, colors_dict):
 
 		out = []
-		colors_dict = {}
-		colors_gen = colors_generator()
 		for sched in self.get_all_schedules():
-			sched_dict, colors_dict, colors_gen = sched.convert_to_dict(colors_dict, colors_gen)
-			out.append(sched_dict)
+			out.append(sched.convert_to_dict(colors_dict))
 
 		return out
 

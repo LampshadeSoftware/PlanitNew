@@ -27,7 +27,11 @@ subject, course_id, and title as keys
 def compute_schedules(wish_list, filters):
 	user = API_User()
 
-	for course in wish_list:
+	colors = ["#33B79B", "#CE5858", "#5869CE", "#BD4EAC"]
+	colors_dict = {}
+
+	for i, course in enumerate(wish_list):
+		colors_dict[str(course['subject']) + str(course['course_id'])] = colors[i]
 		user.add_to_wish_list(str(course['subject']), str(course['course_id']))
 
 	for key in filters:
@@ -44,5 +48,5 @@ def compute_schedules(wish_list, filters):
 	"""
 
 	#print(user.get_all_schedules_as_dict())
-	return user.get_all_schedules_as_dict()
+	return user.get_all_schedules_as_dict(colors_dict)
 
