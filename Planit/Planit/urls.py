@@ -19,7 +19,7 @@ from courses_database import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path(r'', views.home, name='home'),
+    path(r'', views.index, name='index'),
     path(r'testing/', views.index, name='index'),
     path('get_schedules', views.get_schedules, name='get_schedules')
 ]
