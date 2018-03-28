@@ -7,12 +7,13 @@ class API_Section:
 	section_number: number of section
 	time_blocks: list of TimeBlock objects representing the times that the section meets
 	'''
-	def __init__(self, course, crn, section_number, time_blocks):
+	def __init__(self, course, crn, section_number, time_blocks, title):
 		self._crn = crn
 		self._course = course
 		self._section_number = section_number
 
 		self._time_blocks = time_blocks
+		self._title = title
 
 
 	def overlaps(self, other_section):
@@ -41,6 +42,9 @@ class API_Section:
 
 	def get_section_number(self):
 		return self._section_number
+
+	def get_title(self):
+		return self._title
 
 	def __str__(self):
 		return str(self._course) + " " + str(self._section_number)

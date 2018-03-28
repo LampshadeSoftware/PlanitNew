@@ -13,15 +13,17 @@ class API_User:
 		# dictionary of filters for the possible schedules
 		self._filters = dict()
 
-		self._filters['earliest_time'] = None
+		self._filters['earliest_time'] = '1000'
 		self._filters['latest_time'] = None
 
-		self._filters['credit_min'] = 1
+		self._filters['credit_min'] = 12
 		self._filters['credit_max'] = 18
 
 		self._filters['forbidden_days'] = set()
+		#self.set_filter_forbidden_days('F', True)
 
 		self._filters['desired_attributes'] = set()
+		#self.set_filter_desired_attributes('CSI', True)
 
 
 

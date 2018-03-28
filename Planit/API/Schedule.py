@@ -79,11 +79,12 @@ class API_Schedule:
 
 				subject = section.get_course().get_subject()
 				course_id = section.get_course().get_course_id()
+				title = section.get_title()
 				section_num = section.get_section_number()
 				start = "2018-01-0{}T{}:{}".format(block["day"], block["start_hour"], block["start_minute"])
 				end = "2018-01-0{}T{}:{}".format(block["day"], block["end_hour"], block["end_minute"])
 
-				class_dict['title'] = subject + " " + course_id + " " + section_num
+				class_dict['title'] = subject + " " + course_id + " " + section_num + " - " + title
 				class_dict['start'] = start
 				class_dict['end'] = end
 
