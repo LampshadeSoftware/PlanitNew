@@ -13,7 +13,7 @@ class API_User:
 		# dictionary of filters for the possible schedules
 		self._filters = dict()
 
-		self._filters['earliest_time'] = '0800'
+		self._filters['earliest_time'] = None
 		self._filters['latest_time'] = None
 
 		self._filters['credit_min'] = 1
@@ -26,18 +26,32 @@ class API_User:
 		#self.set_filter_desired_attributes('CSI', True)
 
 
+	def apply_filter(self, filter, value):
+		if filter == 'startTime':
+			self.set_filter_earliest_time(TimeBlock.get_readable_time(int(value)))
+
+		elif filter == 'endTime':
+			self.set_filter_latest_time(TimeBlock.get_readable_time(int(value)))
+
+		elif filter == 'credit_min':
+			self.set_filter_credit_min(value)
+
+		elif filter == 'credit_max':
+			self.set_filter_credit_max(value)
+
 
 	def set_filter_earliest_time(self, time):
-		self._filters['earliest_time'] = time
+		print("Setting earliest time to: " + str(time))
+		self._filters['earliest_time'] = str(time)
 
 	def set_filter_latest_time(self, time):
-		self._filters['latest_time'] = time
+		self._filters['latest_time'] = str(time)
 
 	def set_filter_credit_min(self, amount):
-		self._filters['credit_min'] = amount
+		self._filters['credit_min'] = int(amount)
 
 	def set_filter_credit_max(self, amount):
-		self._filters['credit_max'] = amount
+		self._filters['credit_max'] = int(amount)
 
 	'''
 	day in 'MTWRF'

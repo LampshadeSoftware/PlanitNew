@@ -30,8 +30,9 @@ def compute_schedules(wish_list, filters):
 	for course in wish_list:
 		user.add_to_wish_list(str(course['subject']), str(course['course_id']))
 
-	for filter in filters:
-		# apply filter
+	for key in filters:
+		print(filters)
+		user.apply_filter(key, filters[key])
 		pass
 
 	# apply filters
