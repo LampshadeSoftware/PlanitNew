@@ -77,6 +77,8 @@
                 } else {  // left handle
                     startTime.value = Math.round(value);
                 }
+
+                updateSchedules();
             });
 
             startTime.addEventListener('change', function(){
