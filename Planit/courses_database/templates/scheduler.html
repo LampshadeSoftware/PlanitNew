@@ -73,6 +73,7 @@
                 dataType: 'json',
                 success: function (data) {
                     schedules = data;
+                    scheduleIndex = 0;
                     numSchedules = schedules.length;
                     updateCalendar();
                     updateWishListTable();
