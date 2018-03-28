@@ -93,10 +93,9 @@ def get_schedules(request):
 			elif "filters" in key:
 				filters[key[key.find("[")+1: key.find("]")]] = data[key]
 
-		print("Filters:", filters)
 		# if there was a request it sends back the response
 		if wishList:
-			data = Interface.compute_schedules(list(wishList.values()))
+			data = Interface.compute_schedules(list(wishList.values()), filters)
 			print("possible schedules:", data)
 			if len(data) > 0:
 				return JsonResponse(data, safe=False)
