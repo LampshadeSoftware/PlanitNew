@@ -1,6 +1,5 @@
 {% extends 'base.html' %}
 
-
 {% block javascript %}
     <script type='text/javascript'>
 
@@ -10,8 +9,23 @@
 
         $(document).ready( function () {
             $('#courses').DataTable({"lengthChange": false});
-            $('#wishList').DataTable({"bPaginate": false, "searching": false});
-            // localStorage.clear();
+            var wishListTable = $('#wishList').DataTable( {
+                "bPaginate": false,
+                 "searching": false,
+                 "info": false,
+                 columns: [
+                    { title: "Subject" },
+                    { title: "Course ID" },
+                    { title: "Course Title" },
+                    { title: "Remove", "data": null, defaultContent: "<center><button>-</button></center>" }
+                ]
+
+            } );
+            $('#wishList tbody').on( 'click', 'button', function () {
+                var data = wishListTable.row( $(this).parents('tr') ).data();
+                removeFromWishList(data[0], data[1], data[2], data[3]);
+            } );
+            localStorage.clear();
 
             $('#calendar').fullCalendar({
                 defaultDate: moment('2018-01-01'),
@@ -61,6 +75,7 @@
                     schedules = data;
                     numSchedules = schedules.length;
                     updateCalendar();
+                    updateWishListTable();
                 }
             });
         }
@@ -77,7 +92,6 @@
         }
 
         function removeFromWishList(subject, course_id, title, crn) {
-            var newWishListEntry = {"subject": subject, "course_id": course_id, "title": title};
             var wishList = JSON.parse(localStorage.getItem("wishList")) || {};
             delete wishList[crn];
             localStorage.setItem("wishList", JSON.stringify(wishList))
@@ -103,6 +117,18 @@
                 scheduleIndex = 0;
             }
             updateCalendar();
+        }
+
+        function updateWishListTable(){
+            var data = [];
+            var wishList = JSON.parse(localStorage.getItem("wishList")) || {};
+            Object.keys(wishList).forEach(function(key) {
+                var row = [wishList[key]["subject"], wishList[key]["course_id"], wishList[key]["title"], key];
+                data.push(row);
+            });
+            $('#wishList').DataTable().clear();
+            $('#wishList').DataTable().rows.add(data);
+            $('#wishList').DataTable().draw();
         }
     </script>
 {% endblock %}
@@ -133,24 +159,5 @@
 {% endblock %}
 
 {% block wishListTable %}
-    <table id="wishList" class="display">
-        <thead>
-            <tr>
-                <th>Subject</th>
-                <th>Course ID</th>
-                <th>Course Title</th>
-                <th>Wish List</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>Example</td>
-                <td>Example 2</td>
-                <td>Example 3</td>
-                <td style="text-align: center;">
-                    <button>-</button>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+    <table id="wishList" class="display" width="100%"></table>
 {% endblock %}
