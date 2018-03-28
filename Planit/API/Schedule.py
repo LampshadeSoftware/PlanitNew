@@ -15,7 +15,7 @@ class API_Schedule:
 
 		for existing_section in self._sections:
 			if existing_section.overlaps(new_section):
-				print("Not adding " + str(new_section) + ". Overlaps with " + str(existing_section))
+				#print("Not adding " + str(new_section) + ". Overlaps with " + str(existing_section))
 				return False
 
 		self._sections.add(new_section)

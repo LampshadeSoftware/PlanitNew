@@ -89,6 +89,43 @@
                 timeSlider.noUiSlider.set([null, this.value]);
             });
 
+
+            // MIN/MAX CREDITS
+            var creditSlider = document.getElementById('creditSlider');
+            noUiSlider.create(creditSlider, {
+                connect: true,
+                behavior: 'tap',
+                start: [12, 18],
+                step: 1,
+                range: {
+                    'min': 1,
+                    'max': 20
+                }
+            });
+
+            var minCredits = document.getElementById('minCredits');
+            var maxCredits = document.getElementById('maxCredits');
+
+            creditSlider.noUiSlider.on('update', function (values, handle ) {
+                var value = values[handle];
+
+                if ( handle ) {
+                    maxCredits.value = Math.round(value);
+                } else {
+                    minCredits.value = Math.round(value);
+                }
+
+                updateSchedules();
+            });
+
+            minCredits.addEventListener('change', function() {
+                creditSlider.NoUiSlider.set([this.value, null]);
+            });
+            maxCredits.addEventListener('change', function() {
+                creditSlider.NoUiSlider.set([null, this.value]);
+            });
+
+
             // CALLS THE UPDATE LAST
             updateSchedules();
         } );
@@ -259,6 +296,54 @@
             <option value="990" >4:30</option>
             <option value="1020" >5:00</option>
         </select>
-        <div id="timeSlider"></div>
+        <div id="timeSlider" style="margin-bottom: 2em;"></div>
+
+        <p style="display: inline-block;"><strong>Minimum Credits:</strong></p>
+        <select id="minCredits" name="minCredits">
+            <option value="1" >1</option>
+            <option value="2" >2</option>
+            <option value="3" >3</option>
+            <option value="4" >4</option>
+            <option value="5" >5</option>
+            <option value="6" >6</option>
+            <option value="7" >7</option>
+            <option value="8" >8</option>
+            <option value="9" >9</option>
+            <option value="10" >10</option>
+            <option value="11" >11</option>
+            <option value="12" >12</option>
+            <option value="13" >13</option>
+            <option value="14" >14</option>
+            <option value="15" >15</option>
+            <option value="16" >16</option>
+            <option value="17" >17</option>
+            <option value="18" >18</option>
+            <option value="19" >19</option>
+            <option value="20" >20</option>
+        </select>
+        <p style="display: inline-block;"><strong>Maximum Credits:</strong></p>
+        <select id="maxCredits" name="maxCredits">
+            <option value="1" >1</option>
+            <option value="2" >2</option>
+            <option value="3" >3</option>
+            <option value="4" >4</option>
+            <option value="5" >5</option>
+            <option value="6" >6</option>
+            <option value="7" >7</option>
+            <option value="8" >8</option>
+            <option value="9" >9</option>
+            <option value="10" >10</option>
+            <option value="11" >11</option>
+            <option value="12" >12</option>
+            <option value="13" >13</option>
+            <option value="14" >14</option>
+            <option value="15" >15</option>
+            <option value="16" >16</option>
+            <option value="17" >17</option>
+            <option value="18" >18</option>
+            <option value="19" >19</option>
+            <option value="20" >20</option>
+        </select>
+        <div id="creditSlider"></div>
     </form>
 {% endblock %}

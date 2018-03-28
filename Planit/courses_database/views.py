@@ -96,7 +96,7 @@ def get_schedules(request):
 		# if there was a request it sends back the response
 		if wishList:
 			data = Interface.compute_schedules(list(wishList.values()), filters)
-			print("possible schedules:", data)
+			#print("possible schedules:", data)
 			if len(data) > 0:
 				return JsonResponse(data, safe=False)
 			else:

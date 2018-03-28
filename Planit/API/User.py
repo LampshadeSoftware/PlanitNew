@@ -33,10 +33,10 @@ class API_User:
 		elif filter == 'endTime':
 			self.set_filter_latest_time(TimeBlock.get_readable_time(int(value)))
 
-		elif filter == 'credit_min':
+		elif filter == 'minCredits':
 			self.set_filter_credit_min(value)
 
-		elif filter == 'credit_max':
+		elif filter == 'minCredits':
 			self.set_filter_credit_max(value)
 
 
