@@ -33,7 +33,7 @@ class API_Course:
 		self._sections = []
 		for section in django_obj_set:
 			time_blocks = TimeBlock.get_time_blocks(section.meet_time)
-			sec_object = API_Section(self, section.crn, section.section_number, time_blocks)
+			sec_object = API_Section(self, section.crn, section.section_number, time_blocks, section.title)
 			self._sections.append(sec_object)
 
 	def get_subject(self):
