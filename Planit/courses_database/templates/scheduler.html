@@ -67,12 +67,17 @@
 
         function updateSchedules() {
             var wishList = JSON.parse(localStorage.getItem("wishList")) || {};
+            var filters = $('#wishListFilters').serializeArray().reduce(function(obj, item) {
+                obj[item.name] = item.value;
+                return obj;
+            }, {});
 
             $.ajax({
                 url: '{% url "get_schedules" %}',
                 method: 'POST',
                 data: {
                     "wishList": wishList,
+                    "filters": filters,
                     "csrfmiddlewaretoken": '{{ csrf_token }}'
                     },
                 dataType: 'json',
@@ -169,7 +174,7 @@
 {% endblock %}
 
 {% block wishListFeatures %}
-    <form id>
+    <form id="wishListFilters">
         <select name="time" style="width:200px;font-size: 16px" id="times">
             <option value="0">None</option>
             <option value="0800" >8:00</option>

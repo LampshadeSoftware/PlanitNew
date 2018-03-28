@@ -81,16 +81,19 @@ def get_schedules(request):
 		data = request.POST
 		keys = data.keys()
 		wishList = {}
+		filters = {}
 		for key in keys:
-			# key format = wishList[crn#][attr] - (e.g. wishList[12712][subject])
-			if key != 'csrfmiddlewaretoken':
+			if "wishList" in key:
+				# key format = wishList[crn#][attr] - (e.g. wishList[12712][subject])
 				open_b = [pos for pos, char in enumerate(key) if char == "["]
 				close_b = [pos for pos, char in enumerate(key) if char == "]"]
 				crn = key[open_b[0]+1:close_b[0]]
 				attr = key[open_b[1]+1:close_b[1]]
 				wishList.setdefault(crn, {})[attr] = data[key]
-		print(list(wishList.values()))
+			elif "filters" in key:
+				filters[key[key.find("[")+1: key.find("]")]] = data[key]
 
+		print(filters)
 		# if there was a request it sends back the response
 		if wishList:
 			data = Interface.compute_schedules(list(wishList.values()))

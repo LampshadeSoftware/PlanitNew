@@ -31,10 +31,12 @@ def compute_schedules(wish_list):
 		user.add_to_wish_list(str(course['subject']), str(course['course_id']))
 
 	# apply filters
+	"""
 	for x in user.get_all_schedules():
 		print("NEW SCHEDULE")
 		print(x)
 		print()
+	"""
 
 	#print(user.get_all_schedules_as_dict())
 	return user.get_all_schedules_as_dict()
