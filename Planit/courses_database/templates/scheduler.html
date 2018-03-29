@@ -1,21 +1,15 @@
 {% extends 'base.html' %}
 
 {% block javascript %}
-    <script type='text/javascript'>
-
-        var scheduleIndex = 0;
-        var numSchedules = 0;
-        var schedules = [[{}]];
-
-        $(document).ready( function () {
-            // SETS UP TABLES
+    <script type='text/javascript'>  // All init function go here
+        function tablesInit(){
             $('#courses').DataTable({"lengthChange": false, "dom": "<'row'<'col-sm-6'f>>" + "t"});
             $('.dataTables_filter').addClass('pull-left');
             var wishListTable = $('#wishList').DataTable( {
                 "bPaginate": false,
-                 "searching": false,
-                 "info": false,
-                 columns: [
+                "searching": false,
+                "info": false,
+                columns: [
                     { title: "Subject" },
                     { title: "Course ID" },
                     { title: "Course Title" },
@@ -27,9 +21,9 @@
                 var data = wishListTable.row( $(this).parents('tr') ).data();
                 removeFromWishList(data[0], data[1], data[2], data[3]);
             } );
-            //localStorage.clear();
+        }
 
-            // SETS UP FILTERS WITH MULTIPLE SELECT
+        function filtersInit(){
             $('#daysOff').multipleSelect({
                 onClick: function(view) {
                     updateSchedules();
@@ -53,9 +47,9 @@
                     updateSchedules();
                 }
             }, "checkAll");
+        }
 
-
-            // SETS UP CALENDAR
+        function calendarInit(){
             $('#calendar').fullCalendar({
                 defaultDate: moment('2018-01-01'),
                 weekends: false,
@@ -72,13 +66,9 @@
 
                 events: [{}]
             });
+        }
 
-            // DEALS WITH THE TABS FEATURE
-            $(".nav-tabs a").click(function(){
-                $(this).tab('show');
-            });
-
-            // SLIDER INIT
+        function slidersInit() {
             var timeSlider = document.getElementById('timeSlider');
             noUiSlider.create(timeSlider, {
                 connect: true,
@@ -150,6 +140,33 @@
             maxCredits.addEventListener('change', function() {
                 creditSlider.noUiSlider.set([null, this.value]);
             });
+        }
+    </script>
+    <script type='text/javascript'>
+
+        var scheduleIndex = 0;
+        var numSchedules = 0;
+        var schedules = [[{}]];
+
+        $(document).ready( function () {
+            //localStorage.clear();
+
+            // SETS UP TABLES
+            tablesInit();
+
+            // SETS UP FILTERS WITH MULTIPLE SELECT
+            filtersInit();
+
+            // SETS UP CALENDAR
+            calendarInit();
+
+            // DEALS WITH THE TABS FEATURE
+            $(".nav-tabs a").click(function(){
+                $(this).tab('show');
+            });
+
+            // SLIDERS INIT
+            slidersInit();
 
 
             // CALLS THE UPDATE LAST
