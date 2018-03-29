@@ -130,17 +130,9 @@
             updateSchedules();
         } );
 
-        function updateCalendar() {
-            $('#calendar').fullCalendar('removeEvents');
-            $('#calendar').fullCalendar('addEventSource', schedules[scheduleIndex]);
-            $('#calendar').fullCalendar('rerenderEvents' );
-            if (Object.keys(schedules[0][0]).length == 0){
-                document.getElementById("scheduleDisplay").innerHTML = "0/0";
-            } else {
-                document.getElementById("scheduleDisplay").innerHTML = (scheduleIndex+1).toString() + "/" + numSchedules.toString();
-            }
-
-        }
+        // =================================================================
+        // MARK: UPDATE FUNCTIONS (FUNCTIONS THAT UPDATE THE UI IN SOME WAY)
+        // =================================================================
 
         function updateSchedules() {
             var wishList = JSON.parse(localStorage.getItem("wishList")) || {};
@@ -163,34 +155,63 @@
                     scheduleIndex = 0;
                     numSchedules = schedules.length;
                     updateCalendar();
-                    updateWishListTable();
                 }
             });
         }
 
-        function addToWishList(subject, course_id, title, crn) {
+        function updateWishListTable(){
+            var data = [];
+            var wishList = JSON.parse(localStorage.getItem("wishList")) || {};
+            Object.keys(wishList).forEach(function(key) {
+                var row = [wishList[key]["subject"], wishList[key]["course_id"], wishList[key]["title"], key];
+                data.push(row);
+            });
+            var wishListTable = $('#wishList');
+            wishListTable.DataTable().clear();
+            wishListTable.DataTable().rows.add(data);
+            wishListTable.DataTable().draw();
+        }
 
+        function updateCalendar() {
+            var calendar = $('#calendar');
+            calendar.fullCalendar('removeEvents');
+            calendar.fullCalendar('addEventSource', schedules[scheduleIndex]);
+            calendar.fullCalendar('rerenderEvents' );
+            if (Object.keys(schedules[0][0]).length === 0){
+                document.getElementById("scheduleDisplay").innerHTML = "0/0";
+            } else {
+                document.getElementById("scheduleDisplay").innerHTML = (scheduleIndex+1).toString() + "/" + numSchedules.toString();
+            }
+
+        }
+
+        // =======================================================================
+        // MARK: USER INTERACTIONS (FUNCTIONS THAT RUN WHEN A USER CLICKS A BUTTON
+        // =======================================================================
+
+        function addToWishList(subject, course_id, title, crn) {
             var newWishListEntry = {"subject": subject, "course_id": course_id, "title": title};
             var wishList = JSON.parse(localStorage.getItem("wishList")) || {};
             wishList[crn] = newWishListEntry;
-            localStorage.setItem("wishList", JSON.stringify(wishList))
+            localStorage.setItem("wishList", JSON.stringify(wishList));
 
+            updateWishListTable();
             updateSchedules();
-
         }
 
         function removeFromWishList(subject, course_id, title, crn) {
             var wishList = JSON.parse(localStorage.getItem("wishList")) || {};
             delete wishList[crn];
-            localStorage.setItem("wishList", JSON.stringify(wishList))
+            localStorage.setItem("wishList", JSON.stringify(wishList));
 
+            updateWishListTable();
             updateSchedules();
         }
 
         function scheduleLeft() {
             scheduleIndex -= 1;
             if (scheduleIndex < 0){
-                if (numSchedules == 0){
+                if (numSchedules === 0){
                     scheduleIndex = 0;
                 } else {
                     scheduleIndex = numSchedules-1;
@@ -205,18 +226,6 @@
                 scheduleIndex = 0;
             }
             updateCalendar();
-        }
-
-        function updateWishListTable(){
-            var data = [];
-            var wishList = JSON.parse(localStorage.getItem("wishList")) || {};
-            Object.keys(wishList).forEach(function(key) {
-                var row = [wishList[key]["subject"], wishList[key]["course_id"], wishList[key]["title"], key];
-                data.push(row);
-            });
-            $('#wishList').DataTable().clear();
-            $('#wishList').DataTable().rows.add(data);
-            $('#wishList').DataTable().draw();
         }
     </script>
 {% endblock %}
