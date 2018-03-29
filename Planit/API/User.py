@@ -36,7 +36,7 @@ class API_User:
 		elif filter == 'minCredits':
 			self.set_filter_credit_min(value)
 
-		elif filter == 'minCredits':
+		elif filter == 'maxCredits':
 			self.set_filter_credit_max(value)
 
 

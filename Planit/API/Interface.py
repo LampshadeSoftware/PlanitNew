@@ -31,7 +31,7 @@ def compute_schedules(wish_list, filters):
 	colors_dict = {}
 
 	for i, course in enumerate(wish_list):
-		colors_dict[str(course['subject']) + str(course['course_id'])] = colors[i]
+		colors_dict[str(course['subject']) + str(course['course_id'])] = colors[i % len(colors)]
 		user.add_to_wish_list(str(course['subject']), str(course['course_id']))
 
 	for key in filters:
