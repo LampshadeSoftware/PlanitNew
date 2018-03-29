@@ -30,11 +30,30 @@
             //localStorage.clear();
 
             // SETS UP FILTERS WITH MULTIPLE SELECT
-            $('#daysOff').multipleSelect();
+            $('#daysOff').multipleSelect({
+                onClick: function(view) {
+                    updateSchedules();
+                },
+                onCheckAll: function() {
+                    updateSchedules();
+                },
+                onUncheckAll: function() {
+                    updateSchedules();
+                }
+            });
             $('#attributes').multipleSelect({
-                filter: true
+                filter: true,
+                onClick: function(view) {
+                    updateSchedules();
+                },
+                onCheckAll: function() {
+                    updateSchedules();
+                },
+                onUncheckAll: function() {
+                    updateSchedules();
+                }
             }, "checkAll");
-            
+
 
             // SETS UP CALENDAR
             $('#calendar').fullCalendar({
@@ -148,6 +167,9 @@
                 obj[item.name] = item.value;
                 return obj;
             }, {});
+
+            filters["daysOff"] = String($("#daysOff").multipleSelect("getSelects"));
+            filters["attr"] = String($("#attributes").multipleSelect("getSelects"));
 
             $.ajax({
                 url: '{% url "get_schedules" %}',
@@ -367,12 +389,12 @@
 
         <!-- Days Off Filter -->
         <label for="daysOff">Days Off</label>
-        <select class="w300" multiple="multiple" id="daysOff" name="test">
-            <option name="day" value="1"> Monday</option>
-            <option name="day" value="2"> Tuesday</option>
-            <option name="day" value="3"> Wednesday</option>
-            <option name="day" value="4"> Thursday</option>
-            <option name="day" value="5"> Friday</option>
+        <select class="w300" multiple="multiple" id="daysOff">
+            <option name="day" value="M"> Monday</option>
+            <option name="day" value="T"> Tuesday</option>
+            <option name="day" value="W"> Wednesday</option>
+            <option name="day" value="U"> Thursday</option>
+            <option name="day" value="F"> Friday</option>
         </select>
         <br><br>
 
