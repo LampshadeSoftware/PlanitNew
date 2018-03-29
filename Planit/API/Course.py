@@ -17,19 +17,29 @@ from API.TimeBlock import *
 
 class API_Course:
 
+	'''
+	:param subject: string (ex: CSCI)
+	:param course_id: string (ex: 141)
+	'''
 	def __init__(self, subject, course_id):
 		self._subject = subject
 		self._course_id = course_id
 		self._attributes = set()
 
+		# Get all the sections whose subject and course id match the given parameters
 		django_obj_set = Section.objects.all().filter(subject=subject, course_id=course_id)
+
+		# If we have found at least section that matches...
 		if len(django_obj_set) > 0:
+
+			# Pull info that is the same across all sections from database
 			self._name = django_obj_set[0].title
 			self._credits = int(django_obj_set[0].credit_hrs)
+
 			for attr in django_obj_set[0].course_attr.split(','):
 				self._attributes.add(attr)
 
-
+		# Create section objects for all sections of this course and store in list
 		self._sections = []
 		for section in django_obj_set:
 			time_blocks = TimeBlock.get_time_blocks(section.meet_time)
