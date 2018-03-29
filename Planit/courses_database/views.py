@@ -27,7 +27,6 @@ def get_schedules(request):
 		keys = data.keys()
 		wishList = {}
 		filters = {}
-		print("data:", data)
 		for key in keys:
 			if "wishList" in key:
 				# key format = wishList[crn#][attr] - (e.g. wishList[12712][subject])
@@ -43,6 +42,7 @@ def get_schedules(request):
 				else:
 					filters[filter_key] = data[key]
 
+		print("filters", filters)
 		# if there was a request it sends back the response
 		if wishList:
 			data = Interface.compute_schedules(list(wishList.values()), filters)

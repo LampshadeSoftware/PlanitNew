@@ -41,7 +41,7 @@ class API_User:
 
 
 	def set_filter_earliest_time(self, time):
-		print("Setting earliest time to: " + str(time))
+		# print("Setting earliest time to: " + str(time))
 		self._filters['earliest_time'] = str(time)
 
 	def set_filter_latest_time(self, time):
@@ -76,7 +76,8 @@ class API_User:
 			course = API_Course(subject, course_id)
 			self._wish_list[key] = [course, True]
 		else:
-			print(key + " already in wish list")
+			pass
+			# print(key + " already in wish list")
 
 	def set_course_optional(self, subject, course_id, value):
 		key = str(subject) + str(course_id)

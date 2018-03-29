@@ -1,6 +1,6 @@
 .navbar-custom {
     color: #FFFFFF;
-    background-color: #29B89B;
+    background-color: #46b8af;
 }
 
 .tab-pane {
@@ -19,4 +19,12 @@
 
 .dataTables_wrapper .dataTables_filter input {
     margin-left: 0.0em;
+}
+
+body {
+    font-family: "Montserrat";
+}
+
+.w300 {
+    width: 100%;
 }

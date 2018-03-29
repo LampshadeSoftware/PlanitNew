@@ -14,14 +14,14 @@ class API_Schedule:
 	def add_section(self, new_section):
 		# check that we are not adding duplicate sections
 		if new_section in self._sections:
-			print(str(new_section) + " already exists in schedule")
+			# print(str(new_section) + " already exists in schedule")
 			return False
 
 		# check that the class we are trying to add does not overlap with
 		# any sections that already exist in this schedule
 		for existing_section in self._sections:
 			if existing_section.overlaps(new_section):
-				#print("Not adding " + str(new_section) + ". Overlaps with " + str(existing_section))
+				# print("Not adding " + str(new_section) + ". Overlaps with " + str(existing_section))
 				return False
 
 		# add section to set and increment credit count
