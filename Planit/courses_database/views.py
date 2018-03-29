@@ -8,7 +8,15 @@ import API.Interface as Interface
 
 
 def index(request):
-	return render(request, 'scheduler.html', {"sections": Section.objects.all()})
+	unique_sections = set()
+	sections = []
+	for section in Section.objects.all():
+		subject, course_id = section.subject, section.course_id
+		if subject + course_id not in unique_sections:
+			sections.append(section)
+			unique_sections.add(subject + course_id)
+
+	return render(request, 'scheduler.html', {"sections": sections})
 
 
 # Used to retrieve schedules from Daniel's code and return them to put in the calendar
