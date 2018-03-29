@@ -45,7 +45,7 @@ class API_Course:
 	def get_sections(self):
 		return self._sections
 
-	def num_credits(self):
+	def get_num_credits(self):
 		return self._credits
 
 	def has_attribute(self, attribute):

@@ -19,7 +19,7 @@ class API_Schedule:
 				return False
 
 		self._sections.add(new_section)
-		self._num_credits += new_section.get_course().num_credits()
+		self._num_credits += new_section.get_course().get_num_credits()
 		return True
 
 	def total_credits(self):
