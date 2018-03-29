@@ -1,8 +1,35 @@
 {% extends 'base.html' %}
 
 {% block javascript %}
-    <script type='text/javascript'> // all INIT functions go here
-        function calendarInit(){
+    <script type='text/javascript'>
+
+        var scheduleIndex = 0;
+        var numSchedules = 0;
+        var schedules = [[{}]];
+
+        $(document).ready( function () {
+            // SETS UP TABLES
+            $('#courses').DataTable({"lengthChange": false, "dom": "<'row'<'col-sm-6'f>>" + "t"});
+            $('.dataTables_filter').addClass('pull-left');
+            var wishListTable = $('#wishList').DataTable( {
+                "bPaginate": false,
+                 "searching": false,
+                 "info": false,
+                 columns: [
+                    { title: "Subject" },
+                    { title: "Course ID" },
+                    { title: "Course Title" },
+                    { title: "Remove", "data": null, defaultContent: "<center><button>-</button></center>" }
+                ]
+
+            } );
+            $('#wishList tbody').on( 'click', 'button', function () {
+                var data = wishListTable.row( $(this).parents('tr') ).data();
+                removeFromWishList(data[0], data[1], data[2], data[3]);
+            } );
+            //localStorage.clear();
+
+            // SETS UP CALENDAR
             $('#calendar').fullCalendar({
                 defaultDate: moment('2018-01-01'),
                 weekends: false,
@@ -19,31 +46,13 @@
 
                 events: [{}]
             });
-        }
 
-        function tablesInit() {
-            $('#courses').DataTable({"lengthChange": false, "dom": "<'row'<'col-sm-6'f>>" + "t"});
-            $('.dataTables_filter').addClass('pull-left');
-            var wishListTable = $('#wishList').DataTable( {
-                "bPaginate": false,
-                "searching": false,
-                "info": false,
-                columns: [
-                    { title: "Subject" },
-                    { title: "Course ID" },
-                    { title: "Course Title" },
-                    { title: "Remove", "data": null, defaultContent: "<center><button>-</button></center>" }
-                ]
+            // DEALS WITH THE TABS FEATURE
+            $(".nav-tabs a").click(function(){
+                $(this).tab('show');
+            });
 
-            } );
-            $('#wishList tbody').on( 'click', 'button', function () {
-                var data = wishListTable.row( $(this).parents('tr') ).data();
-                removeFromWishList(data[0], data[1], data[2], data[3]);
-            } );
-        }
-
-        function slidersInit(){
-            // TIME SLIDER INIT
+            // SLIDER INIT
             var timeSlider = document.getElementById('timeSlider');
             noUiSlider.create(timeSlider, {
                 connect: true,
@@ -115,41 +124,24 @@
             maxCredits.addEventListener('change', function() {
                 creditSlider.noUiSlider.set([null, this.value]);
             });
-        }
-    </script>
-    <script type='text/javascript'>
 
-        var scheduleIndex = 0;
-        var numSchedules = 0;
-        var schedules = [[{}]];
-
-        // Runs as soon as the web page is loaded
-        $(document).ready( function () {
-            //localStorage.clear();
-
-            // SETS UP TABLES
-            tablesInit();
-
-            // SETS UP CALENDAR
-            calendarInit();
-
-            // DEALS WITH THE TABS FEATURE FOR SWITCHIN BETWEEN SEARCHING COURSES AND FILTERS
-            $(".nav-tabs a").click(function(){
-                $(this).tab('show');
-            });
-
-            // SLIDERS INIT
-            slidersInit();
 
             // CALLS THE UPDATE LAST
             updateSchedules();
         } );
 
-        // =================================================================
-        // MARK: UPDATE FUNCTIONS (FUNCTIONS THAT UPDATE THE UI IN SOME WAY)
-        // =================================================================
+        function updateCalendar() {
+            $('#calendar').fullCalendar('removeEvents');
+            $('#calendar').fullCalendar('addEventSource', schedules[scheduleIndex]);
+            $('#calendar').fullCalendar('rerenderEvents' );
+            if (Object.keys(schedules[0][0]).length == 0){
+                document.getElementById("scheduleDisplay").innerHTML = "0/0";
+            } else {
+                document.getElementById("scheduleDisplay").innerHTML = (scheduleIndex+1).toString() + "/" + numSchedules.toString();
+            }
 
-        // Runs after every filter update or when a user adds/removes a course from their wishlist
+        }
+
         function updateSchedules() {
             var wishList = JSON.parse(localStorage.getItem("wishList")) || {};
             var filters = $('#wishListFilters').serializeArray().reduce(function(obj, item) {
@@ -158,7 +150,7 @@
             }, {});
 
             $.ajax({
-                url: '{% url "get_schedules" %}',  // Uses Django syntax to get the url in case we change it in urls.py
+                url: '{% url "get_schedules" %}',
                 method: 'POST',
                 data: {
                     "wishList": wishList,
@@ -167,68 +159,34 @@
                     },
                 dataType: 'json',
                 success: function (data) {
-                    // data format: [[{}]]  (a list of schedules where each schedule is a list of sections)
                     schedules = data;
                     scheduleIndex = 0;
                     numSchedules = schedules.length;
                     updateCalendar();
+                    updateWishListTable();
                 }
             });
         }
 
-        // runs when ever the user clicks to go to the next/previous schedule
-        function updateCalendar() {
-            $('#calendar').fullCalendar('removeEvents');
-            $('#calendar').fullCalendar('addEventSource', schedules[scheduleIndex]);
-            $('#calendar').fullCalendar('rerenderEvents' );
-            if (Object.keys(schedules[0][0]).length == 0){  // if there are no schedules
-                document.getElementById("scheduleDisplay").innerHTML = "0/0";
-            } else {
-                document.getElementById("scheduleDisplay").innerHTML = (scheduleIndex+1).toString() + "/" + numSchedules.toString();
-            }
-
-        }
-
-        // Runs when a user adds/removes a course from their wishlist
-        function updateWishListTable(){
-            var data = [];
-            var wishList = JSON.parse(localStorage.getItem("wishList")) || {};
-            Object.keys(wishList).forEach(function(key) {
-                var row = [wishList[key]["subject"], wishList[key]["course_id"], wishList[key]["title"], key];
-                data.push(row);
-            });
-            $('#wishList').DataTable().clear();
-            $('#wishList').DataTable().rows.add(data);
-            $('#wishList').DataTable().draw();
-        }
-
-        // =======================================================================
-        // MARK: USER INTERACTIONS (FUNCTIONS THAT RUN WHEN A USER CLICKS A BUTTON
-        // =======================================================================
-
-        // Runs when the user adds an course from their wishlist
         function addToWishList(subject, course_id, title, crn) {
+
             var newWishListEntry = {"subject": subject, "course_id": course_id, "title": title};
             var wishList = JSON.parse(localStorage.getItem("wishList")) || {};
             wishList[crn] = newWishListEntry;
             localStorage.setItem("wishList", JSON.stringify(wishList))
 
-            updateWishListTable();
             updateSchedules();
+
         }
 
-
-        // Runs when the user removes an course from their wishlist
         function removeFromWishList(subject, course_id, title, crn) {
             var wishList = JSON.parse(localStorage.getItem("wishList")) || {};
             delete wishList[crn];
             localStorage.setItem("wishList", JSON.stringify(wishList))
 
-            updateWishListTable();
             updateSchedules();
         }
 
-        // Runs when the user clicks the left arrow on the calendar
         function scheduleLeft() {
             scheduleIndex -= 1;
             if (scheduleIndex < 0){
@@ -241,13 +199,24 @@
             updateCalendar();
         }
 
-        // Runs when the user clicks the right arrow on the calendar
         function scheduleRight() {
             scheduleIndex += 1;
             if (scheduleIndex >= numSchedules){
                 scheduleIndex = 0;
             }
             updateCalendar();
+        }
+
+        function updateWishListTable(){
+            var data = [];
+            var wishList = JSON.parse(localStorage.getItem("wishList")) || {};
+            Object.keys(wishList).forEach(function(key) {
+                var row = [wishList[key]["subject"], wishList[key]["course_id"], wishList[key]["title"], key];
+                data.push(row);
+            });
+            $('#wishList').DataTable().clear();
+            $('#wishList').DataTable().rows.add(data);
+            $('#wishList').DataTable().draw();
         }
     </script>
 {% endblock %}
