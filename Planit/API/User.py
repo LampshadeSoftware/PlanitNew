@@ -39,6 +39,16 @@ class API_User:
 		elif filter == 'maxCredits':
 			self.set_filter_credit_max(value)
 
+		elif filter == 'daysOff':
+			days = value.split(',')
+			for day in days:
+				self.set_filter_forbidden_days(day, True)
+
+		elif filter == 'attr':
+			attributes = value.split(',')
+			for attr in attributes:
+				self.set_filter_desired_attributes(attr, True)
+
 
 	def set_filter_earliest_time(self, time):
 		# print("Setting earliest time to: " + str(time))
