@@ -20,6 +20,7 @@
     <header></header>
 
     <main>
+
         <nav class="navbar navbar-default navbar-custom">
             <div class="container-fluid">
                 <div class="navbar-header">
@@ -52,14 +53,19 @@
                     </div>
                 </div>
                 <!-- Filter Classes (right side of screen) -->
-                <div class="col-sm-8" style="height:100%">
-                    <!-- Calendar -->
-                    <center>
-                        <button onclick="scheduleLeft()"><</button>
-                        <strong><p id="scheduleDisplay" style="display: inline-block;">0/0</p></strong>
-                        <button onclick="scheduleRight()">></button>
-                    </center>
-                    <div id='calendar'></div>
+                <div class="col-sm-8">
+                    <!-- style="overflow-y: scroll; height: 80vh" -->
+                    <div class="row">
+                        <!-- Calendar -->
+                        <div class="col-md-12">
+                            <center>
+                                <button onclick="scheduleLeft()"><</button>
+                                <strong><p id="scheduleDisplay" style="display: inline-block;">0/0</p></strong>
+                                <button onclick="scheduleRight()">></button>
+                            </center>
+                            <div id='calendar'></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -72,6 +78,7 @@
     <script src="{% static 'fullcalendar/lib/moment.min.js' %}"></script>
     <script src="{% static 'fullcalendar/fullcalendar.js' %}"></script>
     <script src="{% static 'multiple-select/multiple-select.js' %}"></script>
+    <script src="{% static 'js/notify.min.js' %}"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script type="text/javascript" charset="utf8" src="{% static 'DataTables/datatables.js' %}"></script>
     <script src="{% static 'noUISlider/nouislider.min.js' %}"></script>

@@ -151,14 +151,14 @@
         $(document).ready( function () {
             //localStorage.clear();
 
+            // SETS UP CALENDAR
+            calendarInit();
+
             // SETS UP TABLES
             tablesInit();
 
             // SETS UP FILTERS WITH MULTIPLE SELECT
             filtersInit();
-
-            // SETS UP CALENDAR
-            calendarInit();
 
             // DEALS WITH THE TABS FEATURE
             $(".nav-tabs a").click(function(){
@@ -242,6 +242,11 @@
             wishList[crn] = newWishListEntry;
             localStorage.setItem("wishList", JSON.stringify(wishList));
 
+            $.notify(
+                "Added " + subject + " " + course_id + " to wish list.", "success",
+                { position:"top" }
+            );
+
             updateWishListTable();
             updateSchedules();
         }
@@ -250,6 +255,11 @@
             var wishList = JSON.parse(localStorage.getItem("wishList")) || {};
             delete wishList[crn];
             localStorage.setItem("wishList", JSON.stringify(wishList));
+
+            $.notify(
+                "Removed " + subject + " " + course_id + " from wish list.", "success",
+                { position:"top" }
+            );
 
             updateWishListTable();
             updateSchedules();
@@ -309,6 +319,7 @@
 {% block wishListFeatures %}
     <form id="wishListFilters">
         <!-- Time Filter -->
+        <br>
         <label for="startTime">Start Time:</label>
         <select id="startTime" name="startTime">
             <option value="480" >8:00</option>

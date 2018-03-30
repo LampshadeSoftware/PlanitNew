@@ -42,7 +42,6 @@ def get_schedules(request):
 				else:
 					filters[filter_key] = data[key]
 
-		print("filters", filters)
 		# if there was a request it sends back the response
 		if wishList:
 			data = Interface.compute_schedules(list(wishList.values()), filters)
