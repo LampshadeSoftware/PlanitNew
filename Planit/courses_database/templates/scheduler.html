@@ -84,6 +84,14 @@
             var startTime = document.getElementById('startTime');
             var endTime = document.getElementById('endTime');
 
+            startTime.addEventListener('change', function(){
+                timeSlider.noUiSlider.set([this.value, null]);
+            });
+
+            endTime.addEventListener('change', function(){
+                timeSlider.noUiSlider.set([null, this.value]);
+            });
+
             timeSlider.noUiSlider.on('update', function( values, handle ) {
 
                 var value = values[handle];
@@ -93,16 +101,10 @@
                 } else {  // left handle
                     startTime.value = Math.round(value);
                 }
-
+                //updateSchedules();
+            });
+            timeSlider.noUiSlider.on('change', function( values, handle ) {
                 updateSchedules();
-            });
-
-            startTime.addEventListener('change', function(){
-                timeSlider.noUiSlider.set([this.value, null]);
-            });
-
-            endTime.addEventListener('change', function(){
-                timeSlider.noUiSlider.set([null, this.value]);
             });
 
 
@@ -122,6 +124,13 @@
             var minCredits = document.getElementById('minCredits');
             var maxCredits = document.getElementById('maxCredits');
 
+            minCredits.addEventListener('change', function() {
+                creditSlider.noUiSlider.set([this.value, null]);
+            });
+            maxCredits.addEventListener('change', function() {
+                creditSlider.noUiSlider.set([null, this.value]);
+            });
+
             creditSlider.noUiSlider.on('update', function (values, handle ) {
                 var value = values[handle];
 
@@ -130,15 +139,10 @@
                 } else {
                     minCredits.value = Math.round(value);
                 }
-
+                //updateSchedules();
+            });
+            creditSlider.noUiSlider.on('change', function( values, handle ) {
                 updateSchedules();
-            });
-
-            minCredits.addEventListener('change', function() {
-                creditSlider.noUiSlider.set([this.value, null]);
-            });
-            maxCredits.addEventListener('change', function() {
-                creditSlider.noUiSlider.set([null, this.value]);
             });
         }
     </script>
@@ -153,34 +157,42 @@
         $(document).ready( function () {
             //localStorage.clear();
 
+            // console.log(1);
             // SETS UP CALENDAR
             calendarInit();
 
+            // console.log(2);
             // SETS UP TABLES
             tablesInit();
 
+            // console.log(3);
             // SETS UP FILTERS WITH MULTIPLE SELECT
             filtersInit();
 
+            // console.log(4);
             // DEALS WITH THE TABS FEATURE
             $(".nav-tabs a").click(function(){
                 $(this).tab('show');
             });
 
+            // console.log(5);
             // SLIDERS INIT
             slidersInit();
 
-
+            // console.log(6);
             // CALLS THE UPDATE LAST
-            updateSchedules();
+            updateSchedules(false);
+            // console.log(7);
             updateWishListTable();
+            // console.log(8);
         } );
 
         // =================================================================
         // MARK: UPDATE FUNCTIONS (FUNCTIONS THAT UPDATE THE UI IN SOME WAY)
         // =================================================================
 
-        function updateSchedules() {
+        function updateSchedules(is_async) {
+            if (typeof(is_async)==='undefined') is_async = true;
             var wishList = JSON.parse(localStorage.getItem("wishList")) || {};
             var filters = $('#wishListFilters').serializeArray().reduce(function(obj, item) {
                 obj[item.name] = item.value;
@@ -189,6 +201,8 @@
 
             filters["daysOff"] = String($("#daysOff").multipleSelect("getSelects"));
             filters["attr"] = String($("#attributes").multipleSelect("getSelects"));
+
+            console.log("updating schedules");
 
             $.ajax({
                 url: '{% url "get_schedules" %}',
@@ -199,12 +213,17 @@
                     "csrfmiddlewaretoken": '{{ csrf_token }}'
                     },
                 dataType: 'json',
+                async: is_async,
                 success: function (data) {
                     schedules = data["schedules"];
                     coursesInfo = data["coursesInfo"];
                     scheduleIndex = 0;
                     numSchedules = schedules.length;
                     updateCalendar();
+                    updateWishListTable();
+                },
+                error: function(XMLHttpRequest, textStatus, errorThrown) {
+                    alert("Status: " + textStatus); alert("Error: " + errorThrown);
                 }
             });
         }
@@ -212,9 +231,24 @@
         function updateWishListTable(){
             var data = [];
             var wishList = JSON.parse(localStorage.getItem("wishList")) || {};
+
+            var wishListButtons = document.getElementById("wishListButtonsHolder");
+            wishListButtons.innerHTML = "";
+
             Object.keys(wishList).forEach(function(key) {
-                var row = [wishList[key]["subject"], wishList[key]["course_id"], wishList[key]["title"], key];
+                var subject = wishList[key]["subject"];
+                var course_id = wishList[key]["course_id"];
+                var row = [subject, course_id, wishList[key]["title"], key];
                 data.push(row);
+
+                var button = document.createElement("button");
+                button.innerHTML = subject + " " + course_id;
+                if (coursesInfo[subject+course_id]) {
+                    button.style.background = coursesInfo[subject+course_id]["color"];
+                }
+                button.style.color = "white";
+                wishListButtons.appendChild(button);
+
             });
             var wishListTable = $('#wishList');
             wishListTable.DataTable().clear();
@@ -250,7 +284,7 @@
                 { position:"top" }
             );
 
-            updateWishListTable();
+            // updateWishListTable();
             updateSchedules();
         }
 
@@ -264,7 +298,7 @@
                 { position:"top" }
             );
 
-            updateWishListTable();
+            // updateWishListTable();
             updateSchedules();
         }
 
@@ -320,6 +354,7 @@
 {% endblock %}
 
 {% block wishListFeatures %}
+    <div id="wishListButtonsHolder"></div>
     <form id="wishListFilters">
         <!-- Time Filter -->
         <br>
