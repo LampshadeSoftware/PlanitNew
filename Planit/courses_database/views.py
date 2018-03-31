@@ -42,16 +42,16 @@ def get_schedules(request):
 				else:
 					filters[filter_key] = data[key]
 
-		default_response = {"schedules": [[{}]], "info": {}}
+		default_response = {"schedules": [[{}]], "coursesInfo": {}}
 		# if there was a request it sends back the response
 		if wishList:
 			schedules, courses_info = Interface.compute_schedules(list(wishList.values()), filters)
 			if len(schedules) > 0:
-				return JsonResponse(schedules, safe=False)
+				return JsonResponse({"schedules": schedules, "coursesInfo": courses_info}, safe=False)
 			else:
-				return JsonResponse([[{}]], safe=False)
+				return JsonResponse(default_response, safe=False)
 		else:
 			# returns a default value
-			return JsonResponse([[{}]], safe=False)
+			return JsonResponse(default_response, safe=False)
 	else:
 		return HttpResponse("You shouldn't be here... 0.0")

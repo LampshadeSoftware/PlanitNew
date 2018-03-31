@@ -200,7 +200,8 @@
                     },
                 dataType: 'json',
                 success: function (data) {
-                    schedules = data;
+                    schedules = data["schedules"];
+                    coursesInfo = data["coursesInfo"];
                     scheduleIndex = 0;
                     numSchedules = schedules.length;
                     updateCalendar();
