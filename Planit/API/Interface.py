@@ -14,7 +14,7 @@ django.setup()
 from API.User import *
 
 # your imports, e.g. Django models
-from courses_database.models import WishList
+from courses_database.models import Section
 
 from API.Section import *
 from API.TimeBlock import *
@@ -27,11 +27,19 @@ subject, course_id, and title as keys
 def compute_schedules(wish_list, filters):
 	user = API_User()
 
-	colors = ["#46B8AF", "#CE5858", "#5869CE", "#BD4EAC"]
+	colors = ["#46B8AF", "#5869CE", "#CE5858", "#BD4EAC", "#F0962A"]
 	colors_dict = {}
-
+	courses_info = {}  # gets all additional info that we need like colors and descriptions
 	for i, course in enumerate(wish_list):
-		colors_dict[str(course['subject']) + str(course['course_id'])] = colors[i % len(colors)]
+		subject = str(course['subject'])
+		course_id = str(course['course_id'])
+		colors_dict[subject + course_id] = colors[i % len(colors)]
+
+		course_object = Section.objects.all().filter(subject=subject, course_id=course_id)[0]
+		courses_info.setdefault(subject + course_id, {})
+		courses_info[subject+course_id]["color"] = colors[i % len(colors)]
+		courses_info[subject+course_id]["description"] = course_object.description
+
 		user.add_to_wish_list(str(course['subject']), str(course['course_id']))
 
 	for key in filters:
@@ -48,6 +56,7 @@ def compute_schedules(wish_list, filters):
 		print()
 	"""
 
+
 	#print(user.get_all_schedules_as_dict(colors_dict))
-	return user.get_all_schedules_as_dict(colors_dict)
+	return user.get_all_schedules_as_dict(colors_dict), courses_info
 
