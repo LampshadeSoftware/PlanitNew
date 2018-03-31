@@ -49,7 +49,7 @@ def get_schedules(request):
 			if len(schedules) > 0:
 				return JsonResponse({"schedules": schedules, "coursesInfo": courses_info}, safe=False)
 			else:
-				return JsonResponse(default_response, safe=False)
+				return JsonResponse({"schedules": [[{}]], "coursesInfo": courses_info}, safe=False)
 		else:
 			# returns a default value
 			return JsonResponse(default_response, safe=False)

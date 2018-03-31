@@ -5,22 +5,6 @@
         function tablesInit(){
             $('#courses').DataTable({"lengthChange": false, "dom": "<'row'<'col-sm-6'f>>" + "t"});
             $('.dataTables_filter').addClass('pull-left');
-            var wishListTable = $('#wishList').DataTable( {
-                "bPaginate": false,
-                "searching": false,
-                "info": false,
-                columns: [
-                    { title: "Subject" },
-                    { title: "Course ID" },
-                    { title: "Course Title" },
-                    { title: "Remove", "data": null, defaultContent: "<center><button>-</button></center>" }
-                ]
-
-            } );
-            $('#wishList tbody').on( 'click', 'button', function () {
-                var data = wishListTable.row( $(this).parents('tr') ).data();
-                removeFromWishList(data[0], data[1], data[2], data[3]);
-            } );
         }
 
         function filtersInit(){
@@ -155,7 +139,7 @@
         var coursesInfo = {};  // Is a dictionary that maps "subject+course_id" to an info dict for that course
 
         $(document).ready( function () {
-            //localStorage.clear();
+            localStorage.clear();
 
             // console.log(1);
             // SETS UP CALENDAR
@@ -183,8 +167,6 @@
             // CALLS THE UPDATE LAST
             updateSchedules(false);
             // console.log(7);
-            updateWishListTable();
-            // console.log(8);
         } );
 
         // =================================================================
@@ -220,7 +202,7 @@
                     scheduleIndex = 0;
                     numSchedules = schedules.length;
                     updateCalendar();
-                    updateWishListTable();
+                    updateWishListVisuals();
                 },
                 error: function(XMLHttpRequest, textStatus, errorThrown) {
                     alert("Status: " + textStatus); alert("Error: " + errorThrown);
@@ -228,8 +210,7 @@
             });
         }
 
-        function updateWishListTable(){
-            var data = [];
+        function updateWishListVisuals(){
             var wishList = JSON.parse(localStorage.getItem("wishList")) || {};
 
             var wishListButtons = document.getElementById("wishListButtonsHolder");
@@ -238,22 +219,25 @@
             Object.keys(wishList).forEach(function(key) {
                 var subject = wishList[key]["subject"];
                 var course_id = wishList[key]["course_id"];
-                var row = [subject, course_id, wishList[key]["title"], key];
-                data.push(row);
 
                 var button = document.createElement("button");
                 button.innerHTML = subject + " " + course_id;
                 if (coursesInfo[subject+course_id]) {
                     button.style.background = coursesInfo[subject+course_id]["color"];
+                    button.style.color = "white";
                 }
-                button.style.color = "white";
+                button.style.borderRadius = "7px";
+                button.style.height = "50px";
+                button.style.width = "100px";
+                button.addEventListener("click", function () {
+                    var title = document.getElementById("courseTitle");
+                    title.innerHTML = subject + " " + course_id;
+                    console.log(coursesInfo[subject+course_id]);
+                    var description = document.getElementById("courseDescription");
+                    description.innerHTML = coursesInfo[subject+course_id]["description"];
+                });
                 wishListButtons.appendChild(button);
-
             });
-            var wishListTable = $('#wishList');
-            wishListTable.DataTable().clear();
-            wishListTable.DataTable().rows.add(data);
-            wishListTable.DataTable().draw();
         }
 
         function updateCalendar() {
@@ -273,10 +257,10 @@
         // MARK: USER INTERACTIONS (FUNCTIONS THAT RUN WHEN A USER CLICKS A BUTTON
         // =======================================================================
 
-        function addToWishList(subject, course_id, title, crn) {
+        function addToWishList(subject, course_id, title) {
             var newWishListEntry = {"subject": subject, "course_id": course_id, "title": title};
             var wishList = JSON.parse(localStorage.getItem("wishList")) || {};
-            wishList[crn] = newWishListEntry;
+            wishList[subject+course_id] = newWishListEntry;
             localStorage.setItem("wishList", JSON.stringify(wishList));
 
             $.notify(
@@ -288,9 +272,9 @@
             updateSchedules();
         }
 
-        function removeFromWishList(subject, course_id, title, crn) {
+        function removeFromWishList(subject, course_id) {
             var wishList = JSON.parse(localStorage.getItem("wishList")) || {};
-            delete wishList[crn];
+            delete wishList[subject+course_id];
             localStorage.setItem("wishList", JSON.stringify(wishList));
 
             $.notify(
@@ -341,7 +325,7 @@
                 <td> {{ item.course_id }} </td>
                 <td> {{ item.title }}</td>
                 <td style="text-align: center;">
-                    <button onclick="addToWishList('{{item.subject}}','{{item.course_id}}','{{item.title}}','{{item.crn}}')">+</button>
+                    <button onclick="addToWishList('{{item.subject}}','{{item.course_id}}','{{item.title}}')">+</button>
                 </td>
             </tr>
             {% endfor %}
@@ -349,17 +333,20 @@
     </table>
 {% endblock %}
 
-{% block wishListTable %}
-    <table id="wishList" class="display" width="100%"></table>
+{% block coursesInfo %}
+    <div id="coursesInfo">
+        <strong><h4 id="courseTitle">Course Title</h4></strong>
+        <p id="courseDescription">Description</p>
+    </div>
 {% endblock %}
 
 {% block wishListFeatures %}
-    <div id="wishListButtonsHolder"></div>
+    <div id="wishListButtonsHolder" style="padding-top: 7px"></div>
+    <hr>
     <form id="wishListFilters">
         <!-- Time Filter -->
-        <br>
         <label for="startTime">Start Time:</label>
-        <select id="startTime" name="startTime">
+        <select id="startTime" name="startTime" onchange="updateSchedules()">
             <option value="480" >8:00</option>
             <option value="510" >8:30</option>
             <option value="540" >9:00</option>
@@ -381,7 +368,7 @@
             <option value="1020" >5:00</option>
         </select>
         <label for="endTime">End Time:</label>
-        <select id="endTime" name="endTime">
+        <select id="endTime" name="endTime" onchange="updateSchedules()">
             <option value="480" >8:00</option>
             <option value="510" >8:30</option>
             <option value="540" >9:00</option>
@@ -406,7 +393,7 @@
 
         <!-- Credit Filter -->
         <label for="minCredits">Minimum Credits:</label>
-        <select id="minCredits" name="minCredits">
+        <select id="minCredits" name="minCredits" onchange="updateSchedules()">
             <option value="1" >1</option>
             <option value="2" >2</option>
             <option value="3" >3</option>
@@ -429,7 +416,7 @@
             <option value="20" >20</option>
         </select>
         <label for="maxCredits">Maximum Credits:</label>
-        <select id="maxCredits" name="maxCredits">
+        <select id="maxCredits" name="maxCredits" onchange="updateSchedules()">
             <option value="1" >1</option>
             <option value="2" >2</option>
             <option value="3" >3</option>
@@ -545,4 +532,5 @@
             <option value="UNSM" >University Seminar Req -- UNSM</option>
         </select>
     </form>
+    <hr>
 {% endblock %}
