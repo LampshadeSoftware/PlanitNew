@@ -42,21 +42,14 @@ def compute_schedules(wish_list, filters):
 
 		user.add_to_wish_list(str(course['subject']), str(course['course_id']))
 
+	# apply filters
 	for key in filters:
 		#print("Recieving filter - {" + str(key) + ": " + str(filters[key]) + "}")
 		if len(filters[key]) > 0:
 			user.apply_filter(key, filters[key])
 		pass
 
-	# apply filters
-	"""
-	for x in user.get_all_schedules():
-		print("NEW SCHEDULE")
-		print(x)
-		print()
-	"""
-
 
 	#print(user.get_all_schedules_as_dict(colors_dict))
-	return user.get_all_schedules_as_dict(colors_dict), courses_info
+	return user.get_all_schedules_as_dicts(colors_dict), courses_info
 
