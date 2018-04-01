@@ -112,14 +112,6 @@ class API_User:
 
 		return want_list
 
-	def get_all_schedules_as_dict(self, colors_dict):
-
-		out = []
-		for sched in self.get_all_schedules():
-			out.append(sched.convert_to_dict(colors_dict))
-
-		return out
-
 	def get_all_schedules(self):
 
 		# start with an empty schedule
@@ -223,7 +215,15 @@ class API_User:
 
 		return True
 
+	def get_all_schedules_as_dicts(self):
 
+		out = []
+		for sched in self.get_all_schedules():
+			out.append(sched.convert_to_dict())
+
+		return out
+
+	def get_interface_output(self, colors_dict):
 
 
 

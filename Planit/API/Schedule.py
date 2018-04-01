@@ -85,38 +85,27 @@ class API_Schedule:
 	TODO: fix this so that each dictionary is one section, with another list of time
 	block dictionaries for meet times
 	'''
-	def convert_to_dict(self, colors_dict):
+	def convert_to_dict(self):
 
-		out = []
+		sched = dict()
+		sched['total_credits'] = self.total_credits()
 
-		for i, section in enumerate(self._sections):
-			subject = section.get_course().get_subject()
-			course_id = section.get_course().get_course_id()
-			title = section.get_title()
-			section_num = section.get_section_number()
+		sections = []
 
-			# sets the colors
-			color = colors_dict[subject + course_id]
+		for section in self._sections:
 
-			for block in section.get_time_blocks():
-				block = block.get_as_dict()
-				class_dict = dict()
+			section_dict = dict()
+			section_dict['subject'] = section.get_course().get_subject()
+			section_dict['course_id'] = section.get_course().get_course_id()
+			section_dict['title'] = section.get_title()
+			section_dict['crn'] = section.get_crn()
+			section_dict['num_credits'] = section.get_course().get_num_credits()
+			section_dict['times'] = section.get_time_blocks().get_as_dict()
 
-				"""
-				class_dict['crn'] = section.get_crn()
-				class_dict['subject'] = section.get_course().get_subject()
-				class_dict['course_id'] = section.get_course().get_course_id()
-				class_dict['section_num'] = section.get_section_number()
-				"""
+			sections.append(section_dict)
 
-				start = "2018-01-0{}T{}:{}".format(block["day"], block["start_hour"], block["start_minute"])
-				end = "2018-01-0{}T{}:{}".format(block["day"], block["end_hour"], block["end_minute"])
+		sched['sections'] = sections
 
-				class_dict['title'] = subject + " " + course_id + " " + section_num + " - " + title
-				class_dict['start'] = start
-				class_dict['end'] = end
-				class_dict['color'] = color
+		return sched
 
-				out.append(class_dict)
 
-		return out
