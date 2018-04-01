@@ -216,9 +216,16 @@
             var wishListButtons = document.getElementById("wishListButtonsHolder");
             wishListButtons.innerHTML = "";
 
+            if (Object.keys(wishList).length === 0){
+                var noButtons = document.createElement("p");
+                noButtons.innerHTML = "Go to the search classes tab to add classes."
+                wishListButtons.appendChild(noButtons);
+            }
+
             Object.keys(wishList).forEach(function(key) {
                 var subject = wishList[key]["subject"];
                 var course_id = wishList[key]["course_id"];
+                var title = wishList[key]["title"];
 
                 var button = document.createElement("button");
                 button.innerHTML = subject + " " + course_id;
@@ -230,9 +237,8 @@
                 button.style.height = "50px";
                 button.style.width = "100px";
                 button.addEventListener("click", function () {
-                    var title = document.getElementById("courseTitle");
-                    title.innerHTML = subject + " " + course_id;
-                    console.log(coursesInfo[subject+course_id]);
+                    var courseTitle = document.getElementById("courseTitle");
+                    courseTitle.innerHTML = subject + " " + course_id + " - " + title;
                     var description = document.getElementById("courseDescription");
                     description.innerHTML = coursesInfo[subject+course_id]["description"];
                 });
