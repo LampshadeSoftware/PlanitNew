@@ -197,6 +197,7 @@
                 dataType: 'json',
                 async: is_async,
                 success: function (data) {
+                    coursesInfo = data["coursesInfo"];
                     var raw_schedules = data["schedules"];
                     if (raw_schedules.length > 0){
                         schedules = [];
@@ -221,7 +222,8 @@
                                     schedule.push({
                                         "title": subject + " " + courseId + " " + sectionNum + " - " + title,
                                         "start": "2018-01-0" + day + 'T' + startHour + ":" + startMinute,
-                                        "end": "2018-01-0" + day + 'T' + endHour + ":" + endMinute
+                                        "end": "2018-01-0" + day + 'T' + endHour + ":" + endMinute,
+                                        "color": coursesInfo[subject+courseId]["color"]
                                     });
                                 }
                             }
@@ -233,7 +235,6 @@
                         numSchedules = 0
                     }
 
-                    coursesInfo = data["coursesInfo"];
                     scheduleIndex = 0;
                     updateCalendar();
                     updateWishListVisuals();
