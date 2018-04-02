@@ -101,17 +101,7 @@ class API_Schedule:
 			section_dict['section_num'] = section.get_section_number()
 			section_dict['crn'] = section.get_crn()
 			section_dict['num_credits'] = section.get_course().get_num_credits()
-
-			time_list = []
-			for time_block in section.get_time_blocks():
-				time_list.append(time_block.get_as_dict())
-
-			section_dict['times'] = time_list
-			print()
-			print("TIMES")
-			for time in time_list:
-				print(time)
-			print()
+			section_dict['times'] = [x.get_as_dict() for x in section.get_time_blocks()]
 
 			key = section_dict['subject'] + section_dict['course_id']
 			sections[key] = section_dict

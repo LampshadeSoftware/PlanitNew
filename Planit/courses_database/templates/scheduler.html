@@ -134,7 +134,7 @@
 
         var scheduleIndex = 0;
         var numSchedules = 0;
-        var schedules = [];
+        var schedules = [[{}]];  // this will be used by FullCalendar so keep this format
 
         var coursesInfo = {};  // Is a dictionary that maps "subject+course_id" to an info dict for that course
 
@@ -197,10 +197,44 @@
                 dataType: 'json',
                 async: is_async,
                 success: function (data) {
-                    schedules = data["schedules"];
+                    var raw_schedules = data["schedules"];
+                    if (raw_schedules.length > 0){
+                        schedules = [];
+                        for (var i in raw_schedules){
+                            var schedule = [];
+                            var sections = raw_schedules[i]["sections"];
+                            for (var j in sections){
+                                var section = sections[j];
+
+                                var subject = section["subject"];
+                                var courseId = section["course_id"];
+                                var sectionNum = section["section_num"];
+                                var title = section["title"];
+                                for(var t in section["times"]){
+                                    var time = section["times"][t];
+                                    console.log(time);
+                                    var day = time["day"];
+                                    var startHour = time["start_hour"];
+                                    var startMinute = time["start_minute"];
+                                    var endHour = time["end_hour"];
+                                    var endMinute = time["end_minute"];
+                                    schedule.push({
+                                        "title": subject + " " + courseId + " " + sectionNum + " - " + title,
+                                        "start": "2018-01-0" + day + 'T' + startHour + ":" + startMinute,
+                                        "end": "2018-01-0" + day + 'T' + endHour + ":" + endMinute
+                                    });
+                                }
+                            }
+                            schedules.push(schedule);
+                        }
+                        numSchedules = schedules.length;
+                    } else {
+                        schedules = [[{}]]
+                        numSchedules = 0
+                    }
+
                     coursesInfo = data["coursesInfo"];
                     scheduleIndex = 0;
-                    numSchedules = schedules.length;
                     updateCalendar();
                     updateWishListVisuals();
                 },
@@ -249,48 +283,11 @@
         function updateCalendar() {
             var calendar = $('#calendar');
             calendar.fullCalendar('removeEvents');
-
-            var event_source = [{}];
-
-            if(numSchedules > 0) {
-
-                var sections_dict = schedules[scheduleIndex]['sections'];
-
-                var section_key;
-                var section;
-
-
-                for(section_key in sections_dict) {
-                    section = sections_dict[section_key];
-
-                    var times = section['times'];
-                    for(var i = 0; i < times.length; i++) {
-                        var time_block = times[i];
-
-                        var event_title = section['subject'] + " " + section['course_id']
-                            + " " + section['title'];
-                        var event_start = "2018-01-0" + time_block['day'] + 'T' +
-                            time_block['start_hour'] + ":" + time_block['start_minute'];
-                        var event_end = "2018-01-0" + time_block['day'] + 'T' +
-                            time_block['end_hour'] + ":" + time_block['end_minute'];
-
-                        event_source.push({
-                            title: event_title,
-                            start: event_start,
-                            end: event_end,
-                            //color: ,
-                            allDay: false
-                        });
-
-                    }
-
-                }
-
-            }
-
-
-            calendar.fullCalendar('addEventSource', event_source);
-            calendar.fullCalendar('rerenderEvents' );
+            console.log(1);
+            console.log(schedules[scheduleIndex]);
+            console.log(2);
+            calendar.fullCalendar('addEventSource', schedules[scheduleIndex]);
+            calendar.fullCalendar('rerenderEvents');
             if (numSchedules === 0){
                 document.getElementById("scheduleDisplay").innerHTML = "0/0";
             } else {
