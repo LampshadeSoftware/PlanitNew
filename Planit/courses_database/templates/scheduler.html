@@ -213,7 +213,6 @@
                                 var title = section["title"];
                                 for(var t in section["times"]){
                                     var time = section["times"][t];
-                                    console.log(time);
                                     var day = time["day"];
                                     var startHour = time["start_hour"];
                                     var startMinute = time["start_minute"];
@@ -284,9 +283,6 @@
         function updateCalendar() {
             var calendar = $('#calendar');
             calendar.fullCalendar('removeEvents');
-            console.log(1);
-            console.log(schedules[scheduleIndex]);
-            console.log(2);
             calendar.fullCalendar('addEventSource', schedules[scheduleIndex]);
             calendar.fullCalendar('rerenderEvents');
             if (numSchedules === 0){

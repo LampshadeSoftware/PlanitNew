@@ -225,7 +225,6 @@ class API_User:
 
 	def get_interface_output(self, colors_dict):
 		schedules = self.get_all_schedules_as_dicts()
-		print(schedules)
 		used_courses = dict()
 		for key in self._used_courses:
 			used_courses[key] = dict()
