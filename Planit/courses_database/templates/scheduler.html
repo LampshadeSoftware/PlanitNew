@@ -259,23 +259,21 @@
                 var section_key;
                 var section;
 
-                var time_block;
 
                 for(section_key in sections_dict) {
-
                     section = sections_dict[section_key];
+
                     var times = section['times'];
-                    for(time_block in times) {
-                        alert("test");
-                        alert(time_block);
+                    for(var i = 0; i < times.length; i++) {
+                        var time_block = times[i];
+
                         var event_title = section['subject'] + " " + section['course_id']
                             + " " + section['title'];
                         var event_start = "2018-01-0" + time_block['day'] + 'T' +
                             time_block['start_hour'] + ":" + time_block['start_minute'];
-                        var event_start = "2018-01-0" + time_block['day'] + 'T' +
+                        var event_end = "2018-01-0" + time_block['day'] + 'T' +
                             time_block['end_hour'] + ":" + time_block['end_minute'];
 
-                        alert(event_start);
                         event_source.push({
                             title: event_title,
                             start: event_start,
