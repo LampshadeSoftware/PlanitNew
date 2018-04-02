@@ -26,7 +26,7 @@ class API_User:
 		#self.set_filter_desired_attributes('CSI', True)
 
 		# keeps track of all of the courses that actually end up in a possible schedule
-		self._used_courses = dict()
+		self._used_courses = set()
 
 
 	def apply_filter(self, filter, value):
@@ -225,12 +225,13 @@ class API_User:
 
 	def get_interface_output(self, colors_dict):
 		schedules = self.get_all_schedules_as_dicts()
+		print(schedules)
 		used_courses = dict()
 		for key in self._used_courses:
-			course_info[key] = dict()
-			course_info[key]['color'] = colors_dict[key]
+			used_courses[key] = dict()
+			used_courses[key]['color'] = colors_dict[key]
 
-		return {'schedules': schedules, 'used_courses': used_courses}
+		return {'schedules': schedules, 'coursesInfo': used_courses}
 
 
 

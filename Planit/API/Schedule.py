@@ -38,7 +38,7 @@ class API_Schedule:
 	def get_course_set(self):
 		out = set()
 		for section in self._sections:
-			course = section.get_course().get_subject()
+			course = section.get_course()
 			subject = course.get_subject()
 			id = course.get_course_id()
 
