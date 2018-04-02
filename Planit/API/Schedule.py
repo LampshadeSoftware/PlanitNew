@@ -86,7 +86,6 @@ class API_Schedule:
 	block dictionaries for meet times
 	'''
 	def convert_to_dict(self):
-		print("test")
 		sched = dict()
 		sched['total_credits'] = self.total_credits()
 

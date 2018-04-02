@@ -223,9 +223,8 @@ class API_User:
 		return out
 
 	def get_interface_output(self, colors_dict):
-		out = self.get_all_schedules_as_dicts()
-		print(out)
-		return out
+		return self.get_all_schedules_as_dicts()
+
 
 
 
