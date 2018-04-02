@@ -134,7 +134,7 @@
 
         var scheduleIndex = 0;
         var numSchedules = 0;
-        var schedules = [[{}]];
+        var schedules = [];
 
         var coursesInfo = {};  // Is a dictionary that maps "subject+course_id" to an info dict for that course
 
@@ -249,9 +249,51 @@
         function updateCalendar() {
             var calendar = $('#calendar');
             calendar.fullCalendar('removeEvents');
-            calendar.fullCalendar('addEventSource', schedules[scheduleIndex]);
+
+            var event_source = [{}];
+
+            if(numSchedules > 0) {
+
+                var sections_dict = schedules[scheduleIndex]['sections'];
+
+                var section_key;
+                var section;
+
+                var time_block;
+
+                for(section_key in sections_dict) {
+
+                    section = sections_dict[section_key];
+                    var times = section['times'];
+                    for(time_block in times) {
+                        alert("test");
+                        alert(time_block);
+                        var event_title = section['subject'] + " " + section['course_id']
+                            + " " + section['title'];
+                        var event_start = "2018-01-0" + time_block['day'] + 'T' +
+                            time_block['start_hour'] + ":" + time_block['start_minute'];
+                        var event_start = "2018-01-0" + time_block['day'] + 'T' +
+                            time_block['end_hour'] + ":" + time_block['end_minute'];
+
+                        alert(event_start);
+                        event_source.push({
+                            title: event_title,
+                            start: event_start,
+                            end: event_end,
+                            //color: ,
+                            allDay: false
+                        });
+
+                    }
+
+                }
+
+            }
+
+
+            calendar.fullCalendar('addEventSource', event_source);
             calendar.fullCalendar('rerenderEvents' );
-            if (Object.keys(schedules[0][0]).length === 0){
+            if (numSchedules === 0){
                 document.getElementById("scheduleDisplay").innerHTML = "0/0";
             } else {
                 document.getElementById("scheduleDisplay").innerHTML = (scheduleIndex+1).toString() + "/" + numSchedules.toString();

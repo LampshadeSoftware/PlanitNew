@@ -216,7 +216,6 @@ class API_User:
 		return True
 
 	def get_all_schedules_as_dicts(self):
-
 		out = []
 		for sched in self.get_all_schedules():
 			out.append(sched.convert_to_dict())
@@ -224,7 +223,9 @@ class API_User:
 		return out
 
 	def get_interface_output(self, colors_dict):
-		return self.get_all_schedules_as_dicts()
+		out = self.get_all_schedules_as_dicts()
+		print(out)
+		return out
 
 
 
