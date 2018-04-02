@@ -25,6 +25,9 @@ class API_User:
 		self._filters['desired_attributes'] = set()
 		#self.set_filter_desired_attributes('CSI', True)
 
+		# keeps track of all of the courses that actually end up in a possible schedule
+		self._used_courses = dict()
+
 
 	def apply_filter(self, filter, value):
 		if filter == 'startTime':
@@ -80,11 +83,11 @@ class API_User:
 			self._filters['desired_attributes'].remove(attribute)
 
 
-	def add_to_wish_list(self, subject, course_id):
+	def add_to_wish_list(self, subject, course_id, optional=True):
 		key = str(subject) + str(course_id)
 		if key not in self._wish_list:
 			course = API_Course(subject, course_id)
-			self._wish_list[key] = [course, True]
+			self._wish_list[key] = [course, optional]
 		else:
 			pass
 			# print(key + " already in wish list")
@@ -125,13 +128,11 @@ class API_User:
 		# if we have added all our required courses, we can begin to add optional courses
 		if len(course_list) == 0:
 			if not optional:
-				# if the new schedule also passes the final filters, it is technically a valid schedule, even though
-				# we might be able to add more to it
-				if self.schedule_passes_final_filters(locked_schedule):
-					possible_schedules.append(locked_schedule)
 				return self._get_all_schedules_recursive(locked_schedule, self.get_want_list(), True)
 			else:
 				if self.schedule_passes_final_filters(locked_schedule):
+					# update used courses set
+					self._used_courses.update(locked_schedule.get_course_set())
 					return [locked_schedule]
 				else:
 					return []
@@ -223,7 +224,13 @@ class API_User:
 		return out
 
 	def get_interface_output(self, colors_dict):
-		return self.get_all_schedules_as_dicts()
+		schedules = self.get_all_schedules_as_dicts()
+		used_courses = dict()
+		for key in self._used_courses:
+			course_info[key] = dict()
+			course_info[key]['color'] = colors_dict[key]
+
+		return {'schedules': schedules, 'used_courses': used_courses}
 
 
 

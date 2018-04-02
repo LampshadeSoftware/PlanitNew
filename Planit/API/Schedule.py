@@ -35,6 +35,18 @@ class API_Schedule:
 	def get_sections(self):
 		return list(self._sections)
 
+	def get_course_set(self):
+		out = set()
+		for section in self._sections:
+			course = section.get_course().get_subject()
+			subject = course.get_subject()
+			id = course.get_course_id()
+
+			key = subject + id
+
+			out.add(key)
+		return out
+
 	'''
 	:param other_schedule: API.Schedule object
 	:return: true if the schedules are equal, false if not
