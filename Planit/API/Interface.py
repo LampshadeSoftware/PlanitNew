@@ -50,7 +50,13 @@ def compute_schedules(wish_list, filters):
 			user.apply_filter(key, filters[key])
 		pass
 
-	schedules = user.get_interface_output(colors_dict)["schedules"]
-	print(schedules)
+	out = user.get_interface_output(colors_dict)
+	schedules = out["schedules"]
+	used_courses = out["used_courses"]
+
+	for course in courses_info:
+		if course not in used_courses:
+			del courses_info[course]["color"]
+
 	return schedules, courses_info
 

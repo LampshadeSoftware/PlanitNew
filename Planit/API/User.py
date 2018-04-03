@@ -230,7 +230,7 @@ class API_User:
 			used_courses[key] = dict()
 			used_courses[key]['color'] = colors_dict[key]
 
-		return {'schedules': schedules, 'coursesInfo': used_courses}
+		return {'schedules': schedules, 'used_courses': used_courses}
 
 
 

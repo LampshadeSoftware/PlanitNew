@@ -263,7 +263,7 @@
 
                 var button = document.createElement("button");
                 button.innerHTML = subject + " " + course_id;
-                if (coursesInfo[subject+course_id]) {
+                if (coursesInfo[subject+course_id]["color"]) {
                     button.style.background = coursesInfo[subject+course_id]["color"];
                     button.style.color = "white";
                 }
