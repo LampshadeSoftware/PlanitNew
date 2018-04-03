@@ -134,6 +134,7 @@
 
         var scheduleIndex = 0;
         var numSchedules = 0;
+        var creditCounts = [];
         var schedules = [[{}]];  // this will be used by FullCalendar so keep this format
 
         var coursesInfo = {};  // Is a dictionary that maps "subject+course_id" to an info dict for that course
@@ -197,6 +198,7 @@
                 dataType: 'json',
                 async: is_async,
                 success: function (data) {
+                    creditCounts = [];
                     coursesInfo = data["coursesInfo"];
                     var raw_schedules = data["schedules"];
                     if (raw_schedules.length > 0){
@@ -204,6 +206,7 @@
 
                         // parses the schedules dictionary into a FullCalendar-readable format
                         for (var i in raw_schedules){
+                            creditCounts.push(raw_schedules[i]["total_credits"]);
                             var schedule = [];
                             var sections = raw_schedules[i]["sections"];
                             for (var j in sections){
@@ -213,6 +216,7 @@
                                 var courseId = section["course_id"];
                                 var sectionNum = section["section_num"];
                                 var title = section["title"];
+                                var numCredits = section["num_credits"];
                                 for(var t in section["times"]){
                                     var time = section["times"][t];
                                     var day = time["day"];
@@ -221,7 +225,7 @@
                                     var endHour = time["end_hour"];
                                     var endMinute = time["end_minute"];
                                     schedule.push({
-                                        "title": subject + " " + courseId + " " + sectionNum + " - " + title,
+                                        "title": "[" + numCredits + "] " + subject + " " + courseId + " " + sectionNum + " - " + title,
                                         "start": "2018-01-0" + day + 'T' + startHour + ":" + startMinute,
                                         "end": "2018-01-0" + day + 'T' + endHour + ":" + endMinute,
                                         "color": coursesInfo[subject+courseId]["color"]
@@ -297,7 +301,8 @@
             if (numSchedules === 0){
                 document.getElementById("scheduleDisplay").innerHTML = "0/0";
             } else {
-                document.getElementById("scheduleDisplay").innerHTML = (scheduleIndex+1).toString() + "/" + numSchedules.toString();
+                document.getElementById("scheduleDisplay").innerHTML = (scheduleIndex+1).toString() + "/" + numSchedules.toString()
+                    + " (" + creditCounts[scheduleIndex] + " credits)";
             }
 
         }
