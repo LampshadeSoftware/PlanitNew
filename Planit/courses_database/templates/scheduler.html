@@ -2,9 +2,10 @@
 
 {% block javascript %}
     <script type='text/javascript'>  // All init function go here
+
         function tablesInit(){
-            $('#courses').DataTable({"lengthChange": false, "dom": "<'row'<'col-sm-6'f>>" + "t"});
-            $('.dataTables_filter').addClass('pull-left');
+            $('#courses').DataTable({searching: false, "lengthChange": false, "dom": "<'row'<'col-sm-6'f>>" + "t"});
+            //$('.dataTables_filter').addClass('pull-left');
         }
 
         function filtersInit(){
@@ -307,6 +308,26 @@
 
         }
 
+        function filterCourses() {
+            var subjectInput =$("#subjectInput").val();
+            var inputString = subjectInput.toUpperCase();
+
+            table = document.getElementById("courses");
+            tr = table.getElementsByTagName("tr");
+
+            // Loop through all table rows, and hide those who don't match the search query
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[0];
+                if (td) {
+                    var found = td.innerHTML.toUpperCase();
+                    if (found.indexOf(inputString) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+        }
         // =======================================================================
         // MARK: USER INTERACTIONS (FUNCTIONS THAT RUN WHEN A USER CLICKS A BUTTON
         // =======================================================================
@@ -368,6 +389,22 @@
 {% endblock %}
 
 {% block searchTable %}
+    <table id="searchOptions" class="display" border="0" cellspacing="5" cellpadding="5">
+        <tbody>
+            <tr>
+                <td>Subject:</td>
+                <td><input type="text" id="subjectInput" name="subjectInput" onkeyup="filterCourses()"></td>
+            </tr>
+            <tr>
+                <td>Course Number:</td>
+                <td><input type="text" id="coursenumInput" name="coursenumInput"></td>
+            </tr>
+            <tr>
+                <td>Title:</td>
+                <td><input type="text" id="titleInput" name="titleInput"></td>
+            </tr>
+        </tbody>
+    </table>
     <table id="courses" class="display">
         <thead>
             <tr>
