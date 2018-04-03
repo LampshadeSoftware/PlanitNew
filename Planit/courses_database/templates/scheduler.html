@@ -139,7 +139,7 @@
         var coursesInfo = {};  // Is a dictionary that maps "subject+course_id" to an info dict for that course
 
         $(document).ready( function () {
-            localStorage.clear();
+            //localStorage.clear();
 
             // console.log(1);
             // SETS UP CALENDAR
@@ -201,6 +201,8 @@
                     var raw_schedules = data["schedules"];
                     if (raw_schedules.length > 0){
                         schedules = [];
+
+                        // parses the schedules dictionary into a FullCalendar-readable format
                         for (var i in raw_schedules){
                             var schedule = [];
                             var sections = raw_schedules[i]["sections"];
@@ -271,10 +273,17 @@
                 button.style.height = "50px";
                 button.style.width = "100px";
                 button.addEventListener("click", function () {
+                    document.getElementById("courseInfo").style.display = "inline";
                     var courseTitle = document.getElementById("courseTitle");
                     courseTitle.innerHTML = subject + " " + course_id + " - " + title;
                     var description = document.getElementById("courseDescription");
                     description.innerHTML = coursesInfo[subject+course_id]["description"];
+                    var addDropButton = document.getElementById("addDropButton");
+                    var newAddDrop = addDropButton.cloneNode(true);
+                    addDropButton.parentNode.replaceChild(newAddDrop, addDropButton);
+                    newAddDrop.addEventListener("click", function () {
+                        removeFromWishList(subject, course_id);
+                    })
                 });
                 wishListButtons.appendChild(button);
             });
@@ -300,16 +309,22 @@
         function addToWishList(subject, course_id, title) {
             var newWishListEntry = {"subject": subject, "course_id": course_id, "title": title};
             var wishList = JSON.parse(localStorage.getItem("wishList")) || {};
-            wishList[subject+course_id] = newWishListEntry;
-            localStorage.setItem("wishList", JSON.stringify(wishList));
 
-            $.notify(
-                "Added " + subject + " " + course_id + " to wish list.", "success",
-                { position:"top" }
-            );
+            if (!(subject+course_id in wishList)) {
+                wishList[subject + course_id] = newWishListEntry;
+                localStorage.setItem("wishList", JSON.stringify(wishList));
 
-            // updateWishListTable();
-            updateSchedules();
+                $.notify(
+                    "Added " + subject + " " + course_id + " to wish list.", "success",
+                    {position: "top"}
+                );
+                updateSchedules();
+            } else {
+                $.notify(
+                    "You've already added " + subject + " " + course_id + " to your wish list.",
+                    {position: "top right"}
+                );
+            }
         }
 
         function removeFromWishList(subject, course_id) {
@@ -322,7 +337,6 @@
                 { position:"top" }
             );
 
-            // updateWishListTable();
             updateSchedules();
         }
 
@@ -374,8 +388,9 @@
 {% endblock %}
 
 {% block coursesInfo %}
-    <div id="coursesInfo">
+    <div id="courseInfo" style="display: none">
         <strong><h4 id="courseTitle">Course Title</h4></strong>
+        <button id="addDropButton">Remove Course</button>
         <p id="courseDescription">Description</p>
     </div>
 {% endblock %}
