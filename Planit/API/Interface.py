@@ -27,7 +27,7 @@ subject, course_id, and title as keys
 def compute_schedules(wish_list, filters):
 	user = API_User()
 
-	colors = ["#46B8AF", "#5869CE", "#CE5858", "#BD4EAC", "#F0962A"]
+	colors = ["#46B8AF", "#5869CE", "#CE5858", "#BD4EAC", "#F0962A", "#5DC15D", "#975DC1"]
 	colors_dict = {}
 	courses_info = {}  # gets all additional info that we need like colors and descriptions
 	for i, course in enumerate(wish_list):
