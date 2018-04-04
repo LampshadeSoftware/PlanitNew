@@ -5,8 +5,30 @@
 
         function tablesInit(){
             // "dom": "<'row'<'col-sm-6'f>>" + "t"
-            $('#courses').DataTable({searching: false, "lengthChange": false});
+            var coursesDataTable = $('#courses').DataTable({searching: true, dom: 'lrtp', "lengthChange": false});
             //$('.dataTables_filter').addClass('pull-left');
+            $('#subjectInput').on( 'keyup', function () {
+                coursesDataTable
+                    .columns( 0 )
+                    .search( this.value )
+                    .draw();
+            });
+            $('#coursenumInput').on( 'keyup', function () {
+                coursesDataTable
+                    .columns( 1 )
+                    .search( this.value )
+                    .draw();
+            });
+            $('#titleInput').on( 'keyup', function () {
+                coursesDataTable
+                    .columns( 2 )
+                    .search( this.value )
+                    .draw();
+            });
+        }
+
+        function filterCourseTable() {
+
         }
 
         function filtersInit(){
