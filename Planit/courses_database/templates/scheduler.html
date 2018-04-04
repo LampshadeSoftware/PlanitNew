@@ -2,33 +2,27 @@
 
 {% block javascript %}
     <script type='text/javascript'>  // All init function go here
-
+        var coursesDataTable;
         function tablesInit(){
             // "dom": "<'row'<'col-sm-6'f>>" + "t"
-            var coursesDataTable = $('#courses').DataTable({searching: true, dom: 'lrtp', "lengthChange": false});
+            coursesDataTable = $('#courses').DataTable({searching: true, dom: 'lrtp', "lengthChange": false});
             //$('.dataTables_filter').addClass('pull-left');
             $('#subjectInput').on( 'keyup', function () {
-                coursesDataTable
-                    .columns( 0 )
-                    .search( this.value )
-                    .draw();
+                filterCourseTable(this, 0);
             });
             $('#coursenumInput').on( 'keyup', function () {
-                coursesDataTable
-                    .columns( 1 )
-                    .search( this.value )
-                    .draw();
+                filterCourseTable(this, 1);
             });
             $('#titleInput').on( 'keyup', function () {
-                coursesDataTable
-                    .columns( 2 )
-                    .search( this.value )
-                    .draw();
+                filterCourseTable(this, 2);
             });
         }
 
-        function filterCourseTable() {
-
+        function filterCourseTable(element, column) {
+            coursesDataTable
+                .columns( column )
+                .search( element.value )
+                .draw();
         }
 
         function filtersInit(){
