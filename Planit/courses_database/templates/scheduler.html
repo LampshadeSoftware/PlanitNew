@@ -2,7 +2,7 @@
 
 {% block javascript %}
     <script type='text/javascript'>  // All init function go here
-        var coursesDataTable;
+        let coursesDataTable;
         function tablesInit(){
             // "dom": "<'row'<'col-sm-6'f>>" + "t"
             coursesDataTable = $('#courses').DataTable({searching: true, dom: 'lrtp', "lengthChange": false});
@@ -16,6 +16,14 @@
             $('#titleInput').on( 'keyup', function () {
                 filterCourseTable(this, 2);
             });
+
+            // Add event listener for opening and closing details
+            $('#courses tbody').on('click', function () {
+                let tr = $(this).closest('tr');
+                let row = coursesDataTable.row( tr );
+
+                alert(row);
+            } );
         }
 
         function filterCourseTable(element, column) {
@@ -26,6 +34,7 @@
         }
 
         function filtersInit(){
+            // DAYS OFF FILTER
             $('#daysOff').multipleSelect({
                 onClick: function(view) {
                     updateSchedules();
@@ -37,6 +46,7 @@
                     updateSchedules();
                 }
             });
+            // ATTRIBUTES FLTER
             $('#attributes').multipleSelect({
                 filter: true,
                 onClick: function(view) {
@@ -71,7 +81,7 @@
         }
 
         function slidersInit() {
-            var timeSlider = document.getElementById('timeSlider');
+            let timeSlider = document.getElementById('timeSlider');
             noUiSlider.create(timeSlider, {
                 connect: true,
                 behaviour: 'tap',
@@ -83,8 +93,8 @@
                 }
             });
 
-            var startTime = document.getElementById('startTime');
-            var endTime = document.getElementById('endTime');
+            let startTime = document.getElementById('startTime');
+            let endTime = document.getElementById('endTime');
 
             startTime.addEventListener('change', function(){
                 timeSlider.noUiSlider.set([this.value, null]);
@@ -96,7 +106,7 @@
 
             timeSlider.noUiSlider.on('update', function( values, handle ) {
 
-                var value = values[handle];
+                let value = values[handle];
 
                 if ( handle ) { // right handle
                     endTime.value = Math.round(value);
@@ -105,13 +115,13 @@
                 }
                 //updateSchedules();
             });
-            timeSlider.noUiSlider.on('change', function( values, handle ) {
+            timeSlider.noUiSlider.on('change', function() {
                 updateSchedules();
             });
 
 
             // MIN/MAX CREDITS INIT
-            var creditSlider = document.getElementById('creditSlider');
+            let creditSlider = document.getElementById('creditSlider');
             noUiSlider.create(creditSlider, {
                 connect: true,
                 behavior: 'tap',
@@ -123,8 +133,8 @@
                 }
             });
 
-            var minCredits = document.getElementById('minCredits');
-            var maxCredits = document.getElementById('maxCredits');
+            let minCredits = document.getElementById('minCredits');
+            let maxCredits = document.getElementById('maxCredits');
 
             minCredits.addEventListener('change', function() {
                 creditSlider.noUiSlider.set([this.value, null]);
@@ -134,7 +144,7 @@
             });
 
             creditSlider.noUiSlider.on('update', function (values, handle ) {
-                var value = values[handle];
+                let value = values[handle];
 
                 if ( handle ) {
                     maxCredits.value = Math.round(value);
@@ -143,49 +153,43 @@
                 }
                 //updateSchedules();
             });
-            creditSlider.noUiSlider.on('change', function( values, handle ) {
+            creditSlider.noUiSlider.on('change', function() {
                 updateSchedules();
             });
         }
     </script>
     <script type='text/javascript'>
 
-        var scheduleIndex = 0;
-        var numSchedules = 0;
-        var creditCounts = [];
-        var schedules = [[{}]];  // this will be used by FullCalendar so keep this format
+        let scheduleIndex = 0;  // Used to display what schedule the user is currently viewing
+        let numSchedules = 0;  // Is the number of schedules for the given filters
+        let creditCounts = [];  // The numbers of credits for each scheduleIndex
+        let schedules = [[{}]];  // this will be used by FullCalendar so keep this format
 
-        var coursesInfo = {};  // Is a dictionary that maps "subject+course_id" to an info dict for that course
+        // General course info. Doesn't change based on schedule index
+        let coursesInfo = {};  // Is a dictionary that maps "subject+course_id" to an info dict for that course
 
         $(document).ready( function () {
             //localStorage.clear();
 
-            // console.log(1);
             // SETS UP CALENDAR
             calendarInit();
 
-            // console.log(2);
             // SETS UP TABLES
             tablesInit();
 
-            // console.log(3);
             // SETS UP FILTERS WITH MULTIPLE SELECT
             filtersInit();
 
-            // console.log(4);
             // DEALS WITH THE TABS FEATURE
             $(".nav-tabs a").click(function(){
                 $(this).tab('show');
             });
 
-            // console.log(5);
             // SLIDERS INIT
             slidersInit();
 
-            // console.log(6);
             // CALLS THE UPDATE LAST
             updateSchedules(false);
-            // console.log(7);
         } );
 
         // =================================================================
@@ -194,8 +198,8 @@
 
         function updateSchedules(is_async) {
             if (typeof(is_async)==='undefined') is_async = true;
-            var wishList = JSON.parse(localStorage.getItem("wishList")) || {};
-            var filters = $('#wishListFilters').serializeArray().reduce(function(obj, item) {
+            let wishList = JSON.parse(localStorage.getItem("wishList")) || {};
+            let filters = $('#wishListFilters').serializeArray().reduce(function(obj, item) {
                 obj[item.name] = item.value;
                 return obj;
             }, {});
@@ -205,6 +209,7 @@
 
             console.log("updating schedules");
 
+            // Ajax gets the schedules data in the background (or not in the background if async is false)
             $.ajax({
                 url: '{% url "get_schedules" %}',
                 method: 'POST',
@@ -218,30 +223,30 @@
                 success: function (data) {
                     creditCounts = [];
                     coursesInfo = data["coursesInfo"];
-                    var raw_schedules = data["schedules"];
+                    let raw_schedules = data["schedules"];
                     if (raw_schedules.length > 0){
                         schedules = [];
 
                         // parses the schedules dictionary into a FullCalendar-readable format
-                        for (var i in raw_schedules){
+                        for (let i in raw_schedules){
                             creditCounts.push(raw_schedules[i]["total_credits"]);
-                            var schedule = [];
-                            var sections = raw_schedules[i]["sections"];
-                            for (var j in sections){
-                                var section = sections[j];
+                            let schedule = [];
+                            let sections = raw_schedules[i]["sections"];
+                            for (let j in sections){
+                                let section = sections[j];
 
-                                var subject = section["subject"];
-                                var courseId = section["course_id"];
-                                var sectionNum = section["section_num"];
-                                var title = section["title"];
-                                var numCredits = section["num_credits"];
-                                for(var t in section["times"]){
-                                    var time = section["times"][t];
-                                    var day = time["day"];
-                                    var startHour = time["start_hour"];
-                                    var startMinute = time["start_minute"];
-                                    var endHour = time["end_hour"];
-                                    var endMinute = time["end_minute"];
+                                let subject = section["subject"];
+                                let courseId = section["course_id"];
+                                let sectionNum = section["section_num"];
+                                let title = section["title"];
+                                let numCredits = section["num_credits"];
+                                for(let t in section["times"]){
+                                    let time = section["times"][t];
+                                    let day = time["day"];
+                                    let startHour = time["start_hour"];
+                                    let startMinute = time["start_minute"];
+                                    let endHour = time["end_hour"];
+                                    let endMinute = time["end_minute"];
                                     schedule.push({
                                         "title": "[" + numCredits + "] " + subject + " " + courseId + " " + sectionNum + " - " + title,
                                         "start": "2018-01-0" + day + 'T' + startHour + ":" + startMinute,
@@ -254,7 +259,7 @@
                         }
                         numSchedules = schedules.length;
                     } else {
-                        schedules = [[{}]]
+                        schedules = [[{}]];
                         numSchedules = 0
                     }
 
@@ -269,23 +274,24 @@
         }
 
         function updateWishListVisuals(){
-            var wishList = JSON.parse(localStorage.getItem("wishList")) || {};
+            let wishList = JSON.parse(localStorage.getItem("wishList")) || {};
 
-            var wishListButtons = document.getElementById("wishListButtonsHolder");
+            let wishListButtons = document.getElementById("wishListButtonsHolder");
             wishListButtons.innerHTML = "";
 
             if (Object.keys(wishList).length === 0){
-                var noButtons = document.createElement("p");
-                noButtons.innerHTML = "Go to the search classes tab to add classes."
+                let noButtons = document.createElement("p");
+                noButtons.innerHTML = "Go to the search classes tab to add classes.";
                 wishListButtons.appendChild(noButtons);
             }
 
+            // Creates the wish list buttons
             Object.keys(wishList).forEach(function(key) {
-                var subject = wishList[key]["subject"];
-                var course_id = wishList[key]["course_id"];
-                var title = wishList[key]["title"];
+                let subject = wishList[key]["subject"];
+                let course_id = wishList[key]["course_id"];
+                let title = wishList[key]["title"];
 
-                var button = document.createElement("button");
+                let button = document.createElement("button");
                 button.innerHTML = subject + " " + course_id;
                 if (coursesInfo[subject+course_id]["color"]) {
                     button.style.background = coursesInfo[subject+course_id]["color"];
@@ -296,12 +302,12 @@
                 button.style.width = "100px";
                 button.addEventListener("click", function () {
                     document.getElementById("courseInfo").style.display = "inline";
-                    var courseTitle = document.getElementById("courseTitle");
+                    let courseTitle = document.getElementById("courseTitle");
                     courseTitle.innerHTML = subject + " " + course_id + " - " + title;
-                    var description = document.getElementById("courseDescription");
+                    let description = document.getElementById("courseDescription");
                     description.innerHTML = coursesInfo[subject+course_id]["description"];
-                    var addDropButton = document.getElementById("addDropButton");
-                    var newAddDrop = addDropButton.cloneNode(true);
+                    let addDropButton = document.getElementById("addDropButton");
+                    let newAddDrop = addDropButton.cloneNode(true);
                     addDropButton.parentNode.replaceChild(newAddDrop, addDropButton);
                     newAddDrop.addEventListener("click", function () {
                         removeFromWishList(subject, course_id);
@@ -312,7 +318,7 @@
         }
 
         function updateCalendar() {
-            var calendar = $('#calendar');
+            let calendar = $('#calendar');
             calendar.fullCalendar('removeEvents');
             calendar.fullCalendar('addEventSource', schedules[scheduleIndex]);
             calendar.fullCalendar('rerenderEvents');
@@ -326,17 +332,17 @@
         }
 
         function filterCourses() {
-            var subjectInput =$("#subjectInput").val();
-            var inputString = subjectInput.toUpperCase();
+            let subjectInput =$("#subjectInput").val();
+            let inputString = subjectInput.toUpperCase();
 
-            table = document.getElementById("courses");
-            tr = table.getElementsByTagName("tr");
+            let table = document.getElementById("courses");
+            let tr = table.getElementsByTagName("tr");
 
             // Loop through all table rows, and hide those who don't match the search query
-            for (i = 0; i < tr.length; i++) {
-                td = tr[i].getElementsByTagName("td")[0];
+            for (let i = 0; i < tr.length; i++) {
+                let td = tr[i].getElementsByTagName("td")[0];
                 if (td) {
-                    var found = td.innerHTML.toUpperCase();
+                    let found = td.innerHTML.toUpperCase();
                     if (found.indexOf(inputString) > -1) {
                         tr[i].style.display = "";
                     } else {
@@ -350,8 +356,8 @@
         // =======================================================================
 
         function addToWishList(subject, course_id, title) {
-            var newWishListEntry = {"subject": subject, "course_id": course_id, "title": title};
-            var wishList = JSON.parse(localStorage.getItem("wishList")) || {};
+            let newWishListEntry = {"subject": subject, "course_id": course_id, "title": title};
+            let wishList = JSON.parse(localStorage.getItem("wishList")) || {};
 
             if (!(subject+course_id in wishList)) {
                 wishList[subject + course_id] = newWishListEntry;
@@ -371,7 +377,7 @@
         }
 
         function removeFromWishList(subject, course_id) {
-            var wishList = JSON.parse(localStorage.getItem("wishList")) || {};
+            let wishList = JSON.parse(localStorage.getItem("wishList")) || {};
             delete wishList[subject+course_id];
             localStorage.setItem("wishList", JSON.stringify(wishList));
 
