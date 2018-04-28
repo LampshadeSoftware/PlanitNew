@@ -25,7 +25,7 @@ SECRET_KEY = '_+wkp0%h6e16ge%*-4-93-0#2^&v61z+pd*51#jd5_)n$))hih'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["clynk.scripts.mit.edu"]
+ALLOWED_HOSTS = ["planit.clynk.scripts.mit.edu"]
 
 
 # Application definition
@@ -120,4 +120,4 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_ROOT = '/afs/athena.mit.edu/user/c/l/clynk/web_scripts/planit/static/'
-STATIC_URL = '/planit/static/'
+STATIC_URL = '/static/'
