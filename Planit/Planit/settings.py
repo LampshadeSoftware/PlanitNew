@@ -25,7 +25,7 @@ SECRET_KEY = '_+wkp0%h6e16ge%*-4-93-0#2^&v61z+pd*51#jd5_)n$))hih'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["planit.clynk.scripts.mit.edu"]
+ALLOWED_HOSTS = ["planit.clynk.scripts.mit.edu", "localhost"]
 
 
 # Application definition
