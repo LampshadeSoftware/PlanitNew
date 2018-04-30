@@ -169,7 +169,7 @@
         let coursesInfo = {};  // Is a dictionary that maps "subject+course_id" to an info dict for that course
 
         $(document).ready( function () {
-            //localStorage.clear();
+            localStorage.clear();
 
             // SETS UP CALENDAR
             calendarInit();
@@ -284,11 +284,15 @@
                 wishListButtons.appendChild(noButtons);
             }
 
+
+
             // Creates the wish list buttons
             Object.keys(wishList).forEach(function(key) {
+
                 let subject = wishList[key]["subject"];
                 let course_id = wishList[key]["course_id"];
                 let title = wishList[key]["title"];
+                let required = !wishList[key]["optional"];
 
                 let button = document.createElement("button");
                 button.innerHTML = subject + " " + course_id;
@@ -301,16 +305,28 @@
                 button.style.width = "100px";
                 button.addEventListener("click", function () {
                     document.getElementById("courseInfo").style.display = "inline";
+
                     let courseTitle = document.getElementById("courseTitle");
                     courseTitle.innerHTML = subject + " " + course_id + " - " + title;
+
+                    let requiredBox = document.getElementById("required");
+
+                    requiredBox.checked = required;
+                    requiredBox.onclick = function() {
+                        setCourseOptional(subject, course_id, !requiredBox.checked);
+                        updateWishListVisuals();
+                    };
+
                     let description = document.getElementById("courseDescription");
                     description.innerHTML = coursesInfo[subject+course_id]["description"];
+
                     let addDropButton = document.getElementById("addDropButton");
                     let newAddDrop = addDropButton.cloneNode(true);
                     addDropButton.parentNode.replaceChild(newAddDrop, addDropButton);
                     newAddDrop.addEventListener("click", function () {
                         removeFromWishList(subject, course_id);
                     })
+
                 });
                 wishListButtons.appendChild(button);
             });
@@ -355,7 +371,7 @@
         // =======================================================================
 
         function addToWishList(subject, course_id, title) {
-            let newWishListEntry = {"subject": subject, "course_id": course_id, "title": title, "optional": false};
+            let newWishListEntry = {"subject": subject, "course_id": course_id, "title": title, "optional": true};
             let wishList = JSON.parse(localStorage.getItem("wishList")) || {};
 
             if (!(subject+course_id in wishList)) {
@@ -407,6 +423,14 @@
             }
             updateCalendar();
         }
+
+        function setCourseOptional(subject, course_id, value) {
+            let wishList = JSON.parse(localStorage.getItem("wishList")) || {};
+
+            wishList[subject+course_id]["optional"] = value;
+
+            localStorage.setItem("wishList", JSON.stringify(wishList));
+        }
     </script>
 {% endblock %}
 
@@ -454,7 +478,7 @@
 {% block coursesInfo %}
     <div id="courseInfo" style="display: none">
         <strong><h4 id="courseTitle">Course Title</h4></strong>
-        <p> [Required: <input id="required" type="checkbox" onchange="updateSchedules()"> ] </p>
+        <p> [Required: <input id="required" type="checkbox"> ] </p>
         <button id="addDropButton">Remove Course</button>
         <p id="courseDescription">Description</p>
     </div>
