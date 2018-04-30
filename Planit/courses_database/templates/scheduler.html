@@ -169,7 +169,7 @@
         let coursesInfo = {};  // Is a dictionary that maps "subject+course_id" to an info dict for that course
 
         $(document).ready( function () {
-            localStorage.clear();
+            // localStorage.clear();
 
             // SETS UP CALENDAR
             calendarInit();
@@ -296,6 +296,11 @@
 
                 let button = document.createElement("button");
                 button.innerHTML = subject + " " + course_id;
+
+                if (required) {
+                    button.innerHTML += "<sup>*</sup>";
+                }
+
                 if (coursesInfo[subject+course_id]["color"]) {
                     button.style.background = coursesInfo[subject+course_id]["color"];
                     button.style.color = "white";
@@ -303,6 +308,7 @@
                 button.style.borderRadius = "7px";
                 button.style.height = "50px";
                 button.style.width = "100px";
+
                 button.addEventListener("click", function () {
                     document.getElementById("courseInfo").style.display = "inline";
 
@@ -315,6 +321,7 @@
                     requiredBox.onclick = function() {
                         setCourseOptional(subject, course_id, !requiredBox.checked);
                         updateWishListVisuals();
+                        updateSchedules();
                     };
 
                     let description = document.getElementById("courseDescription");

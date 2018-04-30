@@ -31,6 +31,7 @@ def compute_schedules(wish_list, filters):
 	colors_dict = {}
 	courses_info = {}  # gets all additional info that we need like colors and descriptions
 	for i, course in enumerate(wish_list):
+
 		subject = str(course['subject'])
 		course_id = str(course['course_id'])
 		colors_dict[subject + course_id] = colors[i % len(colors)]
@@ -40,7 +41,7 @@ def compute_schedules(wish_list, filters):
 		courses_info[subject+course_id]["color"] = colors[i % len(colors)]
 		courses_info[subject+course_id]["description"] = course_object.description
 
-		user.add_to_wish_list(str(course['subject']), str(course['course_id']), optional=course['optional'])
+		user.add_to_wish_list(str(course['subject']), str(course['course_id']), optional=course['optional']=='true')
 
 
 	# apply filters
