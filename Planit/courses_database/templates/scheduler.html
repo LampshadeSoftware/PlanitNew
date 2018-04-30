@@ -355,7 +355,7 @@
         // =======================================================================
 
         function addToWishList(subject, course_id, title) {
-            let newWishListEntry = {"subject": subject, "course_id": course_id, "title": title};
+            let newWishListEntry = {"subject": subject, "course_id": course_id, "title": title, "optional": false};
             let wishList = JSON.parse(localStorage.getItem("wishList")) || {};
 
             if (!(subject+course_id in wishList)) {
@@ -454,6 +454,7 @@
 {% block coursesInfo %}
     <div id="courseInfo" style="display: none">
         <strong><h4 id="courseTitle">Course Title</h4></strong>
+        <p> [Required: <input id="required" type="checkbox" onchange="updateSchedules()"> ] </p>
         <button id="addDropButton">Remove Course</button>
         <p id="courseDescription">Description</p>
     </div>
