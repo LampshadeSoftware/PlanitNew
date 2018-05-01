@@ -1,7 +1,14 @@
 {% extends 'base.html' %}
 
+{% load static %}
+
 {% block javascript %}
-{% include 'scheduler_js.html' %}
+<script> // Django template variables to be used in js
+    var get_schedules_url = '{% url "get_schedules" %}';
+    var csrf_token = '{{ csrf_token }}';
+</script>
+<script src="{% static 'js/scheduler_init.js' %}"></script>
+<script src="{% static 'js/scheduler.js' %}"></script>
 {% endblock %}
 
 {% block searchTable %}
